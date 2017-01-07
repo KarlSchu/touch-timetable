@@ -1,0 +1,13 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "0.1.0",
+    //"command": "firefox"
+    "command": "chromium-browser",
+    "windows": {
+        //"command": "firefox"
+        "command": "chromium-browser"
+    },
+    "args": ["${file}"],
+    "showOutput": "always"
+}

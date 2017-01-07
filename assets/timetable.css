@@ -1,0 +1,256 @@
+/* nanoscrollbar */
+.nano .pane   { background: #888; }
+.nano .slider { background: #111; }
+
+body {
+    /* Override bootstrap properties */
+    background-color: #879aad !important;
+    border: 0 !important;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Required to make elements draggable in old WebKit */
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
+}
+
+@media print{
+    @page {size: landscape}
+    body {margin-left: 50px;}
+}
+
+.btn {
+    float: left;
+    padding-top:0;
+    padding-bottom:0;
+    height:20px;
+}
+.btn2 {
+    float: none;
+    width: 90%
+}
+
+.resetFloat {
+   clear:both;
+}
+
+.importContainer {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Prevent the text contents of draggable elements from being selectable. */
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+
+#teachers {
+    float:left;
+    margin-right: 0;
+    margin-bottom: 20px;
+    z-index: 10000;
+    cursor: move;
+}
+#top {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #fff;
+    float: left;
+    margin-left: 10px;
+    margin-bottom: 20px;
+}
+
+#header {
+    font-size: 1.7em;
+    text-align: center;
+    margin-right: 20px;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.dropLesson {
+    height: 30px;
+    width: 30px;
+    text-align: center;
+}
+
+#groupCounters {
+    float: left;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    margin-right: 10px;
+}
+
+#T0 {
+    color: darkblue;
+    background-color: blue !important;
+    border: 1px solid darkblue;
+}
+@media print{
+    #T0 {
+        background-color: blue !important;
+        -webkit-print-color-adjust: exact; 
+}}
+#T1 {
+    color: blue;
+    background-color: lightblue !important;
+    border: 1px solid blue;
+}
+#T2 {
+    color: darkblue;
+    background-color: lightgreen;
+    border: 1px solid green;
+}
+#T3 {
+    color: black;
+    background-color: mediumvioletred;
+    border: 1px solid darkviolet;
+}
+#T4 {
+    color: mediumvioletred;
+    background-color: violet;
+    border: 1px solid mediumvioletred;
+}
+#T5 {
+    color: darkgreen;
+    background-color: yellow;
+    border: 1px solid yellowgreen;
+}
+#T6 {
+    color: black;
+    background-color: green;
+    border: 1px solid darkgreen;
+}
+#T7 {
+    color: orangered;
+    background-color: orange;
+    border: 1px solid darkorange;
+}
+#T8 {
+    color: brown;
+    background-color: darkorange;
+    border: 1px solid brown;
+}
+#T9 {
+    color: green;
+    background-color: lightgoldenrodyellow;
+    border: 1px solid greenyellow;
+}
+#timeTableImportButton {
+    display: none;
+    clear:both;
+}
+#timeTableHideButton {
+    display: none;
+    clear:both;
+}
+#timeTableOut {
+    display: none;
+    clear:both;
+    height:300px;
+    width: 96%
+}
+
+.springLake td {
+    border: 1px solid gray;
+    vertical-align: middle;
+    text-align: center;
+    /*padding: 2px 2px 2px 2px;*/
+    padding-top: 4px;
+    padding-bottom: 0;
+    idth: 100%;
+}
+
+.spring, .teacherLesson {
+    text-align: center;
+    background-color: lightgray;
+    border: 1px solid gray;
+    box-sizing: border-box;
+    padding: 2px 2px 2px 2px;
+    margin: 2px 2px 2px 2px;
+    border-radius: 26px 26px 26px 26px;
+    width: 100px;
+    height: 80px;
+}
+
+.count {
+    margin: 2px 2px 2px 2px;
+    color: #444;
+}
+
+.springLake {
+    float: left;
+    width: 100%;
+}
+
+.headerGroup {
+    font-size: 0.7em; 
+    color: #fff;
+    background-color: #555;
+    text-shadow: #000 0 1px;
+    box-shadow: 5px;
+    padding: 0px;
+    background: -moz-linear-gradient(left center, rgb(0,0,0), rgb(79,79,79), rgb(21,21,21));
+    background: -webkit-gradient(linear, left top, right top,
+                               color-stop(0, rgb(0,0,0)),
+                               color-stop(0.50, rgb(79,79,79)),
+                               color-stop(1, rgb(21,21,21)));
+    background: -webkit-linear-gradient(left center, rgb(0,0,0), rgb(79,79,79), rgb(21,21,21));
+    background: -ms-linear-gradient(left center, rgb(0,0,0), rgb(79,79,79), rgb(21,21,21));
+    border-bottom: 1px solid #ddd;
+}
+
+.weekday-container {
+    min-width: 180px;
+    margin: 0;
+    background-color: #e3e3e3;
+    min-height: 320px;
+    height:320px;
+    border-radius: 10px;
+    padding-bottom: 15px;
+    float: left;
+    border: 1px solid #666666;
+    background-color: #ccc;
+    margin-right: 0px;
+    -webkit-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 3px #000;
+    -ms-box-shadow: inset 0 0 3px #000;
+    box-shadow: inset 0 0 3px #000;
+    text-align: center;
+    cursor: normal;
+}
+
+.weekday-container header {
+  color: #fff;
+  text-shadow: #000 0 1px;
+  box-shadow: 5px;
+  padding: 0px;
+  font-size: 1em; 
+  background: -moz-linear-gradient(left center, rgb(0,0,0), rgb(79,79,79), rgb(21,21,21));
+  background: -webkit-gradient(linear, left top, right top,
+                               color-stop(0, rgb(0,0,0)),
+                               color-stop(0.50, rgb(79,79,79)),
+                               color-stop(1, rgb(21,21,21)));
+  background: -webkit-linear-gradient(left center, rgb(0,0,0), rgb(79,79,79), rgb(21,21,21));
+  background: -ms-linear-gradient(left center, rgb(0,0,0), rgb(79,79,79), rgb(21,21,21));
+  border-bottom: 1px solid #ddd;
+  -webkit-border-top-left-radius: 10px;
+  -moz-border-radius-topleft: 10px;
+  -ms-border-radius-topleft: 10px;
+  border-top-left-radius: 10px;
+  -webkit-border-top-right-radius: 10px;
+  -ms-border-top-right-radius: 10px;
+  -moz-border-radius-topright: 10px;
+  border-top-right-radius: 10px;
+}
+

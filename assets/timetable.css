@@ -76,7 +76,7 @@ body {
 }
 
 .dropLesson {
-    height: 30px;
+    height: 60px;
     width: 30px;
     text-align: center;
 }
@@ -165,7 +165,7 @@ body {
     /*padding: 2px 2px 2px 2px;*/
     padding-top: 4px;
     padding-bottom: 0;
-    idth: 100%;
+    /*width: 100%;*/
 }
 
 .spring, .teacherLesson {
@@ -173,11 +173,12 @@ body {
     background-color: lightgray;
     border: 1px solid gray;
     box-sizing: border-box;
-    padding: 2px 2px 2px 2px;
-    margin: 2px 2px 2px 2px;
+    padding: 4px 4px 4px 2px;
+    margin: 1px 1px 1px 1px;
     border-radius: 26px 26px 26px 26px;
-    width: 100px;
-    height: 80px;
+    line-height: 14px;
+    /*width: 10px;*/
+    /*height: 80px;*/
 }
 
 .count {

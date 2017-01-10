@@ -1,4 +1,12 @@
 
+function extendContent(origContent) {
+    var newContent = prompt("Add content", origContent);
+    if (newContent != null) {
+        return newContent;
+    }
+    return origContent;
+}
+
 function initTimeTable() {
     var timeTable = new Object();
     ['mo', 'di', 'mi', 'do', 'fr'].forEach(function (weekDay) {
@@ -23,7 +31,11 @@ function fetchDataFromDOM() {
                 if (e1List.length > 0) {
                     var e2List = e1List[0].childNodes;
                     if (e2List.length > 0) {
-                        timeTable[weekDay][groupNr][lessonNr] = e2List[0].id;
+                        var content = new Object();
+                        content.id = e2List[0].id
+                        content.val = e2List[0].innerHTML
+                        timeTable[weekDay][groupNr][lessonNr] = content;
+                        //timeTable[weekDay][groupNr][lessonNr] = e2List[0].id;
                     }
                 }
             });
@@ -40,17 +52,23 @@ function reloadDataIntoDOM(timeTable) {
                 if (target == undefined) {
                     alert("Error: Expected timetable element '" + weekDay + groupNr + lessonNr + "' not found!");
                 } else if (target.className == "dropLesson") {
-                    var teacherId = timeTable[weekDay][groupNr][lessonNr];
-                    var teacherElem = $("#" + teacherId)[0];
-                    if (teacherId != '') {
-                        while (target.childNodes.length > 0) {
-                            target.removeChild(target.childNodes[0]);
+                    if (timeTable[weekDay][groupNr][lessonNr] != "") {
+                        var teacherId = timeTable[weekDay][groupNr][lessonNr].id;
+                        var teacherElem = $("#" + teacherId)[0];
+                        if (teacherId != '') {
+                            while (target.childNodes.length > 0) {
+                                target.removeChild(target.childNodes[0]);
+                            }
+                            var dupNode = teacherElem.cloneNode(true);
+                            dupNode.style.opacity = "";
+                            dupNode.style.cursor = "move";
+                            dupNode.className = "teacherLesson";
+                            dupNode.innerHTML = timeTable[weekDay][groupNr][lessonNr].val;
+                            dupNode.addEventListener("click", function (event) {
+                                event.target.innerHTML = extendContent(event.target.innerHTML);
+                            }, false);
+                            target.appendChild(dupNode);
                         }
-                        var dupNode = teacherElem.cloneNode(true);
-                        dupNode.style.opacity = "";
-                        dupNode.style.cursor = "move";
-                        dupNode.className = "teacherLesson";
-                        target.appendChild(dupNode);
                     }
                 }
             });
@@ -78,7 +96,7 @@ function recalcAll() {
     // init output fields
     ['A', 'B', 'C', 'D'].forEach(function (groupNr) {
         $("#Gr" + groupNr).text('_');
-        ['T0', 'T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9'].forEach(function (taecherNr) {
+        ['T0', 'T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11'].forEach(function (taecherNr) {
             $("#" + taecherNr + "G" + groupNr).text('-');
             $("#" + taecherNr + "G" + groupNr).text('-');
             $("#" + taecherNr + "G" + groupNr).text('-');
@@ -97,7 +115,7 @@ function recalcAll() {
             if (regExGroups.length > 0) {
                 var regExGroup = regExGroups[1];
                 dropLesson.childNodes.forEach(function (child) {
-                    ['T0', 'T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9'].forEach(function (taecherNr) {
+                    ['T0', 'T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11'].forEach(function (taecherNr) {
                         if (child.id == taecherNr) {
                             var lessons;
                             if (isNaN($("#" + taecherNr + "G" + regExGroup).text())) {

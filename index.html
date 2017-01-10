@@ -23,76 +23,90 @@
             <table class="springLake">
                 <tr>
                     <td>
-                        <span class="spring" id="T0" draggable="true"> KeS </span><br />
+                        <div class="spring" id="T0" draggable="true"> KeS </div>
                         <span class="count" id="T0GA">_</span>
                         <span class="count" id="T0GB">_</span>
                         <span class="count" id="T0GC">_</span>
                         <span class="count" id="T0GD">_</span>
                     </td>
                     <td>
-                        <span class="spring" id="T1" draggable="true"> KSC </span><br />
+                        <div class="spring" id="T1" draggable="true"> KSC </div>
                         <span class="count" id="T1GA">_</span>
                         <span class="count" id="T1GB">_</span>
                         <span class="count" id="T1GC">_</span>
                         <span class="count" id="T1GD">_</span>
                     </td>
                     <td>
-                        <span class="spring" id="T2" draggable="true"> UWO </span><br />
+                        <div class="spring" id="T2" draggable="true"> UWO </div>
                         <span class="count" id="T2GA">_</span>
                         <span class="count" id="T2GB">_</span>
                         <span class="count" id="T2GC">_</span>
                         <span class="count" id="T2GD">_</span>
                     </td>
                     <td>
-                        <span class="spring" id="T3" draggable="true"> SBO </span><br />
+                        <div class="spring" id="T3" draggable="true"> SBO </div>
                         <span class="count" id="T3GA">_</span>
                         <span class="count" id="T3GB">_</span>
                         <span class="count" id="T3GC">_</span>
                         <span class="count" id="T3GD">_</span>
                     </td>
                     <td>
-                        <span class="spring" id="T4" draggable="true"> CES </span><br />
+                        <div class="spring" id="T4" draggable="true"> CES </div>
                         <span class="count" id="T4GA">_</span>
                         <span class="count" id="T4GB">_</span>
                         <span class="count" id="T4GC">_</span>
                         <span class="count" id="T4GD">_</span>
                     </td>
+                    <td>
+                        <div class="spring" id="T10" draggable="true"> XXX </div>
+                        <span class="count" id="T10GA">_</span>
+                        <span class="count" id="T10GB">_</span>
+                        <span class="count" id="T10GC">_</span>
+                        <span class="count" id="T10GD">_</span>
+                    </td>
                 </tr>
                 <tr>
                     <td>
-                        <span class="spring" id="T5" draggable="true"> KRU </span><br />
+                        <div class="spring" id="T5" draggable="true"> KRU </div>
                         <span class="count" id="T5GA">_</span>
                         <span class="count" id="T5GB">_</span>
                         <span class="count" id="T5GC">_</span>
                         <span class="count" id="T5GD">_</span>
                     </td>
                     <td>
-                        <span class="spring" id="T6" draggable="true"> HME </span><br />
+                        <div class="spring" id="T6" draggable="true"> HME </div>
                         <span class="count" id="T6GA">_</span>
                         <span class="count" id="T6GB">_</span>
                         <span class="count" id="T6GC">_</span>
                         <span class="count" id="T6GD">_</span>
                     </td>
                     <td>
-                        <span class="spring" id="T7" draggable="true"> SKU </span><br />
+                        <div class="spring" id="T7" draggable="true"> SKU </div>
                         <span class="count" id="T7GA">_</span>
                         <span class="count" id="T7GB">_</span>
                         <span class="count" id="T7GC">_</span>
                         <span class="count" id="T7GD">_</span>
                     </td>
                     <td>
-                        <span class="spring" id="T8" draggable="true"> AST </span><br />
+                        <div class="spring" id="T8" draggable="true"> AST </div>
                         <span class="count" id="T8GA">_</span>
                         <span class="count" id="T8GB">_</span>
                         <span class="count" id="T8GC">_</span>
                         <span class="count" id="T8GD">_</span>
                     </td>
                     <td>
-                        <span class="spring" id="T9" draggable="true"> ISC </span><br />
+                        <div class="spring" id="T9" draggable="true"> ISC </div>
                         <span class="count" id="T9GA">_</span>
                         <span class="count" id="T9GB">_</span>
                         <span class="count" id="T9GC">_</span>
                         <span class="count" id="T9GD">_</span>
+                    </td>
+                    <td>
+                        <div class="spring" id="T11" draggable="true"> yyy </div>
+                        <span class="count" id="T11GA">_</span>
+                        <span class="count" id="T11GB">_</span>
+                        <span class="count" id="T11GC">_</span>
+                        <span class="count" id="T11GD">_</span>
                     </td>
                 </tr>
             </table>
@@ -549,8 +563,10 @@
                 if (event.target.className == "dropLesson") {
                     event.target.style.background = "";
                 }
-                //event.target.style.background = "green";
-                //dragged.parentNode.removeChild(dragged);
+                if (!event.ctrlKey && dragged.parentNode.className == "dropLesson") {
+                    //event.target.style.background = "green";
+                    dragged.parentNode.removeChild(dragged);
+                }
                 while (event.target.childNodes.length > 0) {
                     event.target.removeChild(event.target.childNodes[0]);
                 }
@@ -559,12 +575,10 @@
                 dupNode.style.cursor = "move";
                 dupNode.className = "teacherLesson";
                 event.target.appendChild(dupNode);
-                
-                // dupNode.addEventListener("click", function (event) {
-                //     // reset background of potential drop target when the draggable element leaves it
-                //     var newContent = prompt("Hallo", event.target.innerHTML);
-                //     event.target.innerHTML = newContent;
-                // }, false);
+
+                dupNode.addEventListener("click", function (event) {
+                    event.target.innerHTML = extendContent(event.target.innerHTML);
+                }, false);
             } else if (dragged.className == "spring") {
                 ;
             } else {

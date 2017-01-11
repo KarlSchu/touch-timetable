@@ -1,11 +1,29 @@
-
-function extendContent(origContent) {
-    var newContent = prompt("Add content", origContent);
-    if (newContent != null) {
-        return newContent;
-    }
-    return origContent;
+function clickOnLesson(event) {
+    var target = event.currentTarget;
+    var lessonId = target.parentNode.id;
+    $("#fieldId").text(lessonId);
+    $("#lessonNr").text("'" + lessonId.replace(new RegExp(/([A-Z])L([0-9]+)/gmi), " Gr \$1 \$2'"));
+    $("#lessonNr").text($("#lessonNr").text().replace("mo", "Montag").replace("di", "Dienstag"));
+    $("#teacher").text(target.children[0].innerHTML);
+    $("#subject").val(target.children[1].innerHTML);
+    $("#room").val(target.children[2].innerHTML);
 }
+
+function handleOk(event) {
+    var fieldId = $("#fieldId").text();
+    var field = $("#" + fieldId)[0];
+    field.children[0].children[1].innerHTML = $("#subject").val();
+    field.children[0].children[2].innerHTML = $("#room").val();
+    saveData();
+}
+
+// function extendContent(origContent) {
+//     var newContent = prompt("Add content", origContent);
+//     if (newContent != null) {
+//         return newContent;
+//     }
+//     return origContent;
+// }
 
 function initTimeTable() {
     var timeTable = new Object();
@@ -33,7 +51,9 @@ function fetchDataFromDOM() {
                     if (e2List.length > 0) {
                         var content = new Object();
                         content.id = e2List[0].id
-                        content.val = e2List[0].innerHTML
+                        content.teacher = e2List[0].children[0].innerHTML
+                        content.subject = e2List[0].children[1].innerHTML
+                        content.room = e2List[0].children[2].innerHTML
                         timeTable[weekDay][groupNr][lessonNr] = content;
                         //timeTable[weekDay][groupNr][lessonNr] = e2List[0].id;
                     }
@@ -56,6 +76,9 @@ function reloadDataIntoDOM(timeTable) {
                         var teacherId = timeTable[weekDay][groupNr][lessonNr].id;
                         var teacherElem = $("#" + teacherId)[0];
                         if (teacherId != '') {
+                            var teacherName = timeTable[weekDay][groupNr][lessonNr].teacher;
+                            var subject = timeTable[weekDay][groupNr][lessonNr].subject;
+                            var room = timeTable[weekDay][groupNr][lessonNr].room;
                             while (target.childNodes.length > 0) {
                                 target.removeChild(target.childNodes[0]);
                             }
@@ -63,9 +86,14 @@ function reloadDataIntoDOM(timeTable) {
                             dupNode.style.opacity = "";
                             dupNode.style.cursor = "move";
                             dupNode.className = "teacherLesson";
-                            dupNode.innerHTML = timeTable[weekDay][groupNr][lessonNr].val;
+                            //dupNode.innerHTML = timeTable[weekDay][groupNr][lessonNr].val;
+                            dupNode.children[0].innerHTML = timeTable[weekDay][groupNr][lessonNr].teacher;
+                            dupNode.children[1].innerHTML = timeTable[weekDay][groupNr][lessonNr].subject;
+                            dupNode.children[2].innerHTML = timeTable[weekDay][groupNr][lessonNr].room;
                             dupNode.addEventListener("click", function (event) {
-                                event.target.innerHTML = extendContent(event.target.innerHTML);
+                                clickOnLesson(event);
+                                window.location.href = "#openModal";
+                                //event.target.innerHTML = extendContent(event.target.innerHTML);
                             }, false);
                             target.appendChild(dupNode);
                         }

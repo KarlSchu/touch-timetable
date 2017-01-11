@@ -8,6 +8,18 @@
 </head>
 
 <body class="well">
+    <div id="openModal" class="modalDialog">
+        <div>
+            <div class="floatRight" id="fieldId"></div>
+            <h2>Lesson <span id="lessonNr"></span> Details</h2>
+            <h3>Teacher: <span id="teacher"></span></h3>
+            <label for="subject">Subject</label><input type="text" id="subject" name="subject" value="" />
+            <label for="room">Room</label><input type="text" id="room" name="room" value="" />
+            <a href="" id="ok" title="Save" class="btn btn-small btn2 ok">OK</a>
+            <a href="" title="Close" class="btn btn-small btn2 close">Close</a>
+        </div>
+    </div>
+
     <div>
         <div id="top">
             <div id="header"> Timetable Pegasusschule </div>
@@ -23,42 +35,66 @@
             <table class="springLake">
                 <tr>
                     <td>
-                        <div class="spring" id="T0" draggable="true"> KeS </div>
+                        <div class="spring" id="T0" draggable="true">
+                            <div>KeS</div>
+                            <div></div>
+                            <div></div>
+                        </div>
                         <span class="count" id="T0GA">_</span>
                         <span class="count" id="T0GB">_</span>
                         <span class="count" id="T0GC">_</span>
                         <span class="count" id="T0GD">_</span>
                     </td>
                     <td>
-                        <div class="spring" id="T1" draggable="true"> KSC </div>
+                        <div class="spring" id="T1" draggable="true">
+                            <span>KSC</span>
+                            <span></span>
+                            <span></span>
+                        </div>
                         <span class="count" id="T1GA">_</span>
                         <span class="count" id="T1GB">_</span>
                         <span class="count" id="T1GC">_</span>
                         <span class="count" id="T1GD">_</span>
                     </td>
                     <td>
-                        <div class="spring" id="T2" draggable="true"> UWO </div>
+                        <div class="spring" id="T2" draggable="true">
+                            <div>UWO</div>
+                            <div></div>
+                            <div></div>
+                        </div>
                         <span class="count" id="T2GA">_</span>
                         <span class="count" id="T2GB">_</span>
                         <span class="count" id="T2GC">_</span>
                         <span class="count" id="T2GD">_</span>
                     </td>
                     <td>
-                        <div class="spring" id="T3" draggable="true"> SBO </div>
+                        <div class="spring" id="T3" draggable="true">
+                            <div>SBO</div>
+                            <div></div>
+                            <div></div>
+                        </div>
                         <span class="count" id="T3GA">_</span>
                         <span class="count" id="T3GB">_</span>
                         <span class="count" id="T3GC">_</span>
                         <span class="count" id="T3GD">_</span>
                     </td>
                     <td>
-                        <div class="spring" id="T4" draggable="true"> CES </div>
+                        <div class="spring" id="T4" draggable="true">
+                            <div>CES</div>
+                            <div></div>
+                            <div></div>
+                        </div>
                         <span class="count" id="T4GA">_</span>
                         <span class="count" id="T4GB">_</span>
                         <span class="count" id="T4GC">_</span>
                         <span class="count" id="T4GD">_</span>
                     </td>
                     <td>
-                        <div class="spring" id="T10" draggable="true"> XXX </div>
+                        <div class="spring" id="T10" draggable="true">
+                            <div>XXX</div>
+                            <div></div>
+                            <div></div>
+                        </div>
                         <span class="count" id="T10GA">_</span>
                         <span class="count" id="T10GB">_</span>
                         <span class="count" id="T10GC">_</span>
@@ -67,42 +103,66 @@
                 </tr>
                 <tr>
                     <td>
-                        <div class="spring" id="T5" draggable="true"> KRU </div>
+                        <div class="spring" id="T5" draggable="true">
+                            <div>KRU</div>
+                            <div></div>
+                            <div></div>
+                        </div>
                         <span class="count" id="T5GA">_</span>
                         <span class="count" id="T5GB">_</span>
                         <span class="count" id="T5GC">_</span>
                         <span class="count" id="T5GD">_</span>
                     </td>
                     <td>
-                        <div class="spring" id="T6" draggable="true"> HME </div>
+                        <div class="spring" id="T6" draggable="true">
+                            <div>HME</div>
+                            <div></div>
+                            <div></div>
+                        </div>
                         <span class="count" id="T6GA">_</span>
                         <span class="count" id="T6GB">_</span>
                         <span class="count" id="T6GC">_</span>
                         <span class="count" id="T6GD">_</span>
                     </td>
                     <td>
-                        <div class="spring" id="T7" draggable="true"> SKU </div>
+                        <div class="spring" id="T7" draggable="true">
+                            <div>SKU</div>
+                            <div></div>
+                            <div></div>
+                        </div>
                         <span class="count" id="T7GA">_</span>
                         <span class="count" id="T7GB">_</span>
                         <span class="count" id="T7GC">_</span>
                         <span class="count" id="T7GD">_</span>
                     </td>
                     <td>
-                        <div class="spring" id="T8" draggable="true"> AST </div>
+                        <div class="spring" id="T8" draggable="true">
+                            <div>AST</div>
+                            <div></div>
+                            <div></div>
+                        </div>
                         <span class="count" id="T8GA">_</span>
                         <span class="count" id="T8GB">_</span>
                         <span class="count" id="T8GC">_</span>
                         <span class="count" id="T8GD">_</span>
                     </td>
                     <td>
-                        <div class="spring" id="T9" draggable="true"> ISC </div>
+                        <div class="spring" id="T9" draggable="true">
+                            <div>ISC</div>
+                            <div></div>
+                            <div></div>
+                        </div>
                         <span class="count" id="T9GA">_</span>
                         <span class="count" id="T9GB">_</span>
                         <span class="count" id="T9GC">_</span>
                         <span class="count" id="T9GD">_</span>
                     </td>
                     <td>
-                        <div class="spring" id="T11" draggable="true"> yyy </div>
+                        <div class="spring" id="T11" draggable="true">
+                            <div>YYY</div>
+                            <div></div>
+                            <div></div>
+                        </div>
                         <span class="count" id="T11GA">_</span>
                         <span class="count" id="T11GB">_</span>
                         <span class="count" id="T11GC">_</span>
@@ -146,7 +206,7 @@
         <div class="resetFloat" />
         <div class="weekday-container" id="Montag">
             <header>Montag</header>
-            <table class="springLake">
+            <table class="springOcean">
                 <tr>
                     <td class="headerGroup">GrA1</td>
                     <td class="headerGroup">GrA2</td>
@@ -178,8 +238,7 @@
                     <td id="moDL4" class="dropLesson" droppable="true"></td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td></td>
+                    <td colspan="4" class="space"></td>
                 </tr>
                 <tr>
                     <td id="moAL5" class="dropLesson" droppable="true"></td>
@@ -210,7 +269,7 @@
 
         <div class="weekday-container" id="Dienstag">
             <header>Dienstag</header>
-            <table class="springLake">
+            <table class="springOcean">
                 <tr>
                     <td class="headerGroup">GrA1</td>
                     <td class="headerGroup">GrA2</td>
@@ -242,8 +301,7 @@
                     <td id="diDL4" class="dropLesson" droppable="true"></td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td></td>
+                    <td colspan="4" class="space"></td>
                 </tr>
                 <tr>
                     <td id="diAL5" class="dropLesson" droppable="true"></td>
@@ -274,326 +332,335 @@
 
         <div class="weekday-container" id="Mittwoch">
             <header>Mittwoch</header>
-            <table class="springLake" style="width: 100%">
-<tr>
-    <td class="headerGroup">GrA1</td>
-    <td class="headerGroup">GrA2</td>
-    <td class="headerGroup">GrB</td>
-    <td class="headerGroup">GrC</td>
-</tr>
-<tr>
-    <td id="miAL1" class="dropLesson" droppable="true"></td>
-    <td id="miBL1" class="dropLesson" droppable="true"></td>
-    <td id="miCL1" class="dropLesson" droppable="true"></td>
-    <td id="miDL1" class="dropLesson" droppable="true"></td>
-</tr>
-<tr>
-    <td id="miAL2" class="dropLesson" droppable="true"></td>
-    <td id="miBL2" class="dropLesson" droppable="true"></td>
-    <td id="miCL2" class="dropLesson" droppable="true"></td>
-    <td id="miDL2" class="dropLesson" droppable="true"></td>
-</tr>
-<tr>
-    <td id="miAL3" class="dropLesson" droppable="true"></td>
-    <td id="miBL3" class="dropLesson" droppable="true"></td>
-    <td id="miCL3" class="dropLesson" droppable="true"></td>
-    <td id="miDL3" class="dropLesson" droppable="true"></td>
-</tr>
-<tr>
-    <td id="miAL4" class="dropLesson" droppable="true"></td>
-    <td id="miBL4" class="dropLesson" droppable="true"></td>
-    <td id="miCL4" class="dropLesson" droppable="true"></td>
-    <td id="miDL4" class="dropLesson" droppable="true"></td>
-</tr>
-<tr>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td id="miAL5" class="dropLesson" droppable="true"></td>
-    <td id="miBL5" class="dropLesson" droppable="true"></td>
-    <td id="miCL5" class="dropLesson" droppable="true"></td>
-    <td id="miDL5" class="dropLesson" droppable="true"></td>
-</tr>
-<tr>
-    <td id="miAL6" class="dropLesson" droppable="true"></td>
-    <td id="miBL6" class="dropLesson" droppable="true"></td>
-    <td id="miCL6" class="dropLesson" droppable="true"></td>
-    <td id="miDL6" class="dropLesson" droppable="true"></td>
-</tr>
-<tr>
-    <td id="miAL7" class="dropLesson" droppable="true"></td>
-    <td id="miBL7" class="dropLesson" droppable="true"></td>
-    <td id="miCL7" class="dropLesson" droppable="true"></td>
-    <td id="miDL7" class="dropLesson" droppable="true"></td>
-</tr>
-<tr>
-    <td id="miAL8" class="dropLesson" droppable="true"></td>
-    <td id="miBL8" class="dropLesson" droppable="true"></td>
-    <td id="miCL8" class="dropLesson" droppable="true"></td>
-    <td id="miDL8" class="dropLesson" droppable="true"></td>
-</tr>
-</table>
-</div>
+            <table class="springOcean">
+                <tr>
+                    <td class="headerGroup">GrA1</td>
+                    <td class="headerGroup">GrA2</td>
+                    <td class="headerGroup">GrB</td>
+                    <td class="headerGroup">GrC</td>
+                </tr>
+                <tr>
+                    <td id="miAL1" class="dropLesson" droppable="true"></td>
+                    <td id="miBL1" class="dropLesson" droppable="true"></td>
+                    <td id="miCL1" class="dropLesson" droppable="true"></td>
+                    <td id="miDL1" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td id="miAL2" class="dropLesson" droppable="true"></td>
+                    <td id="miBL2" class="dropLesson" droppable="true"></td>
+                    <td id="miCL2" class="dropLesson" droppable="true"></td>
+                    <td id="miDL2" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td id="miAL3" class="dropLesson" droppable="true"></td>
+                    <td id="miBL3" class="dropLesson" droppable="true"></td>
+                    <td id="miCL3" class="dropLesson" droppable="true"></td>
+                    <td id="miDL3" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td id="miAL4" class="dropLesson" droppable="true"></td>
+                    <td id="miBL4" class="dropLesson" droppable="true"></td>
+                    <td id="miCL4" class="dropLesson" droppable="true"></td>
+                    <td id="miDL4" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="space"></td>
+                </tr>
+                <tr>
+                    <td id="miAL5" class="dropLesson" droppable="true"></td>
+                    <td id="miBL5" class="dropLesson" droppable="true"></td>
+                    <td id="miCL5" class="dropLesson" droppable="true"></td>
+                    <td id="miDL5" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td id="miAL6" class="dropLesson" droppable="true"></td>
+                    <td id="miBL6" class="dropLesson" droppable="true"></td>
+                    <td id="miCL6" class="dropLesson" droppable="true"></td>
+                    <td id="miDL6" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td id="miAL7" class="dropLesson" droppable="true"></td>
+                    <td id="miBL7" class="dropLesson" droppable="true"></td>
+                    <td id="miCL7" class="dropLesson" droppable="true"></td>
+                    <td id="miDL7" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td id="miAL8" class="dropLesson" droppable="true"></td>
+                    <td id="miBL8" class="dropLesson" droppable="true"></td>
+                    <td id="miCL8" class="dropLesson" droppable="true"></td>
+                    <td id="miDL8" class="dropLesson" droppable="true"></td>
+                </tr>
+            </table>
+        </div>
 
-<div class="weekday-container" id="Donnerstag">
-    <header>Donnerstag</header>
-    <table class="springLake" style="width: 100%">
-<tr>
-    <td class="headerGroup">GrA1</td>
-    <td class="headerGroup">GrA2</td>
-    <td class="headerGroup">GrB</td>
-    <td class="headerGroup">GrC</td>
-</tr>
-<tr>
-    <td id="doAL1" class="dropLesson" droppable="true"></td>
-    <td id="doBL1" class="dropLesson" droppable="true"></td>
-    <td id="doCL1" class="dropLesson" droppable="true"></td>
-    <td id="doDL1" class="dropLesson" droppable="true"></td>
-</tr>
-<tr>
-    <td id="doAL2" class="dropLesson" droppable="true"></td>
-    <td id="doBL2" class="dropLesson" droppable="true"></td>
-    <td id="doCL2" class="dropLesson" droppable="true"></td>
-    <td id="doDL2" class="dropLesson" droppable="true"></td>
-</tr>
-<tr>
-    <td id="doAL3" class="dropLesson" droppable="true"></td>
-    <td id="doBL3" class="dropLesson" droppable="true"></td>
-    <td id="doCL3" class="dropLesson" droppable="true"></td>
-    <td id="doDL3" class="dropLesson" droppable="true"></td>
-</tr>
-<tr>
-    <td id="doAL4" class="dropLesson" droppable="true"></td>
-    <td id="doBL4" class="dropLesson" droppable="true"></td>
-    <td id="doCL4" class="dropLesson" droppable="true"></td>
-    <td id="doDL4" class="dropLesson" droppable="true"></td>
-</tr>
-<tr>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td id="doAL5" class="dropLesson" droppable="true"></td>
-    <td id="doBL5" class="dropLesson" droppable="true"></td>
-    <td id="doCL5" class="dropLesson" droppable="true"></td>
-    <td id="doDL5" class="dropLesson" droppable="true"></td>
-</tr>
-<tr>
-    <td id="doAL6" class="dropLesson" droppable="true"></td>
-    <td id="doBL6" class="dropLesson" droppable="true"></td>
-    <td id="doCL6" class="dropLesson" droppable="true"></td>
-    <td id="doDL6" class="dropLesson" droppable="true"></td>
-</tr>
-<tr>
-    <td id="doAL7" class="dropLesson" droppable="true"></td>
-    <td id="doBL7" class="dropLesson" droppable="true"></td>
-    <td id="doCL7" class="dropLesson" droppable="true"></td>
-    <td id="doDL7" class="dropLesson" droppable="true"></td>
-</tr>
-<tr>
-    <td id="doAL8" class="dropLesson" droppable="true"></td>
-    <td id="doBL8" class="dropLesson" droppable="true"></td>
-    <td id="doCL8" class="dropLesson" droppable="true"></td>
-    <td id="doDL8" class="dropLesson" droppable="true"></td>
-</tr>
-</table>
-</div>
+        <div class="weekday-container" id="Donnerstag">
+            <header>Donnerstag</header>
+            <table class="springOcean">
+                <tr>
+                    <td class="headerGroup">GrA1</td>
+                    <td class="headerGroup">GrA2</td>
+                    <td class="headerGroup">GrB</td>
+                    <td class="headerGroup">GrC</td>
+                </tr>
+                <tr>
+                    <td id="doAL1" class="dropLesson" droppable="true"></td>
+                    <td id="doBL1" class="dropLesson" droppable="true"></td>
+                    <td id="doCL1" class="dropLesson" droppable="true"></td>
+                    <td id="doDL1" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td id="doAL2" class="dropLesson" droppable="true"></td>
+                    <td id="doBL2" class="dropLesson" droppable="true"></td>
+                    <td id="doCL2" class="dropLesson" droppable="true"></td>
+                    <td id="doDL2" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td id="doAL3" class="dropLesson" droppable="true"></td>
+                    <td id="doBL3" class="dropLesson" droppable="true"></td>
+                    <td id="doCL3" class="dropLesson" droppable="true"></td>
+                    <td id="doDL3" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td id="doAL4" class="dropLesson" droppable="true"></td>
+                    <td id="doBL4" class="dropLesson" droppable="true"></td>
+                    <td id="doCL4" class="dropLesson" droppable="true"></td>
+                    <td id="doDL4" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="space"></td>
+                </tr>
+                <tr>
+                    <td id="doAL5" class="dropLesson" droppable="true"></td>
+                    <td id="doBL5" class="dropLesson" droppable="true"></td>
+                    <td id="doCL5" class="dropLesson" droppable="true"></td>
+                    <td id="doDL5" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td id="doAL6" class="dropLesson" droppable="true"></td>
+                    <td id="doBL6" class="dropLesson" droppable="true"></td>
+                    <td id="doCL6" class="dropLesson" droppable="true"></td>
+                    <td id="doDL6" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td id="doAL7" class="dropLesson" droppable="true"></td>
+                    <td id="doBL7" class="dropLesson" droppable="true"></td>
+                    <td id="doCL7" class="dropLesson" droppable="true"></td>
+                    <td id="doDL7" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td id="doAL8" class="dropLesson" droppable="true"></td>
+                    <td id="doBL8" class="dropLesson" droppable="true"></td>
+                    <td id="doCL8" class="dropLesson" droppable="true"></td>
+                    <td id="doDL8" class="dropLesson" droppable="true"></td>
+                </tr>
+            </table>
+        </div>
 
-<div class="weekday-container" id="Freitag">
-    <header>Freitag</header>
-    <table class="springLake">
-        <tr>
-            <td class="headerGroup">GrA1</td>
-            <td class="headerGroup">GrA2</td>
-            <td class="headerGroup">GrB</td>
-            <td class="headerGroup">GrC</td>
-        </tr>
-        <tr>
-            <td id="frAL1" class="dropLesson" droppable="true"></td>
-            <td id="frBL1" class="dropLesson" droppable="true"></td>
-            <td id="frCL1" class="dropLesson" droppable="true"></td>
-            <td id="frDL1" class="dropLesson" droppable="true"></td>
-        </tr>
-        <tr>
-            <td id="frAL2" class="dropLesson" droppable="true"></td>
-            <td id="frBL2" class="dropLesson" droppable="true"></td>
-            <td id="frCL2" class="dropLesson" droppable="true"></td>
-            <td id="frDL2" class="dropLesson" droppable="true"></td>
-        </tr>
-        <tr>
-            <td id="frAL3" class="dropLesson" droppable="true"></td>
-            <td id="frBL3" class="dropLesson" droppable="true"></td>
-            <td id="frCL3" class="dropLesson" droppable="true"></td>
-            <td id="frDL3" class="dropLesson" droppable="true"></td>
-        </tr>
-        <tr>
-            <td id="frAL4" class="dropLesson" droppable="true"></td>
-            <td id="frBL4" class="dropLesson" droppable="true"></td>
-            <td id="frCL4" class="dropLesson" droppable="true"></td>
-            <td id="frDL4" class="dropLesson" droppable="true"></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td id="frAL5" class="dropLesson" droppable="true"></td>
-            <td id="frBL5" class="dropLesson" droppable="true"></td>
-            <td id="frCL5" class="dropLesson" droppable="true"></td>
-            <td id="frDL5" class="dropLesson" droppable="true"></td>
-        </tr>
-        <tr>
-            <td id="frAL6" class="dropLesson" droppable="true"></td>
-            <td id="frBL6" class="dropLesson" droppable="true"></td>
-            <td id="frCL6" class="dropLesson" droppable="true"></td>
-            <td id="frDL6" class="dropLesson" droppable="true"></td>
-        </tr>
-        <tr>
-            <td id="frAL7" class="dropLesson" droppable="true"></td>
-            <td id="frBL7" class="dropLesson" droppable="true"></td>
-            <td id="frCL7" class="dropLesson" droppable="true"></td>
-            <td id="frDL7" class="dropLesson" droppable="true"></td>
-        </tr>
-        <tr>
-            <td id="frAL8" class="dropLesson" droppable="true"></td>
-            <td id="frBL8" class="dropLesson" droppable="true"></td>
-            <td id="frCL8" class="dropLesson" droppable="true"></td>
-            <td id="frDL8" class="dropLesson" droppable="true"></td>
-        </tr>
-    </table>
-</div>
-<div class="resetFloat" />
+        <div class="weekday-container" id="Freitag">
+            <header>Freitag</header>
+            <table class="springOcean">
+                <tr>
+                    <td class="headerGroup">GrA1</td>
+                    <td class="headerGroup">GrA2</td>
+                    <td class="headerGroup">GrB</td>
+                    <td class="headerGroup">GrC</td>
+                </tr>
+                <tr>
+                    <td id="frAL1" class="dropLesson" droppable="true"></td>
+                    <td id="frBL1" class="dropLesson" droppable="true"></td>
+                    <td id="frCL1" class="dropLesson" droppable="true"></td>
+                    <td id="frDL1" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td id="frAL2" class="dropLesson" droppable="true"></td>
+                    <td id="frBL2" class="dropLesson" droppable="true"></td>
+                    <td id="frCL2" class="dropLesson" droppable="true"></td>
+                    <td id="frDL2" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td id="frAL3" class="dropLesson" droppable="true"></td>
+                    <td id="frBL3" class="dropLesson" droppable="true"></td>
+                    <td id="frCL3" class="dropLesson" droppable="true"></td>
+                    <td id="frDL3" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td id="frAL4" class="dropLesson" droppable="true"></td>
+                    <td id="frBL4" class="dropLesson" droppable="true"></td>
+                    <td id="frCL4" class="dropLesson" droppable="true"></td>
+                    <td id="frDL4" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="space"></td>
+                </tr>
+                <tr>
+                    <td id="frAL5" class="dropLesson" droppable="true"></td>
+                    <td id="frBL5" class="dropLesson" droppable="true"></td>
+                    <td id="frCL5" class="dropLesson" droppable="true"></td>
+                    <td id="frDL5" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td id="frAL6" class="dropLesson" droppable="true"></td>
+                    <td id="frBL6" class="dropLesson" droppable="true"></td>
+                    <td id="frCL6" class="dropLesson" droppable="true"></td>
+                    <td id="frDL6" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td id="frAL7" class="dropLesson" droppable="true"></td>
+                    <td id="frBL7" class="dropLesson" droppable="true"></td>
+                    <td id="frCL7" class="dropLesson" droppable="true"></td>
+                    <td id="frDL7" class="dropLesson" droppable="true"></td>
+                </tr>
+                <tr>
+                    <td id="frAL8" class="dropLesson" droppable="true"></td>
+                    <td id="frBL8" class="dropLesson" droppable="true"></td>
+                    <td id="frCL8" class="dropLesson" droppable="true"></td>
+                    <td id="frDL8" class="dropLesson" droppable="true"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="resetFloat" />
 
-</div>
+    </div>
 
-<script type="text/javascript" src="lib/jQuery/jquery.min.js"></script>
-<script type="text/javascript" src="lib/DragDropTouch.js"></script>
-<script type="text/javascript" src="assets/timetable.js"></script>
-<script type="text/javascript">
+    <script type="text/javascript" src="lib/jQuery/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/DragDropTouch.js"></script>
+    <script type="text/javascript" src="assets/timetable.js"></script>
+    <script type="text/javascript">
 
-    $("#Clear").click(function () {
-        clearAll();
-    });
-    $("#ShowImport").click(function () {
-        $("#timeTableOut").show();
-        $("#timeTableImportButton").show();
-        $("#timeTableHideButton").show();
-        $("#timeTableOut").focus();
-    });
-    $("#timeTableImportButton").click(function () {
-        importData();
-        $("#timeTableOut").hide();
-        $("#timeTableImportButton").hide();
-        $("#timeTableHideButton").hide();
-    });
-    $("#timeTableHideButton").click(function () {
-        $("#timeTableOut").hide();
-        $("#timeTableHideButton").hide();
-        $("#timeTableImportButton").hide();
-    });
-    $("#Export").click(function () {
-        $("#timeTableOut").show();
-        $("#timeTableOut").val(JSON.stringify(fetchDataFromDOM()));
-        $("#timeTableHideButton").show();
-        $("#timeTableImportButton").hide();
-        $("#timeTableOut").focus();
-    });
-    $("#Save").click(function () {
-        saveData();
-    });
-    $("#Print").click(function () {
-        print();
-    });
-
-    var dragged;
-
-    /* events fired on the draggable target */
-    document.addEventListener("drag", function (event) {
-
-    }, false);
-
-    document.addEventListener("dragstart", function (event) {
-        if (event.target.className == "spring" || event.target.className == "teacherLesson") {
-            // store a ref. on the dragged elem
-            dragged = event.target;
-            // make it half transparent
-            event.target.style.opacity = .5;
-        } else {
-            dragged = null;
-        }
-    }, false);
-
-    document.addEventListener("dragend", function (event) {
-        // reset the transparency
-        event.target.style.opacity = "";
-    }, false);
-
-    /* events fired on the drop targets */
-    document.addEventListener("dragover", function (event) {
-        // prevent default to allow drop
-        event.preventDefault();
-        if (event.target.className == "dropLesson") {
-            event.target.style.background = "darkgray";
-        }
-    }, false);
-
-    document.addEventListener("dragenter", function (event) {
-        // highlight potential drop target when the draggable element enters it
-        if (event.target.className == "dropLesson") {
-            event.target.style.background = "";
-        }
-
-    }, false);
-
-    document.addEventListener("dragleave", function (event) {
-        // reset background of potential drop target when the draggable element leaves it
-        if (event.target.className == "dropLesson") {
-            event.target.style.background = "";
-        }
-
-    }, false);
-
-    document.addEventListener("drop", function (event) {
-        // prevent default action (open as link for some elements)
-        event.preventDefault();
-        // move dragged elem to the selected drop target
-        if (dragged != null) {
-            if (event.target.className == "dropLesson") {
-                if (event.target.className == "dropLesson") {
-                    event.target.style.background = "";
-                }
-                if (!event.ctrlKey && dragged.parentNode.className == "dropLesson") {
-                    //event.target.style.background = "green";
-                    dragged.parentNode.removeChild(dragged);
-                }
-                while (event.target.childNodes.length > 0) {
-                    event.target.removeChild(event.target.childNodes[0]);
-                }
-                var dupNode = dragged.cloneNode(true);
-                dupNode.style.opacity = "";
-                dupNode.style.cursor = "move";
-                dupNode.className = "teacherLesson";
-                event.target.appendChild(dupNode);
-
-                dupNode.addEventListener("click", function (event) {
-                    event.target.innerHTML = extendContent(event.target.innerHTML);
-                }, false);
-            } else if (dragged.className == "spring") {
-                ;
-            } else {
-                dragged.parentNode.removeChild(dragged);
-                //dragged.parentNode.style.background = "";
-            }
+        $("#Clear").click(function () {
+            clearAll();
+        });
+        $("#ShowImport").click(function () {
+            $("#timeTableOut").show();
+            $("#timeTableImportButton").show();
+            $("#timeTableHideButton").show();
+            $("#timeTableOut").focus();
+        });
+        $("#timeTableImportButton").click(function () {
+            importData();
+            $("#timeTableOut").hide();
+            $("#timeTableImportButton").hide();
+            $("#timeTableHideButton").hide();
+        });
+        $("#timeTableHideButton").click(function () {
+            $("#timeTableOut").hide();
+            $("#timeTableHideButton").hide();
+            $("#timeTableImportButton").hide();
+        });
+        $("#Export").click(function () {
+            $("#timeTableOut").show();
+            $("#timeTableOut").val(JSON.stringify(fetchDataFromDOM()));
+            $("#timeTableHideButton").show();
+            $("#timeTableImportButton").hide();
+            $("#timeTableOut").focus();
+        });
+        $("#Save").click(function () {
             saveData();
-            recalcAll();
-        }
-        if (event.target.className == "dropLesson") {
-            event.target.style.background = "";
-        }
-    }, false);
-    loadDataFromStore();
-</script>
+        });
+        $("#textPrint").click(function () {
+            print();
+        });
+        $("#ok").click(function (event) {
+            handleOk(event);
+        });
+
+        var dragged;
+
+        document.addEventListener("keypress", function (event) {
+            var key = event.wich || event.keyCode;
+            if ($("#teacher").is(':visible') && key === 13) {
+                handleOk(event);
+                window.location.href = '';
+            }
+        });
+
+        /* events fired on the draggable target */
+        document.addEventListener("drag", function (event) {
+
+        }, false);
+
+        document.addEventListener("dragstart", function (event) {
+            if (event.target.className == "spring" || event.target.className == "teacherLesson") {
+                // store a ref. on the dragged elem
+                dragged = event.target;
+                // make it half transparent
+                event.target.style.opacity = .5;
+            } else {
+                dragged = null;
+            }
+        }, false);
+
+        document.addEventListener("dragend", function (event) {
+            // reset the transparency
+            event.target.style.opacity = "";
+        }, false);
+
+        /* events fired on the drop targets */
+        document.addEventListener("dragover", function (event) {
+            // prevent default to allow drop
+            event.preventDefault();
+            if (event.target.className == "dropLesson") {
+                event.target.style.background = "darkgray";
+            }
+        }, false);
+
+        document.addEventListener("dragenter", function (event) {
+            // highlight potential drop target when the draggable element enters it
+            if (event.target.className == "dropLesson") {
+                event.target.style.background = "";
+            }
+
+        }, false);
+
+        document.addEventListener("dragleave", function (event) {
+            // reset background of potential drop target when the draggable element leaves it
+            if (event.target.className == "dropLesson") {
+                event.target.style.background = "";
+            }
+
+        }, false);
+
+        document.addEventListener("drop", function (event) {
+            // prevent default action (open as link for some elements)
+            event.preventDefault();
+            // move dragged elem to the selected drop target
+            if (dragged != null) {
+                if (event.target.className == "dropLesson") {
+                    if (event.target.className == "dropLesson") {
+                        event.target.style.background = "";
+                    }
+                    if (!event.ctrlKey && dragged.parentNode.className == "dropLesson") {
+                        //event.target.style.background = "green";
+                        dragged.parentNode.removeChild(dragged);
+                    }
+                    while (event.target.childNodes.length > 0) {
+                        event.target.removeChild(event.target.childNodes[0]);
+                    }
+                    var dupNode = dragged.cloneNode(true);
+                    dupNode.style.opacity = "";
+                    dupNode.style.cursor = "move";
+                    dupNode.className = "teacherLesson";
+                    event.target.appendChild(dupNode);
+
+                    dupNode.addEventListener("click", function (event) {
+                        clickOnLesson(event);
+                        window.location.href = "#openModal";
+                    }, false);
+                } else if (dragged.className == "spring") {
+                    ;
+                } else {
+                    dragged.parentNode.removeChild(dragged);
+                    //dragged.parentNode.style.background = "";
+                }
+                saveData();
+                recalcAll();
+            }
+            if (event.target.className == "dropLesson") {
+                event.target.style.background = "";
+            }
+        }, false);
+        loadDataFromStore();
+    </script>
 
 
 </body>

@@ -2,7 +2,7 @@ function clickOnLesson(event) {
     var target = event.currentTarget;
     var lessonId = target.parentNode.id;
     $("#fieldId").text(lessonId);
-    $("#lessonNr").text("'" + lessonId.replace(new RegExp(/([A-Z])L([0-9]+)/gmi), " Gr \$1 \$2'"));
+    $("#lessonNr").text(lessonId.replace(new RegExp(/([A-Z])L([0-9]+)/gmi), " \$2, Gr \$1"));
     $("#lessonNr").text($("#lessonNr").text().replace("mo", "Montag").replace("di", "Dienstag"));
     $("#teacher").text(target.children[0].innerHTML);
     $("#subject").val(target.children[1].innerHTML);
@@ -93,6 +93,7 @@ function reloadDataIntoDOM(timeTable) {
                             dupNode.addEventListener("click", function (event) {
                                 clickOnLesson(event);
                                 window.location.href = "#openModal";
+                                $("#subject").focus();
                                 //event.target.innerHTML = extendContent(event.target.innerHTML);
                             }, false);
                             target.appendChild(dupNode);

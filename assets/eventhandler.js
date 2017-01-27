@@ -28,17 +28,26 @@ $("#Export").click(function () {
 $("#Save").click(function () {
     saveData();
 });
-$("#textPrint").click(function () {
+$("#TextPrint").click(function () {
     print();
 });
 $("#ok").click(function (event) {
     handleOk(event);
 });
 
-var dragged;
-
+var dragged = null;;
+var shift = false;
+document.addEventListener("keydown", function (event) {
+    var key = event.wich || event.keyCode;
+    if (key === 16) {
+        shift = true;
+    }
+});
 document.addEventListener("keyup", function (event) {
     var key = event.wich || event.keyCode;
+    if (key === 16) {
+        shift = false;
+    }
     if ($("#teacher").is(':visible') && key === 13) {
         handleOk(event);
         window.location.href = '';
@@ -55,7 +64,8 @@ document.addEventListener("dragstart", function (event) {
         // store a ref. on the dragged elem
         dragged = event.target;
         // make it half transparent
-        event.target.style.opacity = .5;
+        dragged.style.opacity = .5;
+        event.dataTransfer.setData('text/plain', null)
     } else {
         dragged = null;
         // prevent default to allow drop
@@ -65,58 +75,68 @@ document.addEventListener("dragstart", function (event) {
 
 document.addEventListener("dragend", function (event) {
     // reset the transparency
-    event.target.style.opacity = "";
+    dragged.style.opacity = "";
 }, false);
 
 /* events fired on the drop targets */
 document.addEventListener("dragover", function (event) {
     // prevent default to allow drop
     event.preventDefault();
-    if (event.target.className == "dropLesson") {
-        event.target.style.background = "darkgray";
+    var target = targetDeepTest(event.target, "dropLesson", 5);
+    if (target != null) {
+        if (target != event.target || target.childNodes.length > 0) {
+            target.style.background = "red";
+        }
+        else {
+            target.style.background = "darkgrey";
+        }
     }
 }, false);
 
 document.addEventListener("dragenter", function (event) {
     // highlight potential drop target when the draggable element enters it
-    if (event.target.className == "dropLesson") {
-        event.target.style.background = "";
+    event.preventDefault();
+    var target = targetDeepTest(event.target, "dropLesson", 5);
+    if (target != null) {
+        if (target != event.target || target.childNodes.length > 0) {
+            target.style.background = "red";
+        }
+        else {
+            target.style.background = "darkgrey";
+        }
     }
-
 }, false);
 
 document.addEventListener("dragleave", function (event) {
     // reset background of potential drop target when the draggable element leaves it
-    if (event.target.className == "dropLesson") {
-        event.target.style.background = "";
+    var target = targetDeepTest(event.target, "dropLesson", 5);
+    if (target != null) {
+        target.style.background = "";
     }
-
 }, false);
 
 document.addEventListener("drop", function (event) {
-    //var key = event.wich || event.keyCode;
     //var clone = event.ctrlKey;
-    var shift = event.shiftKey;
+    shift = shift || event.shiftKey;
+
     // prevent default action (open as link for some elements)
     event.preventDefault();
     // move dragged elem to the selected drop target
     if (dragged != null) {
-        if (event.target.className == "dropLesson") {
-            if (event.target.className == "dropLesson") {
-                event.target.style.background = "";
-            }
+        var target = targetDeepTest(event.target, "dropLesson", 5);
+        if (target != null) {
+            target.style.background = "";
             if (shift && dragged.parentNode.className == "dropLesson") {
-                //event.target.style.background = "green";
                 dragged.parentNode.removeChild(dragged);
             }
-            while (event.target.childNodes.length > 0) {
-                event.target.removeChild(event.target.childNodes[0]);
+            while (target.childNodes.length > 0) {
+                target.removeChild(target.childNodes[0]);
             }
             var dupNode = dragged.cloneNode(true);
             dupNode.style.opacity = "";
             dupNode.style.cursor = "move";
             dupNode.className = "teacherLesson";
-            event.target.appendChild(dupNode);
+            target.appendChild(dupNode);
 
             dupNode.addEventListener("click", function (event) {
                 clickOnLesson(event);
@@ -127,12 +147,8 @@ document.addEventListener("drop", function (event) {
             ;
         } else {
             dragged.parentNode.removeChild(dragged);
-            //dragged.parentNode.style.background = "";
         }
         saveData();
         recalcAll();
-    }
-    if (event.target.className == "dropLesson") {
-        event.target.style.background = "";
     }
 }, false);

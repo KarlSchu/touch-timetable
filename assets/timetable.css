@@ -18,6 +18,7 @@ body {
 @media print{
     @page {size: landscape}
     body {margin-left: 50px;}
+    .no-print, .no-print *  {display: none !important;}
 }
 
 .btn {

@@ -72,6 +72,9 @@ function reloadDataIntoDOM(timeTable) {
                 if (target == undefined) {
                     alert("Error: Expected timetable element '" + weekDay + groupNr + lessonNr + "' not found!");
                 } else if (target.className == "dropLesson") {
+                    if (timeTable == null) {
+                        timeTable = initTimeTable();
+                    }
                     if (timeTable[weekDay][groupNr][lessonNr] != "") {
                         var teacherId = timeTable[weekDay][groupNr][lessonNr].id;
                         var teacherElem = $("#" + teacherId)[0];
@@ -173,6 +176,9 @@ function loadDataFromStore() {
     $("#timeTableOut").val('');
     timeTableString = localStorage.getItem("timeTablePs");
     timeTable = JSON.parse(timeTableString);
+    if (timeTable == null) {
+        timeTable = initTimeTable();
+    }
     document.getElementById("timeTableOut").innerHTML = JSON.stringify(timeTable);
     reloadDataIntoDOM(timeTable);
 }
@@ -191,4 +197,14 @@ function saveData() {
     var timeTable = fetchDataFromDOM();
     timeTableString = JSON.stringify(timeTable);
     localStorage.setItem("timeTablePs", timeTableString);
+}
+
+function targetDeepTest(elem, className, level) {
+    if (elem == null || level < 1) {
+        return null;
+    }
+    if (elem.className == className) {
+        return elem;
+    }
+    return targetDeepTest(elem.parentNode, className, level - 1);
 }

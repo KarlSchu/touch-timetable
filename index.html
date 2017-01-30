@@ -45,6 +45,7 @@
                             <span class="count" id="T0GB">_</span>
                             <span class="count" id="T0GC">_</span>
                             <span class="count" id="T0GD">_</span>
+                            <span class="count" id="T0GE">_</span>
                         </td>
                         <td>
                             <div class="spring" id="T1" draggable="true">
@@ -56,6 +57,7 @@
                             <span class="count" id="T1GB">_</span>
                             <span class="count" id="T1GC">_</span>
                             <span class="count" id="T1GD">_</span>
+                            <span class="count" id="T1GE">_</span>
                         </td>
                         <td>
                             <div class="spring" id="T2" draggable="true">
@@ -179,19 +181,25 @@
                             <span class="count">GrA1: </span><span class="count" id="GrA">_</span>
                         </td>
                         <td>
-                            <span class="count">GrB: </span><span class="count" id="GrC">_</span>
+                            <span class="count">GrA2: </span><span class="count" id="GrB">_</span>
+                        </td>
+                        <td>
+                            <span class="count">GrA3: </span><span class="count" id="GrC">_</span>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <span class="count"><Gr></Gr>GrA2: </span><span class="count" id="GrB">_</span>
+                            <span class="count"><Gr></Gr>GrB: </span><span class="count" id="GrD">_</span>
                         </td>
                         <td>
-                            <span class="count">GrC: </span><span class="count" id="GrD">_</span>
+                            <span class="count">GrC: </span><span class="count" id="GrE">_</span>
+                        </td>
+                        <td>
+                            <span class="count"></span><span class="count" id="GrX">&nbsp;</span>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">
+                        <td colspan="3">
                             <div class="count">Over all lessons: <span id="lessonsCount">_</span></div>
                         </td>
                     </tr>
@@ -208,62 +216,71 @@
             <div class="weekday-container" id="Montag">
                 <header>Montag</header>
                 <table class="springOcean">
-                    <tr>
-                        <td class="headerGroup">GrA1</td>
+                    <tr id="headerGroup">
+                        <!--<td class="headerGroup">GrA1</td>
                         <td class="headerGroup">GrA2</td>
+                        <td class="headerGroup">GrA3</td>
                         <td class="headerGroup">GrB</td>
-                        <td class="headerGroup">GrC</td>
+                        <td class="headerGroup">GrC</td>-->
                     </tr>
                     <tr>
                         <td id="moAL1" class="dropLesson" droppable="true"></td>
                         <td id="moBL1" class="dropLesson" droppable="true"></td>
                         <td id="moCL1" class="dropLesson" droppable="true"></td>
                         <td id="moDL1" class="dropLesson" droppable="true"></td>
+                        <td id="moEL1" class="dropLesson" droppable="true"></td>
                     </tr>
                     <tr>
                         <td id="moAL2" class="dropLesson" droppable="true"></td>
                         <td id="moBL2" class="dropLesson" droppable="true"></td>
                         <td id="moCL2" class="dropLesson" droppable="true"></td>
                         <td id="moDL2" class="dropLesson" droppable="true"></td>
+                        <td id="moEL2" class="dropLesson" droppable="true"></td>
                     </tr>
                     <tr>
                         <td id="moAL3" class="dropLesson" droppable="true"></td>
                         <td id="moBL3" class="dropLesson" droppable="true"></td>
                         <td id="moCL3" class="dropLesson" droppable="true"></td>
                         <td id="moDL3" class="dropLesson" droppable="true"></td>
+                        <td id="moEL3" class="dropLesson" droppable="true"></td>
                     </tr>
                     <tr>
                         <td id="moAL4" class="dropLesson" droppable="true"></td>
                         <td id="moBL4" class="dropLesson" droppable="true"></td>
                         <td id="moCL4" class="dropLesson" droppable="true"></td>
                         <td id="moDL4" class="dropLesson" droppable="true"></td>
+                        <td id="moEL4" class="dropLesson" droppable="true"></td>
                     </tr>
                     <tr>
-                        <td colspan="4" class="space"></td>
+                        <td colspan="5" class="space"></td>
                     </tr>
                     <tr>
                         <td id="moAL5" class="dropLesson" droppable="true"></td>
                         <td id="moBL5" class="dropLesson" droppable="true"></td>
                         <td id="moCL5" class="dropLesson" droppable="true"></td>
                         <td id="moDL5" class="dropLesson" droppable="true"></td>
+                        <td id="moEL5" class="dropLesson" droppable="true"></td>
                     </tr>
                     <tr>
                         <td id="moAL6" class="dropLesson" droppable="true"></td>
                         <td id="moBL6" class="dropLesson" droppable="true"></td>
                         <td id="moCL6" class="dropLesson" droppable="true"></td>
                         <td id="moDL6" class="dropLesson" droppable="true"></td>
+                        <td id="moEL6" class="dropLesson" droppable="true"></td>
                     </tr>
                     <tr>
                         <td id="moAL7" class="dropLesson" droppable="true"></td>
                         <td id="moBL7" class="dropLesson" droppable="true"></td>
                         <td id="moCL7" class="dropLesson" droppable="true"></td>
                         <td id="moDL7" class="dropLesson" droppable="true"></td>
+                        <td id="moEL7" class="dropLesson" droppable="true"></td>
                     </tr>
                     <tr>
                         <td id="moAL8" class="dropLesson" droppable="true"></td>
                         <td id="moBL8" class="dropLesson" droppable="true"></td>
                         <td id="moCL8" class="dropLesson" droppable="true"></td>
                         <td id="moDL8" class="dropLesson" droppable="true"></td>
+                        <td id="moEL8" class="dropLesson" droppable="true"></td>
                     </tr>
                 </table>
             </div>
@@ -529,6 +546,7 @@
         <script type="text/javascript">
             $(function () {
                 // Handler for .ready() called.
+                initTimeTableGrid();
                 loadDataFromStore();
             });
         </script>

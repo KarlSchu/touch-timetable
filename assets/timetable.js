@@ -1,26 +1,192 @@
-var lessonDef = ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8'];
-var lessonTimeDef = ['8:00-9:50', '10:10-12:00'];
-var dayDef = ['mo', 'di', 'mi', 'do', 'fr'];
-
-// var groupDef = ['A', 'B', 'C', 'D', 'E'];
-// var groupNameDef = ['GrA1', 'GrA2', 'GrA3', 'GrB', 'GrC', 'GrD'];
-var groupDef = { 'A': 'GrA1', 'B': 'GrA', 'C': 'GrA3', 'D': 'GrB', 'E': 'GrC' };
-
-// var teacherDef = ['T0', 'T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11'];
-// var teacherNameDef = ['KsC', 'KSC', 'UWO', 'SBO', 'CES', 'XXX', 'KRU', 'HME', 'SKU', 'AST', 'ISC', 'YYY'];
+// timetable.js
+//
+var countBreaksAsTeacherLessons = true;
+var countBreaksAsGroupLessons = true;
+var breakLessonNr = 6;
+var lessonDef = { // max: L0 to L9
+    'L0': '7:30'
+    , 'L1': '8:00-'
+    , 'L2': '-9:50'
+    , 'L3': '10:10-'
+    , 'L4': '-12:00'
+    , 'L5': ''
+    , 'L6': '13:00-'
+    , 'L7': '-14:30'
+    , 'L8': '14:30-'
+    , 'L9': '-17:00'
+};
+var dayDef = { //max mo - so
+    'mo': 'Montag', 'di': 'Dienstag', 'mi': 'Mittwoch', 'do': 'Donnerstag', 'fr': 'Freitag', 'sa': 'Samstag'
+};
+var groupDef = { // max: A - Z
+    'A': 'GrA1'
+    , 'B': 'GrA2'
+    , 'C': 'GrA3'
+    , 'D': 'GrB'
+    , 'E': 'GrC'
+    //, 'F': 'Extra'
+    //, 'G':'GGG'
+    //, 'H':'HHH'
+};
 var teacherDef = {
-    'T0': 'KsC', 'T1': 'KSC', 'T2': 'UWO', 'T3': 'SBO', 'T4': 'CES', 'T5': 'XXX'
+    'T0': 'KeS', 'T1': 'KSC', 'T2': 'UWO', 'T3': 'SBO', 'T4': 'CES', 'T5': 'XXX'
     , 'T6': 'KRU', 'T7': 'HME', 'T8': 'SKU', 'T9': 'AST', 'T10': 'ISC', 'T11': 'YYY'
-}
+};
 
 function initTimeTableGrid() {
-    var nodeTr = document.createElement("tr");
-     $.each(groupDef, function (key, value) {
+    // teacher source
+    var nodeTable = document.createElement("table");
+    nodeTable.setAttribute('class', 'springLake');
+    $("#teachers")[0].appendChild(nodeTable);
+    var teacherNr = 0;
+    var nodeTr;
+    $.each(teacherDef, function (teacherKey, teacherValue) {
+        if (teacherNr++ % 6 == 0) {
+            nodeTr = document.createElement("tr");
+            nodeTable.appendChild(nodeTr);
+        }
         var nodeTd = document.createElement("td");
-        nodeTd.appendChild(document.createTextNode(value));
-        // node.setAttribute('id', key);
-        nodeTd.setAttribute('class', 'headerGroup');
-        $("#headerGroup"+ky).append(nodeTd);
+        nodeTr.append(nodeTd);
+        var nodeDiv = document.createElement("div");
+        nodeDiv.setAttribute('id', teacherKey);
+        nodeDiv.setAttribute('class', 'spring');
+        nodeDiv.setAttribute('draggable', 'true');
+        nodeTd.appendChild(nodeDiv);
+        var nodeDiv2 = document.createElement("div");
+        nodeDiv2.appendChild(document.createTextNode(teacherValue));
+        nodeDiv.appendChild(nodeDiv2);
+        nodeDiv.appendChild(document.createElement("div"));
+        nodeDiv.appendChild(document.createElement("div"));
+        $.each(groupDef, function (groupKey, groupValue) {
+            var nodeSpan = document.createElement("span");
+            nodeSpan.setAttribute('class', 'count');
+            nodeSpan.setAttribute('id', teacherKey + 'G' + groupKey);
+            nodeTd.append(nodeSpan);
+        });
+    });
+
+    // lesson and group sums
+    nodeTable = document.createElement("table");
+    nodeTable.setAttribute('class', 'springLake');
+    // groupCount
+    $("#groupCounters")[0].appendChild(nodeTable);
+    var nodeTr;
+    var nodeTd;
+    var nodeSpan;
+    var groupNr = 0;
+    $.each(groupDef, function (groupKey, groupValue) {
+        if (groupNr++ % 3 == 0) {
+            nodeTr = document.createElement("tr");
+            nodeTable.appendChild(nodeTr);
+        }
+        nodeTd = document.createElement("td");
+        nodeTr.append(nodeTd);
+        nodeSpan = document.createElement("span");
+        nodeTd.appendChild(nodeSpan);
+        nodeSpan.setAttribute('class', 'count');
+        nodeSpan.appendChild(document.createTextNode(groupValue + ': '));
+        nodeSpan = document.createElement("span");
+        nodeTd.appendChild(nodeSpan);
+        nodeSpan.setAttribute('class', 'count');
+        nodeSpan.setAttribute('id', 'Gr' + groupKey);
+        nodeSpan.appendChild(document.createTextNode('_'));
+    });
+    for (var idx = groupNr; groupNr % 3 != 0; groupNr++) {
+        nodeTd = document.createElement("td");
+        nodeTr.append(nodeTd);
+        nodeTd.appendChild(document.createTextNode('_'));
+    }
+    // lessonsCount
+    nodeTr = document.createElement("tr");
+    nodeTable.appendChild(nodeTr);
+    nodeTd = document.createElement("td");
+    nodeTr.append(nodeTd);
+    nodeTd.setAttribute('colspan', 3);
+    nodeTd.setAttribute('class', 'count');
+    nodeSpan = document.createElement("span");
+    nodeTd.appendChild(nodeSpan);
+    nodeSpan.appendChild(document.createTextNode('Over all lessons: '));
+    nodeSpan = document.createElement("span");
+    nodeTd.appendChild(nodeSpan);
+    nodeSpan.setAttribute('id', 'lessonsCount');
+    nodeSpan.appendChild(document.createTextNode('_'));
+
+    // timeline
+    var nodeDiv = document.createElement("div");
+    nodeDiv.setAttribute('class', 'timeline-container');
+    var nodeHeader = document.createElement("header");
+    nodeHeader.appendChild(document.createTextNode('Time'));
+    nodeDiv.appendChild(nodeHeader);
+    var nodeTable = document.createElement("table");
+    nodeTable.setAttribute('class', 'springOcean');
+    nodeDiv.appendChild(nodeTable);
+    var nodeTr = document.createElement("tr");
+    nodeTable.appendChild(nodeTr);
+    var nodeTd = document.createElement("td");
+    nodeTd.appendChild(document.createTextNode('#'));
+    nodeTd.setAttribute('class', 'headerGroup');
+    nodeTr.append(nodeTd);
+    var lessonNr = 1;
+    $.each(lessonDef, function (lessonKey, lessonValue) {
+        nodeTr = document.createElement("tr");
+        nodeTable.appendChild(nodeTr);
+        nodeTd = document.createElement("td");
+        if (lessonNr == breakLessonNr) {
+            nodeTd.setAttribute('class', 'dropLessonBreak lesson');
+        } else if (lessonKey == 'L0') {
+            nodeTd.setAttribute('class', 'dropLessonEarly lesson');
+        } else {
+            nodeTd.setAttribute('class', 'lesson');
+        }
+        nodeTd.setAttribute('droppable', 'true');
+        nodeTd.appendChild(document.createTextNode(lessonValue));
+        nodeTr.append(nodeTd);
+        nodeTable.appendChild(nodeTr);
+        lessonNr++;
+    });
+    $("#timetable")[0].appendChild(nodeDiv);
+
+    // whole week timetable
+    $.each(dayDef, function (dayKey, dayValue) {
+        var nodeDiv = document.createElement("div");
+        nodeDiv.setAttribute('class', 'weekday-container');
+        nodeDiv.setAttribute('id', dayKey);
+        var nodeHeader = document.createElement("header");
+        nodeHeader.appendChild(document.createTextNode(dayValue));
+        nodeDiv.appendChild(nodeHeader);
+        var nodeTable = document.createElement("table");
+        nodeTable.setAttribute('class', 'springOcean');
+        nodeDiv.appendChild(nodeTable);
+        var nodeTr = document.createElement("tr");
+        nodeTr.setAttribute('id', 'headerGroup_' + dayKey)
+        nodeTable.appendChild(nodeTr);
+        $.each(groupDef, function (groupKey, groupValue) {
+            var nodeTd = document.createElement("td");
+            nodeTd.appendChild(document.createTextNode(groupValue));
+            nodeTd.setAttribute('class', 'headerGroup');
+            nodeTr.append(nodeTd);
+        });
+        var lessonNr = 1;
+        $.each(lessonDef, function (lessonKey, lessonValue) {
+            nodeTr = document.createElement("tr");
+            nodeTable.appendChild(nodeTr);
+            $.each(groupDef, function (groupKey, groupValue) {
+                nodeTd = document.createElement("td");
+                nodeTd.setAttribute('id', dayKey + groupKey + lessonKey)
+                if (lessonNr == breakLessonNr) {
+                    nodeTd.setAttribute('class', 'dropLessonBreak dropLesson');
+                } else if (lessonKey == 'L0') {
+                    nodeTd.setAttribute('class', 'dropLessonEarly dropLesson');
+                } else {
+                    nodeTd.setAttribute('class', 'dropLesson');
+                }
+                nodeTd.setAttribute('droppable', 'true');
+                nodeTr.append(nodeTd);
+            });
+            nodeTable.appendChild(nodeTr);
+            lessonNr++;
+        });
+        $("#timetable")[0].appendChild(nodeDiv);
     });
 }
 
@@ -45,12 +211,13 @@ function handleOk(event) {
 
 function initTimeTable() {
     var timeTable = new Object();
-    dayDef.forEach(function (weekDay) {
-        timeTable[weekDay] = new Object();
-        groupDef.forEach(function (groupNr) {
-            timeTable[weekDay][groupNr] = new Object();
-            lessonDef.forEach(function (lessonNr) {
-                timeTable[weekDay][groupNr][lessonNr] = '';
+    timeTable.remarks = '';
+    $.each(dayDef, function (dayKey, dayValue) {
+        timeTable[dayKey] = new Object();
+        $.each(groupDef, function (groupKey, groupValue) {
+            timeTable[dayKey][groupKey] = new Object();
+            $.each(lessonDef, function (lessonKey, lessonValue) {
+                timeTable[dayKey][groupKey][lessonKey] = '';
             });
         });
     });
@@ -59,11 +226,12 @@ function initTimeTable() {
 
 function fetchDataFromDOM() {
     var timeTable = initTimeTable();
-    dayDef.forEach(function (weekDay) {
-        groupDef.forEach(function (groupNr) {
-            lessonDef.forEach(function (lessonNr) {
-                timeTable[weekDay][groupNr][lessonNr] = '';
-                var level1List = $("#" + weekDay + groupNr + lessonNr)
+    timeTable.remarks = $("#remarks").val();
+    $.each(dayDef, function (dayKey, dayValue) {
+        $.each(groupDef, function (groupKey, groupValue) {
+            $.each(lessonDef, function (lessonKey, lessonValue) {
+                timeTable[dayKey][groupKey][lessonKey] = '';
+                var level1List = $("#" + dayKey + groupKey + lessonKey)
                 if (level1List.length > 0) {
                     var level2List = level1List[0].childNodes;
                     if (level2List.length > 0) {
@@ -72,34 +240,38 @@ function fetchDataFromDOM() {
                         content.teacher = level2List[0].children[0].innerHTML
                         content.subject = level2List[0].children[1].innerHTML
                         content.room = level2List[0].children[2].innerHTML
-                        timeTable[weekDay][groupNr][lessonNr] = content;
-                        //timeTable[weekDay][groupNr][lessonNr] = e2List[0].id;
+                        timeTable[dayKey][groupKey][lessonKey] = content;
+                        //timeTable[dayKey][groupKey][lessonKey] = e2List[0].id;
                     }
                 }
             });
         });
     });
-    return timeTable
+    return timeTable;
 }
 
 function reloadDataIntoDOM(timeTable) {
-    dayDef.forEach(function (weekDay) {
-        groupDef.forEach(function (groupNr) {
-            lessonDef.forEach(function (lessonNr) {
-                var target = $("#" + weekDay + groupNr + lessonNr)[0];
+    $("#remarks").val(timeTable.remarks);
+    $.each(dayDef, function (dayKey, dayValue) {
+        $.each(groupDef, function (groupKey, groupValue) {
+            $.each(lessonDef, function (lessonKey, lessonValue) {
+                var target = $("#" + dayKey + groupKey + lessonKey)[0];
                 if (target == undefined) {
-                    alert("Error: Expected timetable element '" + weekDay + groupNr + lessonNr + "' not found!");
-                } else if (target.className == "dropLesson") {
+                    alert("Error: Expected timetable element '" + dayKey + groupKey + lessonKey + "' not found!");
+                } else if (target.className != null && target.className.match('.*' + 'dropLesson\\b.*')) {
                     if (timeTable == null) {
                         timeTable = initTimeTable();
                     }
-                    if (timeTable[weekDay][groupNr][lessonNr] != "") {
-                        var teacherId = timeTable[weekDay][groupNr][lessonNr].id;
+                    if (timeTable[dayKey] != undefined
+                        && timeTable[dayKey][groupKey] != undefined
+                        && timeTable[dayKey][groupKey][lessonKey] != undefined
+                        && timeTable[dayKey][groupKey][lessonKey] != "") {
+                        var teacherId = timeTable[dayKey][groupKey][lessonKey].id;
                         var teacherElem = $("#" + teacherId)[0];
                         if (teacherId != '') {
-                            var teacherName = timeTable[weekDay][groupNr][lessonNr].teacher;
-                            var subject = timeTable[weekDay][groupNr][lessonNr].subject;
-                            var room = timeTable[weekDay][groupNr][lessonNr].room;
+                            var teacherName = timeTable[dayKey][groupKey][lessonKey].teacher;
+                            var subject = timeTable[dayKey][groupKey][lessonKey].subject;
+                            var room = timeTable[dayKey][groupKey][lessonKey].room;
                             while (target.childNodes.length > 0) {
                                 target.removeChild(target.childNodes[0]);
                             }
@@ -107,10 +279,9 @@ function reloadDataIntoDOM(timeTable) {
                             dupNode.style.opacity = "";
                             dupNode.style.cursor = "move";
                             dupNode.className = "teacherLesson";
-                            //dupNode.innerHTML = timeTable[weekDay][groupNr][lessonNr].val;
-                            dupNode.children[0].innerHTML = timeTable[weekDay][groupNr][lessonNr].teacher;
-                            dupNode.children[1].innerHTML = timeTable[weekDay][groupNr][lessonNr].subject;
-                            dupNode.children[2].innerHTML = timeTable[weekDay][groupNr][lessonNr].room;
+                            dupNode.children[0].innerHTML = timeTable[dayKey][groupKey][lessonKey].teacher;
+                            dupNode.children[1].innerHTML = timeTable[dayKey][groupKey][lessonKey].subject;
+                            dupNode.children[2].innerHTML = timeTable[dayKey][groupKey][lessonKey].room;
                             dupNode.addEventListener("click", function (event) {
                                 clickOnLesson(event);
                                 window.location.href = "#openModal";
@@ -140,54 +311,57 @@ function clearAll() {
 }
 
 function recalcAll() {
-    var count = 0;
+    var allLessonsCount = 0;
     var teachers = $(".spring");
     var elements = $(".dropLesson");
-    // init output fields
-    groupDef.forEach(function (groupNr) {
-        $("#Gr" + groupNr).text('-');
-        teacherDef.forEach(function (taecherNr) {
-            $("#" + taecherNr + "G" + groupNr).text('-');
+    // init teachers lessons count fields
+    $.each(groupDef, function (groupKey, groupValue) {
+        $("#Gr" + groupKey).text('-');
+        $.each(teacherDef, function (teacherKey, teacherValue) {
+            $("#" + teacherKey + "G" + groupKey).text('-');
         });
     });
-    // claculate output fields
+    // init group counter fields
     var groupCounter = new Object();
-    groupCounter.A = 0;
-    groupCounter.B = 0;
-    groupCounter.C = 0;
-    groupCounter.D = 0;
-    groupCounter.E = 0;
-    // calc lessons per teacher
+    $.each(groupDef, function (groupKey, groupValue) {
+        groupCounter[groupKey] = 0;
+    });
+    // claculate counters
     elements.each(function (idxDropLesson, dropLesson) {
         if (dropLesson.childNodes.length > 0) {
-            var regExGroups = /..([ABCDE])L[0-9]/.exec(dropLesson.id);
+            var regExGroups = /..([A-Z])L([0-9])/.exec(dropLesson.id);
             if (regExGroups.length > 0) {
-                var regExGroup = regExGroups[1];
+                var groupKey = regExGroups[1];
+                var lessonNr = parseInt(regExGroups[2]);
                 dropLesson.childNodes.forEach(function (child) {
-                    teacherDef.forEach(function (taecherNr) {
-                        if (child.id == taecherNr) {
+                    $.each(teacherDef, function (teacherKey, teacherValue) {
+                        if (child.id == teacherKey &&
+                            (countBreaksAsTeacherLessons || lessonNr != breakLessonNr)) {
                             var lessons;
-                            if (isNaN($("#" + taecherNr + "G" + regExGroup).text())) {
+                            if (isNaN($("#" + teacherKey + "G" + groupKey).text())) {
                                 lessons = 0;
                             } else {
-                                lessons = parseInt($("#" + taecherNr + "G" + regExGroup).text());
+                                lessons = parseInt($("#" + teacherKey + "G" + groupKey).text());
                             }
-                            $("#" + taecherNr + "G" + regExGroup).text(lessons + 1);
+                            $("#" + teacherKey + "G" + groupKey).text(lessons + 1);
                         }
                     });
-                    groupCounter[regExGroup]++;
+                    if (countBreaksAsGroupLessons || lessonNr != breakLessonNr) {
+                        groupCounter[groupKey]++;
+                    }
                 });
-                count++;
+                allLessonsCount++;
             }
         }
     });
 
-    $("#lessonsCount").text(count);
-    $("#GrA").text(groupCounter.A);
-    $("#GrB").text(groupCounter.B);
-    $("#GrC").text(groupCounter.C);
-    $("#GrD").text(groupCounter.D);
-    $("#GrE").text(groupCounter.E);
+    $("#lessonsCount").text(allLessonsCount);
+    $.each(groupDef, function (groupKey, groupValue) {
+        var elem = $("#Gr" + groupKey);
+        if (elem != null) {
+            elem.text(groupCounter[groupKey]);
+        }
+    });
 }
 
 function loadDataFromStore() {
@@ -221,7 +395,7 @@ function targetDeepTest(elem, className, level) {
     if (elem == null || level < 1) {
         return null;
     }
-    if (elem.className == className) {
+    if (elem.className != null && elem.className.match('.*' + className + '\\b.*')) {
         return elem;
     }
     return targetDeepTest(elem.parentNode, className, level - 1);

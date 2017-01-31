@@ -20,11 +20,16 @@ $("#timeTableHideButton").click(function () {
 });
 $("#Export").click(function () {
     $("#timeTableOut").show();
-    $("#timeTableOut").val(JSON.stringify(fetchDataFromDOM()));
+    $("#timeTableOut").val(JSON.stringify(fetchDataFromDOM(), null, 4));
     $("#timeTableHideButton").show();
     $("#timeTableImportButton").hide();
     $("#timeTableOut").focus();
+    $("#timeTableOut")[0].setSelectionRange(0, 0);
+    $("#timeTableOut")[0].scrollTop = 0;
+    $("#timeTableOut")[0].scrollLeft = 0;
 });
+
+
 $("#Save").click(function () {
     saveData();
 });

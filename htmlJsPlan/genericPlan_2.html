@@ -1,0 +1,1126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.3  (Win32)">
+	<META NAME="AUTHOR" CONTENT="Karlheinz Schubert">
+	<META NAME="CREATED" CONTENT="20071208;9482590">
+	<META NAME="CHANGEDBY" CONTENT="Karlheinz Schubert">
+	<META NAME="CHANGED" CONTENT="20071208;9494510">
+  <style>
+  td.style {
+    border-top:1px solid darkgray;
+    border-right:1px solid darkgray;
+    height:35px;
+    width:2%;
+  }
+  td.time {
+    border-top:1px solid darkgray;
+    border-right:1px solid darkgray;
+    height:35px;
+    width:7%;
+  }
+  td.atom {
+    border:0px solid green;
+    height:35px;
+    width:5%;
+  }
+  textarea.style {
+    border:0px solid blue;
+    width:100%;
+    height:100%;
+  }
+  textarea.time {
+    border:0px solid blue;
+    width:100%;
+    height:100%;
+    font:small-caps 8pt Verdana;
+  }
+  textarea.atom {
+    border:0px solid blue;
+    width:100%;
+    height:100%;
+    overflow: hidden;
+  }
+  td.tag {
+    border:1px solid green;
+    text-align: center;
+    width:6%;
+  }
+  table {
+    border:1px solid blue;
+    border-collapse:collapse;
+    page-break-before: always;
+  }
+  table.out, div.out {
+    border-collapse:collapse;
+    font:small-caps 8pt Verdana;
+    //empty-cells:show;
+  }
+  div.outGroup {
+      page-break-before: always;
+  }
+  table.out {
+    border:1px solid blue;
+  }
+  td.outTime {
+    border:1px solid gray;
+    width:1%;
+    white-space:pre;
+  }
+  td.outTag {
+    border:1px solid darkgray;
+    width:10%;
+  }
+  td.outAtom {
+    border:10px solid green;
+    width:17%;
+  }
+  </style>
+  <script language="javascript" type="text/javascript">
+  String.prototype.trim = function() {
+    // Erst führende, dann Abschließende Whitespaces entfernen
+    // und das Ergebnis dieser Operationen zurückliefern
+    return this.replace (/^\s+/, '').replace (/\s+$/, '');
+  }
+  var topics;
+  function initTopics() {
+    topics = new Object();
+    var lastValue = '';
+    var topicNames = document.getElementById('topicNames').value.split(',');
+    var topicValues = document.getElementById('topicValues').value.split(',');
+    if (topicNames.length != topicValues.length) {
+      alert('Anzahl Fächer ('+topicNames.length+') und Anzahl ('+topicValues.length+') Fächereigenschaften ungleich!');
+    }    
+    for(var i = 0; i < topicNames.length; i++) {
+       if (i < topicValues.length)   {
+        lastValue = topicValues[i].trim();
+       }
+      topics[topicNames[i].trim().toLowerCase()] = lastValue;
+    }
+  }
+
+  var teachers;
+  function initTeachers() {
+    teachers = new Object();
+    var teacherNames = document.getElementById('teacherNames').value.split(',');
+    var teacherValues = document.getElementById('teacherValues').value.split(',');
+    //if (teacherNames.length != teacherValues.length) {
+    //  alert('Anzahl Lehrer ('+teacherNames.length+') und Anzahl ('+teacherValues.length+') Lehrereigenschaften ungleich!');
+    //}
+   var lastValue = '';
+   for(var i = 0; i < teacherNames.length; i++) {
+       if (i < teacherValues.length)   {
+          lastValue = teacherValues[i].trim();
+      }
+     teachers[teacherNames[i].trim().toLowerCase()] = lastValue;
+    }
+  }
+  
+  var hiddenGroups;
+  function initHiddenGroups() {
+    hiddenGroups = new Object();
+    var values = document.getElementById('hiddenGroups').value.split(',');
+    for(var i = 0; i < values.length; i++) {
+      hiddenGroups[values[i].trim().toLowerCase()] = 'hidden';
+    }
+   }
+
+  function setAtom(elem) {
+    //var parts = elem.value.split(' ');
+    var parts = elem.value.split(/[.\n]/);
+    elem.style.backgroundColor =  '#ffffff';
+    if (parts.length>0) {
+       if (topics[parts[0].trim().toLowerCase()] != 'undefined') {
+        // 1.Eintrag des Eingabefeldes in topics gefunden
+        elem.style.backgroundColor = topics[parts[0].trim().toLowerCase()] ;
+       }
+    }
+    elem.style.border = '3px solid #ffffff' ;
+    if (parts.length>1) {
+       if (teachers[parts[1].trim().toLowerCase()] != 'undefined') {
+        // 2.Eintrag des Eingabefeldes in teachers gefunden
+        elem.style.border = teachers[parts[1].trim().toLowerCase()] ;
+       }
+    }
+    elem.style.visibility = 'visible';
+    if (parts.length>2) {
+       if (hiddenGroups[parts[2].trim().toLowerCase()] != 'undefined') {
+        // 2.Eintrag des Eingabefeldes in hiddenGroups gefunden
+        elem.style.visibility = hiddenGroups[parts[2].trim().toLowerCase()] ;
+       }
+    }
+    saveAllAtoms();
+  }
+  
+  var days = ['Mo','Di','Mi','Do','Fr'];
+  var headline = ['Montag','Dienstag','Mittwoch','Donnerstag','Freitag']
+  var cols = 3;
+  var rows = 11;
+
+  function refreshAllAtoms() {
+    var error = ''; 
+    var log = '';
+    for (var row = 1; row <= rows; row++) {
+      for (var day in days) {
+        for (var col = 1; col <= cols; col++) {
+          var id = days[day]+'_'+row+'_'+col;
+          try {
+            setAtom(document.getElementById(id));
+            } catch (e)  {
+              error += id + '\n';  
+            }
+        }
+      }
+    }
+    if (error.length > 0) {
+      alert('Fehler beim Refresh des/der Elements/e:\n'+error); 
+    }
+  }
+ 
+  function saveAllAtoms() {
+    var error = ''; 
+    var xml = '';
+    
+    xml += document.getElementById('topicNames').value +'; ';
+    xml += document.getElementById('topicValues').value +'; ';
+    xml += document.getElementById('teacherNames').value +'; ';
+    xml += document.getElementById('teacherValues').value +'; ';
+    xml += document.getElementById('hiddenGroups').value +'; ';
+    
+    for (var row = 1; row <= rows; row++) {
+      xml += document.getElementById('Style_'+row).value +'; ';
+      xml += document.getElementById('Time_'+row).value +'; ';
+      for (var day in days) {
+        for (var col = 1; col <= cols; col++) {
+          var id = days[day]+'_'+row+'_'+col;
+          try {
+             xml += document.getElementById(id).value +'; ';
+            } catch (e)  {
+              error += id + '\n';  
+            }
+        }
+      }
+    }
+    if (error.length > 0) {
+      alert('Fehler beim Refresh des/der Elements/e:\n'+error); 
+    }
+    document.getElementById('transfer').value = xml;
+    //document.getElementById('transfer').select();
+    //document.getElementById('transfer').focus();
+  }
+
+  function calculateLessonsWorker(/*: String */ id) {
+     var parts = document.getElementById(id).value.split(/[.\n]/);
+     if (parts.length > 0) {
+      if (calculatedLessons[parts[0]] == null) {
+        calculatedLessons[parts[0]] = 0;
+      }
+      calculatedLessons[parts[0]]++;
+    }
+  }
+  
+  var calculatedLessons;
+  function calculateLessons() {
+    calculatedLessons = new Object();
+    allCellFactory(calculateLessonsWorker);
+    alert(calculatedLessons);
+  }
+  
+  function allCellFactory(/*:function*/ worker) {
+    var error = ''; 
+    for (var row = 1; row <= rows; row++) {
+      for (var day in days) {
+        for (var col = 1; col <= cols; col++) {
+          var id = days[day]+'_'+row+'_'+col;
+          try {
+             worker(id);
+            } catch (e)  {
+              error += id + '\n';  
+            }
+        }
+      }
+    }
+    if (error.length > 0) {
+      alert('Fehler bei allCellFactory des/der Elements/e:\n'+error); 
+    }
+  }
+  
+  function loadAllAtoms() {
+    var error = ''; 
+    var xml = document.getElementById('transfer').value.split('; ');
+
+    var i = 0;
+    document.getElementById('topicNames').value = xml[i++];
+    document.getElementById('topicValues').value = xml[i++];
+    document.getElementById('teacherNames').value = xml[i++];
+    document.getElementById('teacherValues').value = xml[i++];
+    document.getElementById('hiddenGroups').value = xml[i++];
+    
+    for (var row = 1; row <= rows; row++) {
+      document.getElementById('Style_'+row).value = xml[i++];
+      document.getElementById('Time_'+row).value = xml[i++];
+      for (var day in days) {
+        for (var col = 1; col <= cols; col++) {
+          var id = days[day]+'_'+row+'_'+col;
+          try {
+             //alert(id+'--'+xml[i]);
+             document.getElementById(id).value = xml[i++];
+            } catch (e)  {
+              error += id + '\n';  
+            }
+        }
+      }
+    }
+    if (error.length > 0) {
+      alert('Fehler beim Refresh des/der Elements/e:\n'+error); 
+    }
+  }
+  
+  
+  function clearView() {
+    var entry = document.getElementById('output');  
+    entry.innerHTML = "";
+  }
+
+  function generateViews() {
+     var groups = document.getElementById('groups').value.trim().split(/[ .]/);
+     for (var group in groups) {
+      generateView(groups[group]);
+    }
+  }
+  
+  function generateView(group) {
+    var tr; 
+    var td;    
+    var entry = document.getElementById('output');  
+    entry.className = 'out';
+    var outGroup = document.createElement('div');
+    outGroup.className='outGroup';
+    entry.appendChild(outGroup);
+    entry.appendChild(document.createElement('br'));
+    var comment = document.createTextNode('Gruppe: ' + group);
+    comment.className='outTag';
+    entry.appendChild(comment);
+    var table = document.createElement('table');
+    entry.appendChild(table);
+    table.className = 'out';
+    tr = document.createElement('tr');
+    table.appendChild(tr);
+    td = document.createElement('td');
+    tr.appendChild(td);
+    td.className = 'outTime';
+    td.innerHTML = 'Zeiten';
+    for (var day in headline) {
+      td = document.createElement('td');
+      tr.appendChild(td);
+      td.className = 'outTag';
+      td.innerHTML = headline[day];
+    }
+    td = document.createElement('td');
+    tr.appendChild(td);
+    td.style.border = '1px solid white';
+    td.innerHTML = '&nbsp;';
+    var elem;
+    for (var row = 1; row <= rows; row++) {
+        var rowStyle = document.getElementById('Style_'+row).value;
+        if (rowStyle == 0) {
+          continue;
+        }
+        tr = document.createElement('tr');
+        table.appendChild(tr);
+        td = document.createElement('td');
+        tr.appendChild(td);
+        td.className = 'outTime';
+        td.innerHTML = document.getElementById('Time_'+row).value;
+        for (var day in days) {
+          td = document.createElement('td');
+          tr.appendChild(td);
+          for (var col = 1; col <= 3; col++) {
+            var parts = document.getElementById(days[day]+'_'+row+'_'+col).value.split(/[.\n]/);
+            if ((parts.length > 2 && parts[2].search(group) != -1) || group.length == 0) {
+              elem = document.getElementById(days[day]+'_'+row+'_'+col);
+              td.className = 'outAtom';
+              td.style.backgroundColor = elem.style.backgroundColor;
+              td.style.border = '1px solid blue';
+              td.style.height = rowStyle;
+              var value = elem.value.split(/[.\n]/)[0];
+              if (value.length==0)
+                value = '&nbsp;';
+              td.innerHTML = value;
+              break;
+            }
+          }
+          //elem = document.getElementById(days[day]+'_'+row+'_'+group);
+    }
+       td = document.createElement('td');
+       tr.appendChild(td);
+       td.style.border = '1px solid white';
+       td.style.backgroundColor = 'white';
+    }
+  }
+</script>
+</HEAD>
+<BODY LANG="de-DE" DIR="LTR" onLoad="initTopics();initTeachers();initHiddenGroups();refreshAllAtoms();">
+<div>Abkürzungen</div>
+<TABLE WIDTH=100%>
+  <TR>
+    <TD WIDTH=5%>
+    Fächer:
+    </TD>
+    <TD>
+    <input style="width:100%;" id="topicNames" name="topicNames" onblur="initTopics();refreshAllAtoms();" 
+     value="Üb, HU, Ma, Deu, Fr, En, Ha, Ku, Tu, Pause" />
+    </TD>
+  </TR>
+<TR>
+    <TD>
+    Fächerfarbwerte <A HREF="#" onclick="w = window.open('./col/index.html','ColorPicker','width=560,height=330,left=0,top=0',toolbar='no'); w.focus();">Pick</A>: 
+    </TD>
+    <TD>
+    <input style="width:100%;" id="topicValues" name="topicValues" onblur="initTopics();refreshAllAtoms();" 
+    value="#FFFFCC, #FFFF99, #FFCC66, #00aaaa, #FF3333, #aaaaaa, #aa00aa, #aaaa00, #CC6633, #aaaaaa" />
+    </TD>
+  </TR>
+ <TR>
+    <TD>
+    Lehrer:
+    </TD>
+    <TD>
+    <input style="width:100%;" id="teacherNames" name="teacherNames" onblur="initTeachers();refreshAllAtoms();" 
+    value="HK, KS, LG, BG, SB, WS, AT" />
+    </TD>
+  </TR>
+<TR>
+    <TD>
+    Lehrer als Rahmen :
+    </TD>
+    <TD>
+    <input style="width:100%;" id="teacherValues" name="teacherValues" onblur="initTeachers();refreshAllAtoms();" 
+    value="3px solid #ffffff, 1px solid #0000ff" />
+    </TD>
+  </TR>
+<TR>
+    <TD>
+    Versteckte Gruppen:
+    </TD>
+    <TD>
+    <input style="width:100%;" id="hiddenGroups" name="hiddenGroups" onblur="initHiddenGroups();refreshAllAtoms();" 
+    value="" />
+    </TD>
+  </TR>
+</TABLE>
+<BR />
+<TABLE WIDTH=100%  CELLPADDING=0 CELLSPACING=0>
+	<!-- COL WIDTH=18*>
+	<COL WIDTH=18*>
+	<COL WIDTH=18*>
+	<COL WIDTH=18*>
+	<COL WIDTH=18*>
+	<COL WIDTH=18*>
+	<COL WIDTH=18*>
+	<COL WIDTH=18*>
+	<COL WIDTH=18*>
+	<COL WIDTH=18*>
+	<COL WIDTH=18*>
+	<COL WIDTH=18*>
+	<COL WIDTH=18*>
+	<COL WIDTH=18*>
+	<COL WIDTH=18*>
+	<COL WIDTH=18*>
+	<COL WIDTH=18*>
+	<COL WIDTH=18* -->
+	<TR VALIGN=TOP>
+		<TD id="row1_1" class="style">
+			Row Height
+ 		</TD>
+		<TD id="row1_1" class="time">
+			Zeiten
+ 		</TD>
+		<TD id="row1_2" colspan="3" class="tag">
+			Montag
+		</TD>
+		<TD id="row1_3" colspan="3" class="tag">
+			Dienstag
+		</TD>
+		<TD id="row1_4" colspan="3" class="tag">
+			Mittwoch
+		</TD>
+		<TD id="row1_5" colspan="3" class="tag">
+			Donnerstag
+		</TD>
+		<TD id="row1_6" colspan="3" class="tag">
+			Freitag
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD class="style">
+			<textarea id="Style_1" name="Style_1" value="" class="style"></textarea>
+		</TD>
+		<TD class="time">
+			<textarea id="Time_1" name="Time_1" value="" class="time"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_1_1" name="Mo_1_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_1_2" name="Mo_1_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_1_3" name="Mo_1_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_1_1" name="Di_1_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_1_2" name="Di_1_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_1_3" name="Di_1_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_1_1" name="Mi_1_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_1_2" name="Mi_1_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_1_3" name="Mi_1_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_1_1" name="Do_1_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_1_2" name="Do_1_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_1_3" name="Do_1_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_1_1" name="Fr_1_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_1_2" name="Fr_1_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_1_3" name="Fr_1_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+	</TR>
+
+	<TR VALIGN=TOP>
+		<TD class="style">
+			<textarea id="Style_2" name="Style_2" value="" class="style"></textarea>
+		</TD>
+		<TD class="time">
+			<textarea id="Time_2" name="Time_2" value="" class="time" ></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_2_1" name="Mo_2_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_2_2" name="Mo_2_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_2_3" name="Mo_2_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_2_1" name="Di_2_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_2_2" name="Di_2_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_2_3" name="Di_2_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_2_1" name="Mi_2_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_2_2" name="Mi_2_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_2_3" name="Mi_2_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_2_1" name="Do_2_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_2_2" name="Do_2_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_2_3" name="Do_2_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_2_1" name="Fr_2_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_2_2" name="Fr_2_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_2_3" name="Fr_2_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+	</TR>
+
+	<TR VALIGN=TOP>
+		<TD class="style">
+			<textarea id="Style_3" name="Style_3" value="" class="style"></textarea>
+		</TD>
+		<TD class="time">
+			<textarea id="Time_3" name="Time_3" value="" class="time" ></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_3_1" name="Mo_3_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_3_2" name="Mo_3_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_3_3" name="Mo_3_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_3_1" name="Di_3_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_3_2" name="Di_3_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_3_3" name="Di_3_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_3_1" name="Mi_3_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_3_2" name="Mi_3_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_3_3" name="Mi_3_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_3_1" name="Do_3_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_3_2" name="Do_3_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_3_3" name="Do_3_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_3_1" name="Fr_3_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_3_2" name="Fr_3_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_3_3" name="Fr_3_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+	</TR>
+
+	<TR VALIGN=TOP>
+	    <TD class="style">
+			<textarea id="Style_4" name="Style_4" value="" class="style"></textarea>
+		</TD>
+		<TD class="time">
+			<textarea id="Time_4" name="Time_4" value="" class="time" ></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_4_1" name="Mo_4_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_4_2" name="Mo_4_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_4_3" name="Mo_4_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_4_1" name="Di_4_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_4_2" name="Di_4_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_4_3" name="Di_4_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_4_1" name="Mi_4_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_4_2" name="Mi_4_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_4_3" name="Mi_4_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_4_1" name="Do_4_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_4_2" name="Do_4_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_4_3" name="Do_4_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_4_1" name="Fr_4_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_4_2" name="Fr_4_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_4_3" name="Fr_4_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+	</TR>
+
+	<TR VALIGN=TOP>
+		<TD class="style">
+			<textarea id="Style_5" name="Style_5" value="" class="style"></textarea>
+		</TD>
+		<TD class="time">
+			<textarea id="Time_5" name="Time_5" value="" class="time" ></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_5_1" name="Mo_5_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_5_2" name="Mo_5_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_5_3" name="Mo_5_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_5_1" name="Di_5_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_5_2" name="Di_5_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_5_3" name="Di_5_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_5_1" name="Mi_5_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_5_2" name="Mi_5_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_5_3" name="Mi_5_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_5_1" name="Do_5_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_5_2" name="Do_5_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_5_3" name="Do_5_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_5_1" name="Fr_5_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_5_2" name="Fr_5_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_5_3" name="Fr_5_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+	</TR>
+
+	<TR VALIGN=TOP>
+		<TD class="style">
+			<textarea id="Style_6" name="Style_6" value="" class="style"></textarea>
+		</TD>
+		<TD class="time">
+			<textarea id="Time_6" name="Time_6" value="" class="time" ></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_6_1" name="Mo_6_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_6_2" name="Mo_6_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_6_3" name="Mo_6_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_6_1" name="Di_6_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_6_2" name="Di_6_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_6_3" name="Di_6_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_6_1" name="Mi_6_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_6_2" name="Mi_6_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_6_3" name="Mi_6_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_6_1" name="Do_6_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_6_2" name="Do_6_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_6_3" name="Do_6_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_6_1" name="Fr_6_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_6_2" name="Fr_6_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_6_3" name="Fr_6_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+	</TR>
+
+	<TR VALIGN=TOP>
+		<TD class="style">
+			<textarea id="Style_7" name="Style_7" value="" class="style"></textarea>
+		</TD>
+		<TD class="time">
+			<textarea id="Time_7" name="Time_7" value="" class="time" ></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_7_1" name="Mo_7_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_7_2" name="Mo_7_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_7_3" name="Mo_7_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_7_1" name="Di_7_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_7_2" name="Di_7_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_7_3" name="Di_7_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_7_1" name="Mi_7_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_7_2" name="Mi_7_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_7_3" name="Mi_7_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_7_1" name="Do_7_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_7_2" name="Do_7_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_7_3" name="Do_7_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_7_1" name="Fr_7_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_7_2" name="Fr_7_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_7_3" name="Fr_7_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+	</TR>
+
+	<TR VALIGN=TOP>
+		<TD class="style">
+			<textarea id="Style_8" name="Style_8" value="" class="style"></textarea>
+		</TD>
+		<TD class="time">
+			<textarea id="Time_8" name="Time_8" value="" class="time" ></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_8_1" name="Mo_8_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_8_2" name="Mo_8_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_8_3" name="Mo_8_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_8_1" name="Di_8_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_8_2" name="Di_8_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_8_3" name="Di_8_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_8_1" name="Mi_8_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_8_2" name="Mi_8_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_8_3" name="Mi_8_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_8_1" name="Do_8_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_8_2" name="Do_8_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_8_3" name="Do_8_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_8_1" name="Fr_8_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_8_2" name="Fr_8_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_8_3" name="Fr_8_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+	</TR>
+
+	<TR VALIGN=TOP>
+		<TD class="style">
+			<textarea id="Style_9" name="Style_9" value="" class="style"></textarea>
+		</TD>
+		<TD class="time">
+			<textarea id="Time_9" name="Time_9" value="" class="time" ></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_9_1" name="Mo_9_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_9_2" name="Mo_9_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_9_3" name="Mo_9_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_9_1" name="Di_9_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_9_2" name="Di_9_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_9_3" name="Di_9_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_9_1" name="Mi_9_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_9_2" name="Mi_9_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_9_3" name="Mi_9_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_9_1" name="Do_9_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_9_2" name="Do_9_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_9_3" name="Do_9_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_9_1" name="Fr_9_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_9_2" name="Fr_9_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_9_3" name="Fr_9_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+	</TR>
+
+	<TR VALIGN=TOP>
+		<TD class="style">
+			<textarea id="Style_10" name="Style_10" value="" class="style"></textarea>
+		</TD>
+		<TD class="time">
+			<textarea id="Time_10" name="Time_10" value="" class="time" ></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_10_1" name="Mo_10_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_10_2" name="Mo_10_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_10_3" name="Mo_10_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_10_1" name="Di_10_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_10_2" name="Di_10_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_10_3" name="Di_10_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_10_1" name="Mi_10_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_10_2" name="Mi_10_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_10_3" name="Mi_10_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_10_1" name="Do_10_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_10_2" name="Do_10_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_10_3" name="Do_10_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_10_1" name="Fr_10_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_10_2" name="Fr_10_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_10_3" name="Fr_10_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+	</TR>
+
+	<TR VALIGN=TOP>
+		<TD class="style">
+			<textarea id="Style_11" name="Style_11" value="" class="style"></textarea>
+		</TD>
+		<TD class="time">
+			<textarea id="Time_11" name="Time_11" value="" class="time" ></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_11_1" name="Mo_11_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_11_2" name="Mo_11_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mo_11_3" name="Mo_11_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_11_1" name="Di_11_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_11_2" name="Di_11_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Di_11_3" name="Di_11_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_11_1" name="Mi_11_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_11_2" name="Mi_11_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Mi_11_3" name="Mi_11_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_11_1" name="Do_11_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_11_2" name="Do_11_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Do_11_3" name="Do_11_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_11_1" name="Fr_11_1" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_11_2" name="Fr_11_2" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+		<TD class="atom">
+			<textarea id="Fr_11_3" name="Fr_11_3" value="" class="atom" onblur="setAtom(this);"></textarea>
+		</TD>
+	</TR>
+
+</TABLE>
+<BR />
+Stunden je Fach: <input type="button" value="calc" onclick="calculateLessons();" />
+<TABLE>
+  <TR>
+    <TD>
+    Ha
+    </TD>
+    <TD>
+    Ku
+    </TD>
+    <TD>
+    Deu
+    </TD>
+    <TD>
+    Tu
+    </TD>
+  </TR>
+  <TR>
+    <TD>
+    </TD>
+    <TD>
+    </TD>
+    <TD>
+    </TD>
+    <TD>
+    </TD>
+  </TR>
+</TABLE>
+<BR />
+Stunden je Lehrer:
+<TABLE>
+<TR>
+    <TD>
+    SB
+    </TD>
+    <TD>
+    10
+    </TD>
+   <TD>
+    LG
+    </TD>
+    <TD>
+    12
+    </TD>
+   <TD>
+    KS
+    </TD>
+    <TD>
+    24
+    </TD>
+   <TD>
+    WS
+    </TD>
+    <TD>
+    3</TD>
+   <TD>
+    AD
+    </TD>
+    <TD>
+    20
+    </TD>
+  </TR>
+</TABLE>
+<BR />
+Transfer:<br />
+<textarea style="float:left;width:60%;hight:200px;" id="transfer"></textarea>
+<input type="button" value="load from Transfer" onClick="loadAllAtoms();initTopics();initTeachers();initHiddenGroups();refreshAllAtoms();"/><br />
+<input type="button" value="save into Transfer" onClick="saveAllAtoms();tihs.select();this.focus();"/>
+<br /><br /><br />
+Für Gruppe <input id="groups" name="groups" type="text" value="" title="Format: 4 5 6"/><input type="button" value="generate View" onClick="generateViews();"/> <input type="button" value="clear View" onClick="clearView();"/><br />
+<div id="output">
+ </div>
+
+</BODY>
+</HTML>

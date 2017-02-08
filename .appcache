@@ -1,0 +1,9 @@
+CACHE MANIFEST
+# 2017-02-01 v0.0.1
+/assets/eventhandler.js
+/assets/timetable.css
+/assets/timetable.js
+/lib/Bootstrap/bootstrap.min.css
+/lib/Bootstrap/bootstrap.min.js
+/lib/jQuery/jquery.min.js
+/lib/DragDropTouch.js

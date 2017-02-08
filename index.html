@@ -1,65 +1,91 @@
 <!DOCTYPE html>
+<html manifest="demo.appcache">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, height=device-height, maximum-scale=10.0, minimum-scale=0.1, initial-scale=1.0, user-scalable=yes" />
     <title>TimeTablePS</title>
     <link rel="stylesheet" href="lib/Bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/timetable.css" />
+    <link rel="shortcut icon" href="assets/tt1.ico">
 </head>
 
-<body class="well">
+<body class="well containerFlex">
     <div class="dropzone">
-        <div id="openModal" class="modalDialog">
+        <div id="openModal" class="modalDialog no-print">
             <div>
-                <div class="floatRight" id="fieldId"></div>
-                <h2>Lesson <span id="lessonNr"></span> Details</h2>
-                <h3>Teacher: <span id="teacher"></span></h3>
-                <label for="subject">Subject</label><input type="text" id="subject" name="subject" value="" />
-                <label for="room">Room</label><input type="text" id="room" name="room" value="" />
-                <a href="" id="ok" title="Save" class="btn btn-small btn2 ok">OK</a>
-                <a href="" title="Close" class="btn btn-small btn2 close">Close</a>
+                <form>
+                    <div class="floatRight" id="fieldId"></div>
+                    <h2>Lesson <span id="lessonNr"></span> Details</h2>
+                    <h3>Teacher: <span id="teacher"></span></h3>
+                    <label for="subject">Subject</label><input type="text" id="subject" name="subject" value="" />
+                    <label for="room">Room</label><input type="text" id="room" name="room" value="" />
+                    <a href="" id="ok" title="Save" class="btn btn-small btn2 ok">OK</a>
+                    <a href="" title="close" class="btn btn-small btn2 close">Close</a>
+                </form>
             </div>
         </div>
 
         <div>
             <div id="top">
-                <div id="header"> Timetable Pegasusschule </div>
-                <div>
-                    <input type="button" class="btn btn-small no-print" id="Clear" value="Clear" />
-                    <input type="button" class="btn btn-small no-print" id="ShowImport" value="Import" />
-                    <input type="button" class="btn btn-small no-print" id="Export" value="Export" />
-                    <input type="button" class="btn btn-small no-print" id="Save" value="Save" />
-                    <input type="button" class="btn btn-small no-print" id="TextPrint" value="Print" />
+                <div id="header"> Timetable Pegasusschule
+                    <br>
+                    <div id="lastChange">no idea</div>
+                </div>
+
+                <div class="no-print">
+                    <input type="button" class="btn btn-small" id="clear" value="Clear" />
+                    <input type="button" class="btn btn-small" id="save" value="Save" />
+                    <input type="button" class="btn btn-small" id="textprint" value="Print" />
+                    <br/>
+                    <input type="button" class="btn btn-small" id="showimport" value="Import" />
+                    <input type="button" class="btn btn-small" id="export" value="Export" />
                 </div>
             </div>
-            <div id="teachers"></div>
-            <div id="groupCounters"></div>
-            <div><textarea id="remarks"></textarea></div>
-            <div class="importContainer">
+            <div class="no-print" id="teachers"></div>
+            <div class="no-print" id="groupCounters"></div>
+            <div class="no-print"><textarea id="remarks"></textarea></div>
+            <br/>
+            <div class="importContainer no-print">
+                <input type="file" class="btn btn-small btn2" id="timeTableUpload" name="file" />
                 <textarea id="timeTableOut"></textarea>
                 <div>
-                    <input type="button" class="btn btn-small btn2" id="timeTableImportButton" value="Start" />
-                    <input type="button" class="btn btn-small btn2" id="timeTableHideButton" value="Hide" />
+                    <input type="button" class="btn btn-small btn2 no-print" id="timeTableImportButton" value="Start" />
+                    <input type="button" class="btn btn-small btn2 no-print" id="timeTableHideButton" value="Hide" />
+                    <a href="#" id="download" class="btn btn-small no-print" download="timetable.json">Download</a>
                 </div>
             </div>
-            <div class="resetFloat" />
-            <div id="timetable"></span>
-            <div class="resetFloat" />
+            <div class="resetFloat"></div>
+            <div id="timetable"></div>
+            <div class="resetFloat page-break"></div>
+            <textarea id="legend" class="no-print"></textarea>
+            <div id="legendPrint" class="only-print page-break"></div>
+            <div class="resetFloat"></div>
         </div>
-
+        <footer class="no-print">
+            <span id="version">(c) ksc, 2017, v.0.0.3</span>
+        </footer>
         <script type="text/javascript" src="lib/jQuery/jquery.min.js"></script>
         <script type="text/javascript" src="assets/eventhandler.js"></script>
         <script type="text/javascript" src="lib/DragDropTouch.js"></script>
         <script type="text/javascript" src="assets/timetable.js"></script>
         <script type="text/javascript">
-            $(function () {
+            var printMode = false;
+            $(function() {
                 // Handler for .ready() called.
+                var groupList = getUrlParameter('groups');
+                printMode = getUrlParameter('doprint');
+                setGroupDefinition(groupList);
                 initTimeTableGrid();
                 loadDataFromStore();
+                if (printMode != null) {
+                    $("#legendPrint").show();
+                    $("#legendPrint")[0].innerHTML = $("#legend").val().replace(/\n/g, '<br/>');
+                    $("#legend").hide();
+                    print();
+                }
             });
         </script>
-
-
 </body>
 
 </html>

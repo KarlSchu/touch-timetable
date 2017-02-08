@@ -3,35 +3,72 @@
 var countBreaksAsTeacherLessons = true;
 var countBreaksAsGroupLessons = true;
 var breakLessonNr = 6;
+var coloredLessons = true;
 var lessonDef = { // max: L0 to L9
-    'L0': '7:30'
-    , 'L1': '8:00-'
-    , 'L2': '-9:50'
-    , 'L3': '10:10-'
-    , 'L4': '-12:00'
-    , 'L5': ''
-    , 'L6': '13:00-'
-    , 'L7': '-14:30'
-    , 'L8': '14:30-'
-    , 'L9': '-17:00'
+    'L0': '7:30',
+    'L1': '8:00',
+    'L2': '',
+    'L3': '10:15',
+    'L4': '',
+    'L5': '',
+    'L6': '',
+    'L7': '-15:00',
+    'L8': '-16:00',
+    'L9': '-17:00'
 };
 var dayDef = { //max mo - so
-    'mo': 'Montag', 'di': 'Dienstag', 'mi': 'Mittwoch', 'do': 'Donnerstag', 'fr': 'Freitag', 'sa': 'Samstag'
+    'mo': 'Montag',
+    'di': 'Dienstag',
+    'mi': 'Mittwoch',
+    'do': 'Donnerstag',
+    'fr': 'Freitag',
+    'sa': 'Samstag'
 };
-var groupDef = { // max: A - Z
-    'A': 'GrA1'
-    , 'B': 'GrA2'
-    , 'C': 'GrA3'
-    , 'D': 'GrB'
-    , 'E': 'GrC'
+var groupDefDefault = { // max: A - Z
+    'A': 'GrA1',
+    'B': 'GrA2',
+    'C': 'GrA3',
+    'D': 'GrB',
+    'E': 'GrC',
     //, 'F': 'Extra'
     //, 'G':'GGG'
     //, 'H':'HHH'
 };
+var groupDef = {};
 var teacherDef = {
-    'T0': 'KeS', 'T1': 'KSC', 'T2': 'UWO', 'T3': 'SBO', 'T4': 'CES', 'T5': 'XXX'
-    , 'T6': 'KRU', 'T7': 'HME', 'T8': 'SKU', 'T9': 'AST', 'T10': 'ISC', 'T11': 'YYY'
+    'T0': 'KeS',
+    'T1': 'KSC',
+    'T2': 'UWO',
+    'T3': 'SBO',
+    'T4': 'CES',
+    'T5': 'KRU',
+    'T6': 'HME',
+    'T7': 'SKU',
+    'T8': 'AST',
+    'T9': 'ISC',
+    'T10': 'XXX',
+    'T11': 'ASA'
 };
+
+var timeStamp = "";
+
+function setGroupDefinition(groupList) {
+    if (groupList != undefined && groupList.length > 0) {
+        groupList = groupList.replace(/\s*/g, '');
+        var groups = groupList.split(',');
+        $.each(groupDefDefault, function(groupId, groupName) {
+            // if (groups.includes(groupId)) {
+            //     groupDef[groupId] = groupName;
+            // }
+            if (groups.includes(groupName)) {
+                groupDef[groupId] = groupName;
+            }
+        });
+        coloredLessons = false;
+    } else {
+        groupDef = groupDefDefault;
+    }
+}
 
 function initTimeTableGrid() {
     // teacher source
@@ -40,7 +77,7 @@ function initTimeTableGrid() {
     $("#teachers")[0].appendChild(nodeTable);
     var teacherNr = 0;
     var nodeTr;
-    $.each(teacherDef, function (teacherKey, teacherValue) {
+    $.each(teacherDef, function(teacherKey, teacherValue) {
         if (teacherNr++ % 6 == 0) {
             nodeTr = document.createElement("tr");
             nodeTable.appendChild(nodeTr);
@@ -49,7 +86,11 @@ function initTimeTableGrid() {
         nodeTr.append(nodeTd);
         var nodeDiv = document.createElement("div");
         nodeDiv.setAttribute('id', teacherKey);
-        nodeDiv.setAttribute('class', 'spring');
+        if (coloredLessons) {
+            nodeDiv.setAttribute('class', 'spring colored');
+        } else {
+            nodeDiv.setAttribute('class', 'spring');
+        }
         nodeDiv.setAttribute('draggable', 'true');
         nodeTd.appendChild(nodeDiv);
         var nodeDiv2 = document.createElement("div");
@@ -57,7 +98,7 @@ function initTimeTableGrid() {
         nodeDiv.appendChild(nodeDiv2);
         nodeDiv.appendChild(document.createElement("div"));
         nodeDiv.appendChild(document.createElement("div"));
-        $.each(groupDef, function (groupKey, groupValue) {
+        $.each(groupDef, function(groupKey, groupValue) {
             var nodeSpan = document.createElement("span");
             nodeSpan.setAttribute('class', 'count');
             nodeSpan.setAttribute('id', teacherKey + 'G' + groupKey);
@@ -67,22 +108,24 @@ function initTimeTableGrid() {
 
     // lesson and group sums
     nodeTable = document.createElement("table");
-    nodeTable.setAttribute('class', 'springLake');
+    nodeTable.setAttribute('class', 'groupsSum');
     // groupCount
     $("#groupCounters")[0].appendChild(nodeTable);
     var nodeTr;
     var nodeTd;
     var nodeSpan;
     var groupNr = 0;
-    $.each(groupDef, function (groupKey, groupValue) {
+    $.each(groupDef, function(groupKey, groupValue) {
         if (groupNr++ % 3 == 0) {
             nodeTr = document.createElement("tr");
             nodeTable.appendChild(nodeTr);
         }
         nodeTd = document.createElement("td");
         nodeTr.append(nodeTd);
-        nodeSpan = document.createElement("span");
+        nodeSpan = document.createElement("a");
         nodeTd.appendChild(nodeSpan);
+        nodeSpan.setAttribute('href', window.location.href.replace(/\?.*$/, '') + '?groups=' + groupValue);
+        nodeSpan.setAttribute('target', 'blank');
         nodeSpan.setAttribute('class', 'count');
         nodeSpan.appendChild(document.createTextNode(groupValue + ': '));
         nodeSpan = document.createElement("span");
@@ -127,17 +170,23 @@ function initTimeTableGrid() {
     nodeTd.setAttribute('class', 'headerGroup');
     nodeTr.append(nodeTd);
     var lessonNr = 1;
-    $.each(lessonDef, function (lessonKey, lessonValue) {
+    $.each(lessonDef, function(lessonKey, lessonValue) {
         nodeTr = document.createElement("tr");
         nodeTable.appendChild(nodeTr);
+        var nodeClass = 'lesson';
         nodeTd = document.createElement("td");
         if (lessonNr == breakLessonNr) {
-            nodeTd.setAttribute('class', 'dropLessonBreak lesson');
-        } else if (lessonKey == 'L0') {
-            nodeTd.setAttribute('class', 'dropLessonEarly lesson');
-        } else {
-            nodeTd.setAttribute('class', 'lesson');
+            nodeClass = 'dropLessonBreakTimeLine ' + nodeClass;
         }
+        if (lessonKey == 'L0') {
+            nodeClass = 'dropLessonEarly ' + nodeClass;
+        }
+        if (lessonNr < 5) {
+            nodeClass += ' topAlign';
+        } else {
+            nodeClass += ' bottomAlign';
+        }
+        nodeTd.setAttribute('class', nodeClass);
         nodeTd.setAttribute('droppable', 'true');
         nodeTd.appendChild(document.createTextNode(lessonValue));
         nodeTr.append(nodeTd);
@@ -147,7 +196,7 @@ function initTimeTableGrid() {
     $("#timetable")[0].appendChild(nodeDiv);
 
     // whole week timetable
-    $.each(dayDef, function (dayKey, dayValue) {
+    $.each(dayDef, function(dayKey, dayValue) {
         var nodeDiv = document.createElement("div");
         nodeDiv.setAttribute('class', 'weekday-container');
         nodeDiv.setAttribute('id', dayKey);
@@ -160,26 +209,26 @@ function initTimeTableGrid() {
         var nodeTr = document.createElement("tr");
         nodeTr.setAttribute('id', 'headerGroup_' + dayKey)
         nodeTable.appendChild(nodeTr);
-        $.each(groupDef, function (groupKey, groupValue) {
+        $.each(groupDef, function(groupKey, groupValue) {
             var nodeTd = document.createElement("td");
             nodeTd.appendChild(document.createTextNode(groupValue));
             nodeTd.setAttribute('class', 'headerGroup');
             nodeTr.append(nodeTd);
         });
         var lessonNr = 1;
-        $.each(lessonDef, function (lessonKey, lessonValue) {
+        $.each(lessonDef, function(lessonKey, lessonValue) {
             nodeTr = document.createElement("tr");
             nodeTable.appendChild(nodeTr);
-            $.each(groupDef, function (groupKey, groupValue) {
+            $.each(groupDef, function(groupKey, groupValue) {
                 nodeTd = document.createElement("td");
                 nodeTd.setAttribute('id', dayKey + groupKey + lessonKey)
+                var nodeClass = 'dropLesson';
                 if (lessonNr == breakLessonNr) {
-                    nodeTd.setAttribute('class', 'dropLessonBreak dropLesson');
+                    nodeClass = 'dropLessonBreak ' + nodeClass;
                 } else if (lessonKey == 'L0') {
-                    nodeTd.setAttribute('class', 'dropLessonEarly dropLesson');
-                } else {
-                    nodeTd.setAttribute('class', 'dropLesson');
+                    nodeClass = 'dropLessonEarly ' + nodeClass;
                 }
+                nodeTd.setAttribute('class', nodeClass);
                 nodeTd.setAttribute('droppable', 'true');
                 nodeTr.append(nodeTd);
             });
@@ -206,17 +255,19 @@ function handleOk(event) {
     var field = $("#" + fieldId)[0];
     field.children[0].children[1].innerHTML = $("#subject").val();
     field.children[0].children[2].innerHTML = $("#room").val();
-    saveData(); idxDropLesson
+    saveData();
 }
 
 function initTimeTable() {
     var timeTable = new Object();
+    timeTable.version = '';
+    timeTable.lastChange = '';
     timeTable.remarks = '';
-    $.each(dayDef, function (dayKey, dayValue) {
+    $.each(dayDef, function(dayKey, dayValue) {
         timeTable[dayKey] = new Object();
-        $.each(groupDef, function (groupKey, groupValue) {
+        $.each(groupDef, function(groupKey, groupValue) {
             timeTable[dayKey][groupKey] = new Object();
-            $.each(lessonDef, function (lessonKey, lessonValue) {
+            $.each(lessonDef, function(lessonKey, lessonValue) {
                 timeTable[dayKey][groupKey][lessonKey] = '';
             });
         });
@@ -227,9 +278,12 @@ function initTimeTable() {
 function fetchDataFromDOM() {
     var timeTable = initTimeTable();
     timeTable.remarks = $("#remarks").val();
-    $.each(dayDef, function (dayKey, dayValue) {
-        $.each(groupDef, function (groupKey, groupValue) {
-            $.each(lessonDef, function (lessonKey, lessonValue) {
+    timeTable.legend = $("#legend").val();
+    timeTable.version = $("#version")[0].innerHTML;
+    timeTable.lastChange = $("#lastChange")[0].innerHTML;
+    $.each(dayDef, function(dayKey, dayValue) {
+        $.each(groupDef, function(groupKey, groupValue) {
+            $.each(lessonDef, function(lessonKey, lessonValue) {
                 timeTable[dayKey][groupKey][lessonKey] = '';
                 var level1List = $("#" + dayKey + groupKey + lessonKey)
                 if (level1List.length > 0) {
@@ -247,14 +301,22 @@ function fetchDataFromDOM() {
             });
         });
     });
+    //$("#lastChange")[0].innerHTML = (new Date()).toISOString();
     return timeTable;
 }
 
 function reloadDataIntoDOM(timeTable) {
     $("#remarks").val(timeTable.remarks);
-    $.each(dayDef, function (dayKey, dayValue) {
-        $.each(groupDef, function (groupKey, groupValue) {
-            $.each(lessonDef, function (lessonKey, lessonValue) {
+    timeTable.remarks = $("#remarks").val();
+    $("#lastChange")[0].innerHTML = timeTable.lastChange;
+    $("#legend").val(timeTable.legend);
+    if (timeTable.version != $("#version")[0].innerHTML) {
+        alert('Version upgrade from ' + timeTable.version + ' to ' + $("#version")[0].innerHTML);
+        timeTable.version = $("#version")[0].innerHTML;
+    }
+    $.each(dayDef, function(dayKey, dayValue) {
+        $.each(groupDef, function(groupKey, groupValue) {
+            $.each(lessonDef, function(lessonKey, lessonValue) {
                 var target = $("#" + dayKey + groupKey + lessonKey)[0];
                 if (target == undefined) {
                     alert("Error: Expected timetable element '" + dayKey + groupKey + lessonKey + "' not found!");
@@ -262,10 +324,10 @@ function reloadDataIntoDOM(timeTable) {
                     if (timeTable == null) {
                         timeTable = initTimeTable();
                     }
-                    if (timeTable[dayKey] != undefined
-                        && timeTable[dayKey][groupKey] != undefined
-                        && timeTable[dayKey][groupKey][lessonKey] != undefined
-                        && timeTable[dayKey][groupKey][lessonKey] != "") {
+                    if (timeTable[dayKey] != undefined &&
+                        timeTable[dayKey][groupKey] != undefined &&
+                        timeTable[dayKey][groupKey][lessonKey] != undefined &&
+                        timeTable[dayKey][groupKey][lessonKey] != "") {
                         var teacherId = timeTable[dayKey][groupKey][lessonKey].id;
                         var teacherElem = $("#" + teacherId)[0];
                         if (teacherId != '') {
@@ -279,10 +341,15 @@ function reloadDataIntoDOM(timeTable) {
                             dupNode.style.opacity = "";
                             dupNode.style.cursor = "move";
                             dupNode.className = "teacherLesson";
+                            if (coloredLessons) {
+                                dupNode.setAttribute('class', 'teacherLesson colored');
+                            } else {
+                                dupNode.setAttribute('class', 'teacherLesson');
+                            }
                             dupNode.children[0].innerHTML = timeTable[dayKey][groupKey][lessonKey].teacher;
                             dupNode.children[1].innerHTML = timeTable[dayKey][groupKey][lessonKey].subject;
                             dupNode.children[2].innerHTML = timeTable[dayKey][groupKey][lessonKey].room;
-                            dupNode.addEventListener("click", function (event) {
+                            dupNode.addEventListener("click", function(event) {
                                 clickOnLesson(event);
                                 window.location.href = "#openModal";
                                 $("#subject").focus();
@@ -290,7 +357,7 @@ function reloadDataIntoDOM(timeTable) {
                             }, false);
                             target.appendChild(dupNode);
                         }
-                    }
+                    } //else {target.appendChild(document.createTextNode("x"));}
                 }
             });
         });
@@ -298,16 +365,21 @@ function reloadDataIntoDOM(timeTable) {
     recalcAll();
 }
 
-function clearAll() {
+function clearAllAsk() {
     if (confirm("Clear all lesson entry from time table?")) {
-        var elements = $(".dropLesson");
-        elements.each(function (idx, elem) {
-            while (elem.childNodes.length > 0) {
-                elem.removeChild(elem.childNodes[0]);
-            }
-        });
-        recalcAll();
+        clearAllDo();
     }
+}
+
+function clearAllDo() {
+    var elements = $(".dropLesson");
+    elements.each(function(idx, elem) {
+        while (elem.childNodes.length > 0) {
+            elem.removeChild(elem.childNodes[0]);
+        }
+    });
+    $("#lastChange")[0].innerHTML = (new Date()).toISOString();
+    recalcAll();
 }
 
 function recalcAll() {
@@ -315,26 +387,26 @@ function recalcAll() {
     var teachers = $(".spring");
     var elements = $(".dropLesson");
     // init teachers lessons count fields
-    $.each(groupDef, function (groupKey, groupValue) {
+    $.each(groupDef, function(groupKey, groupValue) {
         $("#Gr" + groupKey).text('-');
-        $.each(teacherDef, function (teacherKey, teacherValue) {
+        $.each(teacherDef, function(teacherKey, teacherValue) {
             $("#" + teacherKey + "G" + groupKey).text('-');
         });
     });
     // init group counter fields
     var groupCounter = new Object();
-    $.each(groupDef, function (groupKey, groupValue) {
+    $.each(groupDef, function(groupKey, groupValue) {
         groupCounter[groupKey] = 0;
     });
     // claculate counters
-    elements.each(function (idxDropLesson, dropLesson) {
+    elements.each(function(idxDropLesson, dropLesson) {
         if (dropLesson.childNodes.length > 0) {
             var regExGroups = /..([A-Z])L([0-9])/.exec(dropLesson.id);
             if (regExGroups.length > 0) {
                 var groupKey = regExGroups[1];
                 var lessonNr = parseInt(regExGroups[2]);
-                dropLesson.childNodes.forEach(function (child) {
-                    $.each(teacherDef, function (teacherKey, teacherValue) {
+                dropLesson.childNodes.forEach(function(child) {
+                    $.each(teacherDef, function(teacherKey, teacherValue) {
                         if (child.id == teacherKey &&
                             (countBreaksAsTeacherLessons || lessonNr != breakLessonNr)) {
                             var lessons;
@@ -356,7 +428,7 @@ function recalcAll() {
     });
 
     $("#lessonsCount").text(allLessonsCount);
-    $.each(groupDef, function (groupKey, groupValue) {
+    $.each(groupDef, function(groupKey, groupValue) {
         var elem = $("#Gr" + groupKey);
         if (elem != null) {
             elem.text(groupCounter[groupKey]);
@@ -383,12 +455,19 @@ function importData() {
     } catch (ex) {
         alert("Error: " + ex);
     }
+    saveData();
 }
 
 function saveData() {
     var timeTable = fetchDataFromDOM();
-    timeTableString = JSON.stringify(timeTable);
-    localStorage.setItem("timeTablePs", timeTableString);
+    if (printMode == 'true') {
+        alert('No modification allowed in print mode!');
+    } else {
+        timeTableString = JSON.stringify(timeTable);
+        localStorage.setItem("timeTablePs", timeTableString);
+        // $("#lastChange")[0].innerHTML = (new Date()).toISOString();
+    }
+    return timeTable;
 }
 
 function targetDeepTest(elem, className, level) {
@@ -400,3 +479,18 @@ function targetDeepTest(elem, className, level) {
     }
     return targetDeepTest(elem.parentNode, className, level - 1);
 }
+
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};

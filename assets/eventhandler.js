@@ -1,54 +1,131 @@
-$("#Clear").click(function () {
-    clearAll();
+$("#clear").click(function() {
+    clearAllAsk();
 });
-$("#ShowImport").click(function () {
+
+$("#showimport").click(function() {
     $("#timeTableOut").show();
+    $("#timeTableUpload").show();
     $("#timeTableImportButton").show();
     $("#timeTableHideButton").show();
+    $("#download").hide();
     $("#timeTableOut").focus();
 });
-$("#timeTableImportButton").click(function () {
+
+$("#timeTableImportButton").click(function() {
+    clearAllAsk();
     importData();
     $("#timeTableOut").hide();
+    $("#timeTableUpload").hide();
     $("#timeTableImportButton").hide();
     $("#timeTableHideButton").hide();
 });
-$("#timeTableHideButton").click(function () {
+
+$("#timeTableHideButton").click(function() {
     $("#timeTableOut").hide();
+    $("#download").hide();
+    $("#timeTableUpload").hide();
     $("#timeTableHideButton").hide();
     $("#timeTableImportButton").hide();
 });
-$("#Export").click(function () {
+
+$("#export").click(function() {
+    $("#download").show();
     $("#timeTableOut").show();
     $("#timeTableOut").val(JSON.stringify(fetchDataFromDOM(), null, 4));
     $("#timeTableHideButton").show();
     $("#timeTableImportButton").hide();
+    $("#timeTableUpload").hide();
     $("#timeTableOut").focus();
     $("#timeTableOut")[0].setSelectionRange(0, 0);
     $("#timeTableOut")[0].scrollTop = 0;
     $("#timeTableOut")[0].scrollLeft = 0;
 });
 
+$("#timeTableUpload").change(function(event) {
+    var reader = new FileReader();
+    // Read file into memory as UTF-16
+    reader.readAsText($("#timeTableUpload")[0].files[0], "UTF-8");
+    // Handle progress, success, and errors
+    reader.onprogress = updateProgress;
+    reader.onload = loaded;
+    reader.onerror = errorHandler;
+});
 
-$("#Save").click(function () {
+function loaded(evt) {
+    // https://w3c.github.io/FileAPI/#FileReader-interface
+    // Obtain the read file data
+    var fileString = evt.target.result;
+    $("#timeTableOut").val(fileString);
+    $("#timeTableOut").focus();
+    $("#timeTableOut")[0].setSelectionRange(0, 0);
+    $("#timeTableOut")[0].scrollTop = 0;
+    $("#timeTableOut")[0].scrollLeft = 0;
+}
+
+function updateProgress(evt) {
+    if (evt.lengthComputable) {
+        // evt.loaded and evt.total are ProgressEvent properties
+        var loaded = (evt.loaded / evt.total);
+        if (loaded < 1) {
+            // Increase the prog bar length
+            // style.width = (loaded * 200) + "px";
+        }
+    }
+}
+
+function errorHandler(evt) {
+    if (evt.target.error.name == "NotReadableError") {
+        alert('ERROR: The file could not be read.');
+    }
+}
+
+$("#save").click(function() {
+    $("#lastChange")[0].innerHTML = (new Date()).toISOString();
     saveData();
 });
-$("#TextPrint").click(function () {
-    print();
+
+$("#textprint").click(function() {
+
+    if (printMode == 'true') {
+        print();
+    } else {
+
+        var groupString = '';
+        $.each(groupDef, function(groupKey, groupValue) {
+            if (groupString.length > 0) {
+                groupString += ',';
+            }
+            groupString += groupValue;
+        });
+        var printList = prompt('Enter groups to print:', groupString);
+        if (printList != null) {
+            var handle = window.open(window.location.href.replace(/\?.*$/, '') + '?groups=' + printList + '&doprint=true', '_blank', '');
+        }
+    }
 });
-$("#ok").click(function (event) {
+
+$("#download").click(function(event) {
+    var timeTable = fetchDataFromDOM();
+    this.href = "data:text/json;charset=utf-8," +
+        encodeURIComponent(JSON.stringify(timeTable, null, 4));
+});
+
+$("#ok").click(function(event) {
     handleOk(event);
 });
 
 var dragged = null;;
 var shift = false;
-document.addEventListener("keydown", function (event) {
+// $(document).on('keydown', function(event) {
+//     console.log('keydown');
+// });
+document.addEventListener("keydown", function(event) {
     var key = event.wich || event.keyCode;
     if (key === 16) {
         shift = true;
     }
 });
-document.addEventListener("keyup", function (event) {
+document.addEventListener("keyup", function(event) {
     var key = event.wich || event.keyCode;
     if (key === 16) {
         shift = false;
@@ -60,12 +137,19 @@ document.addEventListener("keyup", function (event) {
 });
 
 /* events fired on the draggable target */
-document.addEventListener("drag", function (event) {
+document.addEventListener("drag", function(event) {
     //
 }, false);
 
-document.addEventListener("dragstart", function (event) {
-    if (event.target.className == "spring" || event.target.className == "teacherLesson") {
+document.addEventListener("dragstart", function(event) {
+    if ((event.target.className != null && event.target.className.match('.*' + 'spring\\b.*')) ||
+        (event.target.className != null && event.target.className.match('.*' + 'teacherLesson\\b.*'))) {
+        if (printMode == 'true') {
+            alert('No modification allowed in print mode!');
+            dragged = null;
+            // prevent default to allow drop
+            event.preventDefault();
+        }
         // store a ref. on the dragged elem
         dragged = event.target;
         // make it half transparent
@@ -78,41 +162,39 @@ document.addEventListener("dragstart", function (event) {
     }
 }, false);
 
-document.addEventListener("dragend", function (event) {
+document.addEventListener("dragend", function(event) {
     // reset the transparency
     dragged.style.opacity = "";
 }, false);
 
 /* events fired on the drop targets */
-document.addEventListener("dragover", function (event) {
+document.addEventListener("dragover", function(event) {
     // prevent default to allow drop
     event.preventDefault();
     var target = targetDeepTest(event.target, "dropLesson", 5);
     if (target != null) {
         if (target != event.target || target.childNodes.length > 0) {
             target.style.background = "red";
-        }
-        else {
+        } else {
             target.style.background = "darkgrey";
         }
     }
 }, false);
 
-document.addEventListener("dragenter", function (event) {
+document.addEventListener("dragenter", function(event) {
     // highlight potential drop target when the draggable element enters it
     event.preventDefault();
     var target = targetDeepTest(event.target, "dropLesson", 5);
     if (target != null) {
         if (target != event.target || target.childNodes.length > 0) {
             target.style.background = "red";
-        }
-        else {
+        } else {
             target.style.background = "darkgrey";
         }
     }
 }, false);
 
-document.addEventListener("dragleave", function (event) {
+document.addEventListener("dragleave", function(event) {
     // reset background of potential drop target when the draggable element leaves it
     var target = targetDeepTest(event.target, "dropLesson", 5);
     if (target != null) {
@@ -120,7 +202,7 @@ document.addEventListener("dragleave", function (event) {
     }
 }, false);
 
-document.addEventListener("drop", function (event) {
+document.addEventListener("drop", function(event) {
     //var clone = event.ctrlKey;
     shift = shift || event.shiftKey;
 
@@ -131,7 +213,8 @@ document.addEventListener("drop", function (event) {
         var target = targetDeepTest(event.target, "dropLesson", 5);
         if (target != null) {
             target.style.background = "";
-            if (shift && dragged.parentNode.className == "dropLesson") {
+            if (shift && dragged.parentNode.className != null &&
+                dragged.parentNode.className.match('.*' + 'dropLesson\\b.*')) {
                 dragged.parentNode.removeChild(dragged);
             }
             while (target.childNodes.length > 0) {
@@ -140,16 +223,16 @@ document.addEventListener("drop", function (event) {
             var dupNode = dragged.cloneNode(true);
             dupNode.style.opacity = "";
             dupNode.style.cursor = "move";
-            dupNode.className = "teacherLesson";
+            dupNode.className = "colored teacherLesson";
             target.appendChild(dupNode);
 
-            dupNode.addEventListener("click", function (event) {
+            dupNode.addEventListener("click", function(event) {
                 clickOnLesson(event);
                 window.location.href = "#openModal";
                 $("#subject").focus();
             }, false);
-        } else if (dragged.className == "spring") {
-            ;
+            $("#lastChange")[0].innerHTML = (new Date()).toISOString();
+        } else if (dragged.className == "spring") {;
         } else {
             dragged.parentNode.removeChild(dragged);
         }
@@ -157,3 +240,37 @@ document.addEventListener("drop", function (event) {
         recalcAll();
     }
 }, false);
+
+
+
+// if (window.File && window.FileReader && window.FileList && window.Blob) {
+//     alert('File API supported.!');
+// } else {
+//     alert('The File APIs are not fully supported in this browser.');
+// }
+
+// $(function() {
+//     'use strict';
+//     // Change this to the location of your server-side upload handler:
+//     var url = "uploadCarPicture";
+//     $('#fileupload').fileupload({
+//             url: url,
+//             dataType: 'json',
+//             done: function(e, data) {
+//                 $.each(data.files, function(index, file) {
+//                     $('<p/>').text(file.name);
+//                 });
+//             },
+//             fail: function(e, data) {
+//                 alert("File exists");
+//             },
+//             progressall: function(e, data) {
+//                 var progress = parseInt(data.loaded / data.total * 100, 10);
+//                 $('#progress .bar').css(
+//                     'width',
+//                     progress + '%'
+//                 );
+//             }
+//         }).prop('disabled', !$.support.fileInput)
+//         .parent().addClass($.support.fileInput ? undefined : 'disabled');
+// });

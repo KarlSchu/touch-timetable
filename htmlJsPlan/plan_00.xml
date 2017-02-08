@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<plan>
+  <dayDef>
+    <name id="Mo">Montag</name>
+    <name id="Di">Dienstag</name>
+    <name id="Mi">Mittwoch</name>
+    <name id="Do">Donnerstag</name>
+    <name id="Fr">Freitag</name>
+  </dayDef>
+  <topicDefs>
+    <topicDef id="HU">
+      <descr>Hauptunterricht</descr>
+      <style></style>
+    </topicDef>
+    <topicDef id="LA">
+      <descr>Lernatelier</descr>
+      <style></style>
+    </topicDef>
+    <topicDef id="Fr">
+      <descr>Französisch</descr>
+      <style></style>
+    </topicDef>
+  </topicDefs>
+  <teacherDefs>
+    <teacherDef id="ks">
+      <descr>Kerstin Schubert</descr>
+      <style></style>
+    </teacherDef>
+    <teacherDef id="khs">
+      <descr>Karlheinz Schubert</descr>
+      <style></style>
+    </teacherDef>
+  </teacherDefs>
+  <groupDefs>
+    <groupDef id="A">
+      <descr>Kl5</descr>
+      <members>Paul, Fritz, Hans</members>
+      <style></style>
+    </groupDef>
+    <groupDef id="B">
+      <descr>Kl6</descr>
+      <members>Martha,Frieda</members>
+      <style></style>
+    </groupDef>
+  </groupDefs>
+  
+  <table colsPerDay="3" rowsInPlan="15">
+    <line id="1">
+      <style>35</style>
+      <scedule>7:00</scedule>
+      <days>
+        <day id="Mo">
+          <atom>
+            <topic>hu</topic>
+            <groups>A</groups>
+            <teachers>ks</teachers>
+          </atom>
+          <atom>
+            <topic>hu</topic>
+            <groups>B A</groups>
+            <teachers>khs</teachers>
+          </atom>
+        </day>
+        <day id="Di">
+          <atom>
+            <topic>hu</topic>
+            <groups>A</groups>
+            <teachers>ks</teachers>
+          </atom>
+          <atom>
+            <topic>hu</topic>
+            <groups>B A</groups>
+            <teachers>khs</teachers>
+          </atom>
+        </day>
+        <day id="Mi">
+          <atom>
+            <topic>hu</topic>
+            <groups>A</groups>
+            <teachers>ks</teachers>
+          </atom>
+          <atom>
+            <topic>hu</topic>
+            <groups>B A</groups>
+            <teachers>khs</teachers>
+          </atom>
+        </day>
+        <day id="Do">
+          <atom>
+            <topic>hu</topic>
+            <groups>A</groups>
+            <teachers>ks</teachers>
+          </atom>
+          <atom>
+            <topic>hu</topic>
+            <groups>B A</groups>
+            <teachers>khs</teachers>
+          </atom>
+        </day>
+        <day id="Fr">
+          <atom>
+            <topic>hu</topic>
+            <groups>A</groups>
+            <teachers>ks</teachers>
+          </atom>
+          <atom>
+            <topic>hu</topic>
+            <groups>B A</groups>
+            <teachers>khs</teachers>
+          </atom>
+        </day>
+       </days>
+    </line>
+    <line id="2">
+      <style>35</style>
+      <scedule>8:15</scedule>
+      <days>
+        <day id="Mo">
+          <atom>
+            <topic>hu</topic>
+            <groups>A</groups>
+            <teachers>ks</teachers>
+          </atom>
+          <atom>
+            <topic>hu</topic>
+            <groups>B A</groups>
+            <teachers>khs</teachers>
+          </atom>
+        </day>
+       </days>
+    </line>
+  </table>
+</plan>

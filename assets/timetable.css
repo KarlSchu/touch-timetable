@@ -1,8 +1,15 @@
 /* nanoscrollbar */
-.nano .pane   { background: #888; }
-.nano .slider { background: #111; }
+
+.nano .pane {
+    background: #888;
+}
+
+.nano .slider {
+    background: #111;
+}
 
 body {
+    font-size: 12px;
     /* Override bootstrap properties */
     background-color: #879aad !important;
     border: 0 !important;
@@ -13,96 +20,153 @@ body {
     /* Required to make elements draggable in old WebKit */
     -khtml-user-drag: element;
     -webkit-user-drag: element;
+    width: 100%;
 }
 
-@media print{
-    @page {size: landscape}
-    body {margin-left: 50px;}
-    .no-print, .no-print *  {display: none !important;}
+@media all {
+    .page-break {
+        display: none;
+    }
+}
+
+@media print {
+    @page {
+        size: landscape
+    }
+    body {
+        margin-left: 2em;
+    }
+    .no-print,
+    .no-print * {
+        display: none !important;
+    }
+    .page-break {
+        display: block;
+        page-break-before: always;
+    }
+    #legendPrint,
+    .weekday-container {
+        page-break-before: always;
+        page-break-inside: avoid;
+    }
+}
+
+.only-print {
+    display: none;
 }
 
 .btn {
     float: left;
-    padding-top:0;
-    padding-bottom:0;
-    height:20px;
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 1.6em;
 }
+
+#download {
+    display: none;
+    float: left;
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 1.4em;
+}
+
 .btn2 {
     float: none;
-    width: 90%
+    width: 90%;
+    height: 1.6em;
 }
+
 #remarks {
-    height: 93px;
-    width: 528px;
+    height: 6.6em;
+    width: 500px;
 }
 
 .resetFloat {
-   clear:both;
+    clear: both;
 }
 
 .importContainer {
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 0.5em;
 }
 
+
 /* Prevent the text contents of draggable elements from being selectable. */
+
 [draggable] {
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-  /* Required to make elements draggable in old WebKit */
-  -khtml-user-drag: element;
-  -webkit-user-drag: element;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Required to make elements draggable in old WebKit */
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
 }
 
 #teachers {
-    float:left;
+    float: left;
     margin-right: 0;
-    margin-bottom: 20px;
+    margin-bottom: 1em;
     z-index: 10000;
     cursor: move;
 }
+
 #top {
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 1.5em;
     color: #fff;
     float: left;
-    margin-left: 10px;
-    margin-bottom: 20px;
+    margin-left: 1em;
+    margin-bottom: 1.5em;
 }
 
 #header {
     font-size: 1.7em;
-    text-align: center;
-    margin-right: 20px;
-    margin-bottom: 15px;
+    text-align: left;
+    margin-right: 1.5em;
+    margin-bottom: 1em;
     color: #fff;
 }
 
-.dropLesson, .lesson {
-    height: 58px;
+.dropLesson,
+.lesson {
+    height: 5em;
     width: 40px;
     text-align: center;
     border: 0;
-    /*-webkit-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 3px #000;
-    -ms-box-shadow: inset 0 0 3px #000;
-    box-shadow: inset 0 0 3px #000;*/
 }
-.dropLessonEarly{
-    height: 26px;    
+
+table tr td:last-child {
+    border-right: 0;
+}
+
+.dropLessonEarly {
+    height: 2.2em;
+    border: 0;
 }
 
 .dropLessonBreak {
-    height: 26px;
+    height: 5em;
     width: 30px;
     text-align: center;
     border: 0;
     background-color: lightblue;
+}
+
+.dropLessonBreakTimeLine {
+    height: 5em;
+    width: 30px;
+    text-align: center;
+    border: 0;
+    background-color: lightblue;
+}
+
+.topAlign {
+    vertical-align: top;
+}
+
+.bottomAlign {
+    vertical-align: bottom;
 }
 
 #groupCounters {
@@ -112,73 +176,112 @@ body {
     margin-right: 10px;
 }
 
-#T0 {
+
+/*.spring,
+.teacherLesson {
+    color: green;
+    background-color: white !important;
+    border: 0;
+}*/
+
+
+/*.spring [id^="T"] {
+    color: black;
+    background-color: white !important;
+    border: 0;
+}*/
+
+#T0.colored {
     color: darkblue;
     background-color: blue !important;
     border: 1px solid darkblue;
 }
-@media print{
-    #T0 {
-        background-color: blue !important;
-        -webkit-print-color-adjust: exact; 
-}}
-#T1 {
+
+#T1.colored {
     color: blue;
     background-color: lightblue !important;
     border: 1px solid blue;
 }
-#T2 {
+
+#T2.colored {
     color: darkblue;
     background-color: lightgreen;
     border: 1px solid green;
 }
-#T3 {
+
+#T3.colored {
     color: black;
     background-color: mediumvioletred;
     border: 1px solid darkviolet;
 }
-#T4 {
+
+#T4.colored {
     color: mediumvioletred;
     background-color: violet;
     border: 1px solid mediumvioletred;
 }
-#T5 {
+
+#T5.colored {
     color: darkgreen;
     background-color: yellow;
     border: 1px solid yellowgreen;
 }
-#T6 {
+
+#T6.colored {
     color: black;
     background-color: green;
     border: 1px solid darkgreen;
 }
-#T7 {
+
+#T7.colored {
     color: orangered;
     background-color: orange;
     border: 1px solid darkorange;
 }
-#T8 {
+
+#T8.colored {
     color: brown;
     background-color: darkorange;
     border: 1px solid brown;
 }
-#T9 {
+
+#T9.colored {
     color: green;
     background-color: lightgoldenrodyellow;
     border: 1px solid greenyellow;
 }
+
+#T10.colored {
+    color: gray;
+    background-color: lightggray;
+    border: 1px solid greenyellow;
+}
+
+#T11.colored {
+    color: darkslateblue;
+    background-color: burlywood;
+    border: 1px solid greenyellow;
+}
+
+#timeTableUpload {
+    display: none;
+    clear: both;
+}
+
 #timeTableImportButton {
     display: none;
-    clear:both;
+    clear: both;
 }
+
 #timeTableHideButton {
     display: none;
-    clear:both;
+    clear: both;
 }
+
 #timeTableOut {
     display: none;
-    clear:both;
-    height:300px;
+    clear: both;
+    height: 20em;
     width: 96%;
 }
 
@@ -190,6 +293,7 @@ body {
     border-style: solid;
     border-color: gray;
 }
+
 .springLake td {
     border-top: 1px;
     border-bottom: 0;
@@ -199,20 +303,34 @@ body {
     border-color: gray;
     vertical-align: middle;
     text-align: center;
-    /*padding: 2px 2px 2px 2px;*/
     padding-top: 4px;
     padding-bottom: 0;
-    /*width: 100%;*/
+    height: 2em;
 }
-.springOcean td {
+
+.groupsSum td {
     border-top: 1px;
-    border-bottom: 0;
+    border-bottom: 1px;
     border-left: 1px;
     border-right: 1px;
     border-style: solid;
     border-color: gray;
     vertical-align: middle;
     text-align: center;
+    padding-top: 4px;
+    padding-bottom: 5px;
+    height: 2em;
+}
+
+.springOcean td {
+    border-top: 1px;
+    border-bottom: 0;
+    border-left: 0;
+    border-right: 1px;
+    border-style: solid;
+    border-color: gray;
+    text-align: center;
+    border-collapse: collapse;
     /*padding: 2px 2px 2px 2px;*/
     padding-top: 4px;
     padding-bottom: 0;
@@ -234,11 +352,12 @@ body {
     /*width: 100%;*/
 }
 
-.spring, .teacherLesson {
+.spring,
+.teacherLesson {
     text-align: center;
-    background-color: lightgray;
-    border: 1px solid gray;
-    box-sizing: border-box;
+    /*background-color: lightgray;
+    border: 0px solid gray;
+    box-sizing: border-box;*/
     padding: 4px 4px 4px 2px;
     margin: 1px 1px 1px 1px;
     border-radius: 26px 26px 26px 26px;
@@ -263,20 +382,17 @@ body {
 }
 
 .headerGroup {
-    font-size: 0.7em; 
+    font-size: 0.7em;
     color: #fff;
     background-color: #555;
     text-shadow: #000 0 1px;
-    box-shadow: 5px;
+    /*box-shadow: 5px;*/
     padding: 0px;
-    background: -moz-linear-gradient(left center, rgb(0,0,0), rgb(79,79,79), rgb(21,21,21));
-    background: -webkit-gradient(linear, left top, right top,
-                               color-stop(0, rgb(0,0,0)),
-                               color-stop(0.50, rgb(79,79,79)),
-                               color-stop(1, rgb(21,21,21)));
-    background: -webkit-linear-gradient(left center, rgb(0,0,0), rgb(79,79,79), rgb(21,21,21));
-    background: -ms-linear-gradient(left center, rgb(0,0,0), rgb(79,79,79), rgb(21,21,21));
-    border-bottom: 1px solid #ddd;
+    background: -moz-linear-gradient(left center, rgb(0, 0, 0), rgb(79, 79, 79), rgb(21, 21, 21));
+    background: -webkit-gradient(linear, left top, right top, color-stop(0, rgb(0, 0, 0)), color-stop(0.50, rgb(79, 79, 79)), color-stop(1, rgb(21, 21, 21)));
+    background: -webkit-linear-gradient(left center, rgb(0, 0, 0), rgb(79, 79, 79), rgb(21, 21, 21));
+    background: -ms-linear-gradient(left center, rgb(0, 0, 0), rgb(79, 79, 79), rgb(21, 21, 21));
+    border-bottom: 0px solid #ddd;
 }
 
 .timeline-container {
@@ -288,42 +404,33 @@ body {
     border-radius: 10px;
     padding-bottom: 15px;
     float: left;
-    border: 1px solid #666666;
+    border: 2px solid #666666;
     background-color: #ccc;
     margin-right: 0px;
     -webkit-border-radius: 10px;
     -ms-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 3px #000;
+    /*-webkit-box-shadow: inset 0 0 3px #000;
     -ms-box-shadow: inset 0 0 3px #000;
-    box-shadow: inset 0 0 3px #000;
+    box-shadow: inset 0 0 3px #000;*/
     text-align: center;
     cursor: normal;
 }
 
 .timeline-container header {
-  color: #fff;
-  text-shadow: #000 0 1px;
-  box-shadow: 5px;
-  padding: 0px;
-  font-size: 1em; 
-  background: -moz-linear-gradient(left center, rgb(0,0,0), rgb(79,79,79), rgb(21,21,21));
-  background: -webkit-gradient(linear, left top, right top,
-                               color-stop(0, rgb(0,0,0)),
-                               color-stop(0.50, rgb(79,79,79)),
-                               color-stop(1, rgb(21,21,21)));
-  background: -webkit-linear-gradient(left center, rgb(0,0,0), rgb(79,79,79), rgb(21,21,21));
-  background: -ms-linear-gradient(left center, rgb(0,0,0), rgb(79,79,79), rgb(21,21,21));
-  border-bottom: 1px solid #ddd;
-  -webkit-border-top-left-radius: 10px;
-  -moz-border-radius-topleft: 10px;
-  -ms-border-radius-topleft: 10px;
-  border-top-left-radius: 10px;
-  -webkit-border-top-right-radius: 10px;
-  -ms-border-top-right-radius: 10px;
-  -moz-border-radius-topright: 10px;
-  border-top-right-radius: 10px;
+    padding: 0px;
+    font-size: 1em;
+    font-weight: 100;
+    border-bottom: 0px solid #ddd;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -ms-border-radius-topleft: 10px;
+    border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -ms-border-top-right-radius: 10px;
+    -moz-border-radius-topright: 10px;
+    border-top-right-radius: 10px;
 }
 
 .weekday-container {
@@ -335,80 +442,88 @@ body {
     border-radius: 10px;
     padding-bottom: 15px;
     float: left;
-    border: 1px solid #666666;
+    border: 2px solid #666666;
     background-color: #ccc;
     margin-right: 0px;
     -webkit-border-radius: 10px;
     -ms-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 3px #000;
+    /*-webkit-box-shadow: inset 0 0 3px #000;
     -ms-box-shadow: inset 0 0 3px #000;
-    box-shadow: inset 0 0 3px #000;
+    box-shadow: inset 0 0 3px #000;*/
     text-align: center;
     cursor: normal;
 }
 
 .weekday-container header {
-  color: #fff;
-  text-shadow: #000 0 1px;
-  box-shadow: 5px;
-  padding: 0px;
-  font-size: 1em; 
-  background: -moz-linear-gradient(left center, rgb(0,0,0), rgb(79,79,79), rgb(21,21,21));
-  background: -webkit-gradient(linear, left top, right top,
-                               color-stop(0, rgb(0,0,0)),
-                               color-stop(0.50, rgb(79,79,79)),
-                               color-stop(1, rgb(21,21,21)));
-  background: -webkit-linear-gradient(left center, rgb(0,0,0), rgb(79,79,79), rgb(21,21,21));
-  background: -ms-linear-gradient(left center, rgb(0,0,0), rgb(79,79,79), rgb(21,21,21));
-  border-bottom: 1px solid #ddd;
-  -webkit-border-top-left-radius: 10px;
-  -moz-border-radius-topleft: 10px;
-  -ms-border-radius-topleft: 10px;
-  border-top-left-radius: 10px;
-  -webkit-border-top-right-radius: 10px;
-  -ms-border-top-right-radius: 10px;
-  -moz-border-radius-topright: 10px;
-  border-top-right-radius: 10px;
+    color: #fff;
+    text-shadow: #000 0 1px;
+    /*box-shadow: 5px;*/
+    padding: 0px;
+    font-size: 1em;
+    background: -moz-linear-gradient(left center, rgb(0, 0, 0), rgb(79, 79, 79), rgb(21, 21, 21));
+    background: -webkit-gradient(linear, left top, right top, color-stop(0, rgb(0, 0, 0)), color-stop(0.50, rgb(79, 79, 79)), color-stop(1, rgb(21, 21, 21)));
+    background: -webkit-linear-gradient(left center, rgb(0, 0, 0), rgb(79, 79, 79), rgb(21, 21, 21));
+    background: -ms-linear-gradient(left center, rgb(0, 0, 0), rgb(79, 79, 79), rgb(21, 21, 21));
+    border-bottom: 0px solid #ddd;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -ms-border-radius-topleft: 10px;
+    border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -ms-border-top-right-radius: 10px;
+    -moz-border-radius-topright: 10px;
+    border-top-right-radius: 10px;
+}
+
+#legend {
+    height: 12em;
+    width: 96%;
+}
+
+#legendPrint {
+    page-break-before: always;
+    page-break-inside: avoid;
+    columns: 3 12em;
 }
 
 .modalDialog {
-	position: fixed;
-	font-family: Arial, Helvetica, sans-serif;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	background: rgba(0,0,0,0.8);
-	z-index: 99999;
-	opacity:0;
-	-webkit-transition: opacity 400ms ease-in;
-	-moz-transition: opacity 400ms ease-in;
-	transition: opacity 400ms ease-in;
-	pointer-events: none;
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 99999;
+    opacity: 0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
 }
 
 .modalDialog:target {
-	opacity:1;
-	pointer-events: auto;
+    opacity: 1;
+    pointer-events: auto;
 }
 
-.modalDialog > div {
-	width: 400px;
-	position: relative;
-	margin: 10% auto;
-	padding: 5px 20px 13px 20px;
-	border-radius: 10px;
-	background: #fff;
-	background: -moz-linear-gradient(#fff, #999);
-	background: -webkit-linear-gradient(#fff, #999);
-	background: -o-linear-gradient(#fff, #999);
+.modalDialog>div {
+    width: 400px;
+    position: relative;
+    margin: 10% auto;
+    padding: 5px 20px 13px 20px;
+    border-radius: 10px;
+    background: #fff;
+    background: -moz-linear-gradient(#fff, #999);
+    background: -webkit-linear-gradient(#fff, #999);
+    background: -o-linear-gradient(#fff, #999);
 }
 
 .close {
     width: 40px;
-	/*background: #606061;
+    /*background: #606061;
 	color: #FFFFFF;
 	line-height: 25px;
 	position: absolute;
@@ -425,12 +540,14 @@ body {
 	-webkit-box-shadow: 1px 1px 3px #000;
 	box-shadow: 1px 1px 3px #000;*/
 }
+
 .floatRight {
     float: right;
 }
+
 .ok {
     width: 40px;
-	/*background: #606061;
+    /*background: #606061;
 	color: #FFFFFF;
 	line-height: 25px;
 	position: absolute;
@@ -446,9 +563,22 @@ body {
 	-moz-box-shadow: 1px 1px 3px #000;
 	-webkit-box-shadow: 1px 1px 3px #000;
 	box-shadow: 1px 1px 3px #000;*/
+}
+
+#lastChange {
+    font-size: 0.5em;
+    color: #fff;
+    text-align: left;
 }
 
 
 /*.close:hover { background: #00d9ff; }*/
 
-
+footer {
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    height: 30px;
+    width: 100%;
+    color: #aaa;
+}

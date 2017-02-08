@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<planDef>
+  <dayDef>
+    <name id="Mo">Montag</name>
+    <name id="Di">Dienstag</name>
+    <name id="Mi">Mittwoch</name>
+    <name id="Do">Donnerstag</name>
+    <name id="Fr">Freitag</name>
+  </dayDef>
+  <topicDefs>
+    <topicDef id="ILA">
+      <descr>Individuelles Lernangebot</descr>
+      <style>#ffff99</style>
+    </topicDef>
+    <topicDef id="HU">
+      <descr>Hauptunterricht</descr>
+      <style>#ffff99</style>
+    </topicDef>
+    <topicDef id="LA">
+      <descr>Lernatelier</descr>
+      <style>#ffff99</style>
+    </topicDef>
+    <topicDef id="HA">
+      <descr>Handarbeit</descr>
+      <style>#aa3333</style>
+    </topicDef>
+    <topicDef id="Ku">
+      <descr>Kunstunterricht</descr>
+      <style>#aa6666</style>
+    </topicDef>
+    <topicDef id="Sp">
+      <descr>Sprachunterricht</descr>
+      <style>#dd3344</style>
+    </topicDef>
+    <topicDef id="ISp">
+      <descr>Individuelles Fremdsprachangebot</descr>
+      <style>#E6879D</style>
+    </topicDef>
+    <topicDef id="PV">
+      <descr>Prüfungsvorbereitung</descr>
+      <style>#33dd33</style>
+    </topicDef>
+    <topicDef id="Essen">
+      <descr>Essen</descr>
+      <style>#aaaaaa</style>
+    </topicDef>
+    <topicDef id="Tu">
+      <descr>Turnen und Zirus</descr>
+      <style>#5555ff</style>
+    </topicDef>
+    <topicDef id="Club">
+      <descr>Club</descr>
+      <style>#eeeeee</style>
+    </topicDef>
+  </topicDefs>
+  <teacherDefs>
+    <teacherDef id="ks">
+      <descr>Kerstin Schubert</descr>
+      <style>2px solid #00ff00</style>
+    </teacherDef>
+    <teacherDef id="lg">
+      <descr>Lisa Gersbach</descr>
+      <style>2px solid #00ffff</style>
+    </teacherDef>
+     <teacherDef id="bg">
+      <descr>Bea Gutswiler</descr>
+      <style>2px solid #88ffff</style>
+    </teacherDef>
+     <teacherDef id="sb">
+      <descr>Silvia Boss</descr>
+      <style>2px solid #008888</style>
+    </teacherDef>
+     <teacherDef id="at">
+      <descr>Aline Del Torre</descr>
+      <style>2px solid #008800</style>
+    </teacherDef>
+    <teacherDef id="mm">
+      <descr>Miss Merkl</descr>
+      <style>2px solid #000088</style>
+    </teacherDef>
+     <teacherDef id="ws">
+      <descr>Wolfgang Stammen</descr>
+      <style>2px solid #004400</style>
+    </teacherDef>
+     <teacherDef id="khs">
+      <descr>Karlheinz Schubert</descr>
+      <style>2px solid #0000ff</style>
+    </teacherDef>
+  </teacherDefs>
+  <groupDefs>
+    <groupDef id="A">
+      <descr>Kl.6a</descr>
+      <members>Marc, David, Brain</members>
+      <style></style>
+    </groupDef>
+    <groupDef id="B">
+      <descr>Kl.6b</descr>
+      <members>Nora, Pia, Scholastica, Giulia, Noah, Samuel, Thomas, Fabian, Pascal, Severin </members>
+      <style></style>
+    </groupDef>
+    <groupDef id="C">
+      <descr>Kl.5</descr>
+      <members>Nikolai, Ramon, Deliah, Aleander</members>
+      <style></style>
+    </groupDef>
+    <groupDef id="D">
+      <descr>Kl.4</descr>
+      <members>Marc, Noe, Quirin</members>
+      <style></style>
+    </groupDef>
+  </groupDefs>
+</planDef>

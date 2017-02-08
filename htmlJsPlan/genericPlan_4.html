@@ -1,0 +1,832 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8" >
+	<TITLE>TimeTable Pegasus Schule</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.3  (Win32)" >
+	<META NAME="AUTHOR" CONTENT="Karlheinz Schubert" >
+	<META NAME="CREATED" CONTENT="20071208;9482590" >
+	<META NAME="CHANGEDBY" CONTENT="Karlheinz Schubert" >
+	<META NAME="CHANGED" CONTENT="20071208;9494510" >
+  <style>
+  td.style {
+    border:1px solid blue;
+    border-collapse: collapse;
+    margin: 0px;
+    padding: 0px;
+    height: 38px;
+    width: 2%;
+  }
+  td.time {
+    border:1px solid blue;
+    border-collapse: collapse;
+    margin: 0px;
+    padding: 0px;
+    height:38px;
+    width:7%;
+  }
+  td.atom {
+    border:1px solid lightgray;
+    border-collapse: collapse;
+    margin: 0px;
+    padding: 0px;
+    height:38px;
+    width:5%;
+  }
+  textarea.style {
+    border:1px solid blue;
+    border-collapse: collapse;
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    width:100%;
+  }
+  textarea.time {
+    border:1px solid blue;
+    border-collapse: collapse;
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    width:100%;
+    font:small-caps 8pt Verdana;
+  }
+  textarea.atom {
+    border:1px solid lightgray;
+    border-collapse: collapse;
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    width:100%;
+    overflow: hidden;
+  }
+  td.tag {
+    border:1px solid blue;
+    border-collapse: collapse;
+    text-align: center;
+    width:6%;
+  }
+  table {
+    border:1px solid lightgray;
+    border-collapse: collapse;
+    margin: 0px;
+    padding: 0px;
+  }
+  table.inPlan {
+    border:1px solid lightgray;
+    border-collapse: collapse;
+    margin: 0px;
+    padding: 0px;
+    width:100%;
+    font:small-caps 8pt Verdana;
+  }
+  
+  #plan {
+    border:1px solid lightgray;
+    border-collapse: collapse;
+    margin: 0px;
+    padding: 0px;
+  }
+  
+  table.out, div.out {
+    border:1px solid lightgray;
+    border-collapse: collapse;
+    margin: 0px;
+    padding: 0px;
+    font:small-caps 8pt Verdana;
+    //empty-cells:show;
+  }
+  div.outGroup {
+      page-break-before: always;
+  }
+  table.out {
+    border:1px solid blue;
+    border-collapse:collapse;
+    margin: 0px;
+    padding: 0px;
+  }
+  table.outCalc {
+    border:1px solid blue;
+    border-collapse:collapse;
+    margin: 0px;
+    padding: 0px;
+    font:small-caps 8pt Verdana;
+    width:10%;
+  }
+  td.outStyle {
+    border: 1px solid blue;
+    border-collapse:collapse;
+    margin: 0px;
+    padding: 0px;
+    width:1%;
+    white-space:pre;
+  }
+  td.outTime {
+    border: 1px solid blue;
+    border-collapse:collapse;
+    margin: 0px;
+    padding: 0px;
+    width:1%;
+    white-space:pre;
+  }
+  td.outTag {
+    border:1px solid lightgray;
+    border-collapse:collapse;
+    width:10%;
+  }
+  td.outAtom {
+    border:1px solid green;
+    border-collapse:collapse;
+    width:17%;
+    }
+  </style>
+  <script language="javascript" type="text/javascript">// <![CDATA[
+  var days = ['Mo','Di','Mi','Do','Fr'];
+  var headline = ['Montag','Dienstag','Mittwoch','Donnerstag','Freitag']
+  var dayCols = 3;
+  var tableRows = 11;
+  var autoRefresh = false;
+  var topics;
+  var teachers;
+  //var hiddenGroups;
+  var calculatedLessons;
+  var calculatedTeachers;
+  var calculatedGroups;
+  var ubId = 'unbesetztId';
+
+
+  String.prototype.trim = function() {
+    // Erst führende, dann Abschließende Whitespaces entfernen
+    // und das Ergebnis dieser Operationen zurückliefern
+    return this.replace (/^\s+/, '').replace (/\s+$/, '');
+  }
+  function initTopics() {
+    topics = new Object();
+    var lastValue = '';
+    var topicNames = document.getElementById('topicNames').value.split(',');
+    var topicValues = document.getElementById('topicValues').value.split(',');
+    if (topicNames.length != topicValues.length) {
+      alert('Anzahl Fächer ('+topicNames.length+') und Anzahl ('+topicValues.length+') Fächereigenschaften ungleich!');
+    }    
+    for(var i = 0; i < topicNames.length; i++) {
+       if (i < topicValues.length)   {
+        lastValue = topicValues[i].trim();
+       }
+      topics[topicNames[i].trim().toLowerCase()] = lastValue;
+    }
+  }
+
+  function initTeachers() {
+    teachers = new Object();
+    var teacherNames = document.getElementById('teacherNames').value.split(',');
+    var teacherValues = document.getElementById('teacherValues').value.split(',');
+    //if (teacherNames.length != teacherValues.length) {
+    //  alert('Anzahl Lehrer ('+teacherNames.length+') und Anzahl ('+teacherValues.length+') Lehrereigenschaften ungleich!');
+    //}
+   var lastValue = '';
+   for(var i = 0; i < teacherNames.length; i++) {
+       if (i < teacherValues.length)   {
+          lastValue = teacherValues[i].trim();
+      }
+     teachers[teacherNames[i].trim().toLowerCase()] = lastValue;
+    }
+  }
+  
+  /**
+    * Ausgabestundenplaene für die Gruppen generieren 
+    */
+  function generateEditPlan() {
+    tableRows = document.getElementById('tableRows').value;
+    dayCols = document.getElementById('dayCols').value;
+    var tr; 
+    var td;    
+    var ta;
+    var entry = document.getElementById('inPlan');  
+    entry.innerHTML = '';
+    entry.className = 'in';
+    var comment = document.createTextNode('Plandata');
+    comment.className='outTag';
+    entry.appendChild(comment);
+    var table = document.createElement('table');
+    table.id = 'plan';
+    entry.appendChild(table);
+    table.className = 'inPlan';
+    tr = document.createElement('tr');
+    table.appendChild(tr);
+    td = document.createElement('td');
+    tr.appendChild(td);
+    td.className = 'outStyle';
+    td.innerHTML = 'H';
+    td = document.createElement('td');
+    tr.appendChild(td);
+    td.className = 'time';
+    td.innerHTML = 'Zeiten';
+    for (var day in headline) {
+      td = document.createElement('td');
+      tr.appendChild(td);
+      td.className = 'tag';
+      td.innerHTML = headline[day];
+      td.colSpan = dayCols;
+    }
+    for (var row = 1; row <= tableRows; row++) {
+        var tr = document.createElement('tr');
+        table.appendChild(tr);
+        var td = document.createElement('td');
+        tr.appendChild(td);
+        td.className = 'style';
+        var ta = document.createElement('textarea');
+        td.appendChild(ta);
+        ta.id = 'Style_'+row;
+        ta.name = 'Style_'+row;
+        ta.className = 'style';
+        
+        td = document.createElement('td');
+        tr.appendChild(td);
+        td.className = 'time';
+        ta = document.createElement('textarea');
+        td.appendChild(ta);
+        ta.id = 'Time_'+row;
+        ta.name = 'Time_'+row;
+        ta.className = 'time';
+        
+        for (var day in days) {
+          for (var col = 1; col <= dayCols; col++) {              
+            var id = days[day]+'_'+row+'_'+col;
+            var td = document.createElement('td');
+            tr.appendChild(td);
+            td.className = 'atom';
+            var ta = document.createElement('textarea');
+            td.appendChild(ta);
+            ta.id = id;
+            ta.name = id;
+            ta.className = 'atom';
+            ta.onblur = function(){
+              setAtom(this);
+              };
+          }
+       }
+    }
+  }
+
+  /**
+   * transfer --> plan
+   */
+  function transfer2plan() {
+    var error = ''; 
+    var xml = document.getElementById('transfer').value.split(/[;]/);
+    var i = 0;
+    document.getElementById('topicNames').value = xml[i++].trim();
+    document.getElementById('topicValues').value = xml[i++].trim();
+    document.getElementById('teacherNames').value = xml[i++].trim();
+    document.getElementById('teacherValues').value = xml[i++].trim();
+    document.getElementById('dayCols').value = xml[i++].trim();
+    document.getElementById('tableRows').value = xml[i++].trim();
+    generateEditPlan();
+    var xmlLessons = new Array();
+    for (var row = 1; row <= tableRows; row++) {
+      if (typeof(xml[i] ) == "undefined" || xml[i] == null) {
+        continue;
+      }
+      xmlLessons.push(xml[i]);
+    }
+  alert(xmlLessons);
+    loadAllAtoms(xmlLessons);
+   }
+
+  /**
+   * Plan mit Zeiten und Lektionsangaben f�llen
+   */
+  function loadAllAtoms(xml) {
+   for (var row = 1; row <= xml.length; row++) {
+     document.getElementById('Style_'+row).value = xml[i++].trim();
+      document.getElementById('Time_'+row).value = xml[i++].trim();
+      for (var day in days) {
+        for (var col = 1; col <= dayCols; col++) {
+          var id = days[day]+'_'+row+'_'+col;
+          try {
+             document.getElementById(id).value = xml[i++].trim();
+            } catch (e)  {
+              error += id + '\n';  
+            }
+        }
+      }
+    }
+    if (error.length > 0) {
+      alert('Fehler beim Refresh des/der Elements/e:\n'+error); 
+    }
+  }
+
+  /**
+    * plan -> Transfer
+    */
+  function plan2transfer() {
+    if (autoRefresh == false)
+      return;
+    var error = ''; 
+    var xml = '';
+    
+    xml += document.getElementById('topicNames').value +';\n';
+    xml += document.getElementById('topicValues').value +';\n';
+    xml += document.getElementById('teacherNames').value +';\n';
+    xml += document.getElementById('teacherValues').value +';\n';
+    xml += document.getElementById('dayCols').value + '; ';
+    xml += document.getElementById('tableRows').value + ';\n';
+ 
+    for (var row = 1; row <= tableRows; row++) {
+      xml += document.getElementById('Style_'+row).value +'; ';
+      xml += document.getElementById('Time_'+row).value +'; ';
+      for (var day in days) {
+        for (var col = 1; col <= dayCols; col++) {
+          var id = days[day]+'_'+row+'_'+col;
+          try {
+             xml += document.getElementById(id).value + '; ';
+            } catch (e)  {
+              error += id + '\n';  
+            }
+        }
+      }
+      xml += '\n';
+    }
+    if (error.length > 0) {
+      alert('Fehler beim Refresh des/der Elements/e:\n'+error); 
+    }
+    document.getElementById('transfer').value = xml;
+  }
+
+   function setAtom(elem) {
+    var parts = elem.value.split(/[.:]/);
+    elem.style.backgroundColor = 'white';
+    elem.style.border = '1px solid lightgray';
+    if (parts.length>0 && parts[0].trim().length > 0) {
+       if (topics[parts[0].trim().toLowerCase()] != 'undefined') {
+        // 1.Eintrag des Eingabefeldes in topics gefunden
+        elem.style.backgroundColor = topics[parts[0].trim().toLowerCase()] ;
+       }
+      elem.style.border = '4px solid white';
+      if (parts.length>1) {
+         if (teachers[parts[1].trim().toLowerCase()] != 'undefined') {
+          // 2.Eintrag des Eingabefeldes in teachers gefunden
+          elem.style.border = teachers[parts[1].trim().toLowerCase()];
+        } else {
+          elem.style.border = '8px solid red';
+        }
+      }
+   }
+   plan2transfer();
+  }
+  
+  /**
+    * Reset all Colors and Frames
+    */
+  function refreshAllAtoms() {
+    autoRefresh = false;
+    var error = ''; 
+    var log = '';
+    for (var row = 1; row <= tableRows; row++) {
+      for (var day in days) {
+        for (var col = 1; col <= dayCols; col++) {
+          var id = days[day]+'_'+row+'_'+col;
+          try {
+            setAtom(document.getElementById(id));
+            } catch (e)  {
+              error += id + '\n';  
+            }
+        }
+      }
+    }
+    if (error.length > 0) {
+      alert('Fehler beim Refresh des/der Elements/e:\n'+error); 
+    }
+    autoRefresh = true;
+  }
+ 
+  /**
+    * Berechnung der Fachstundenanzahlen
+    */
+  function calculateLessons() {
+    calculatedLessons = new Object();
+    var summe = 0;
+    allCellFactory(calculateLessonsWorker);
+    var tr; 
+    var td;    
+    var entry = document.getElementById('outputLessons');  
+    entry.innerHTML = "";
+    entry.className = 'out';
+    var table = document.createElement('table');
+    entry.appendChild(table);
+    table.className = 'outCalc';
+    tr = document.createElement('tr');
+    table.appendChild(tr);
+    td = document.createElement('th');
+    tr.appendChild(td);
+    td.innerHTML = 'Fach';
+    td = document.createElement('th');
+    tr.appendChild(td);
+    td.innerHTML = 'Stundenzahl';
+    for (var lesson in calculatedLessons) {
+      tr = document.createElement('tr');
+      table.appendChild(tr);
+      td = document.createElement('td');
+      tr.appendChild(td);
+      td.className = 'outTime';
+      td.innerHTML = lesson;
+      td = document.createElement('td');
+      tr.appendChild(td);
+      td.className = 'outTime';
+      td.innerHTML = calculatedLessons[lesson];
+      summe += calculatedLessons[lesson];
+    }
+    tr = document.createElement('tr');
+    table.appendChild(tr);
+    td = document.createElement('td');
+    tr.appendChild(td);
+    td.className = 'outTime';
+    td.innerHTML = '<b>Summe Fachstunden</b>';
+    td = document.createElement('td');
+    tr.appendChild(td);
+    td.className = 'outTime';
+    td.innerHTML = '<b>'+summe+'</b>';
+  }
+  
+  function calculateLessonsWorker(/*: String */ id) {
+     var parts = document.getElementById(id).value.split(/[.:]/);
+     if (parts.length > 0) {
+      var part = parts[0];
+       if (part.length > 0 && part != '.') {
+        if (calculatedLessons[part] == null) {
+          calculatedLessons[part] = 0;
+        }
+        calculatedLessons[part]++;
+      }
+    }
+  }
+  
+  /**
+    * Berechnung der Lehrerstundenanzahlen
+    */
+  function calculateTeacherLessons() {
+    calculatedTeachers = new Object();
+    var summe = 0;
+    var summeUnb = 0;
+    allCellFactory(calculateTeacherLessonsWorker);
+    var tr; 
+    var td;    
+    var entry = document.getElementById('outputTeachers');  
+    entry.innerHTML = "";
+    entry.className = 'out';
+    var table = document.createElement('table');
+    entry.appendChild(table);
+    table.className = 'outCalc';
+    tr = document.createElement('tr');
+    table.appendChild(tr);
+    td = document.createElement('th');
+    tr.appendChild(td);
+    td.innerHTML = 'Lehrer';
+    td = document.createElement('th');
+    tr.appendChild(td);
+    td.innerHTML = 'Stundenzahl';
+    for (var lesson in calculatedTeachers) {
+      if (lesson == ubId) {
+        summeUnb += calculatedTeachers[lesson];
+      } else {
+        tr = document.createElement('tr');
+        table.appendChild(tr);
+        td = document.createElement('td');
+        tr.appendChild(td);
+        td.className = 'outTime';
+        td.innerHTML = lesson;
+        summe += calculatedTeachers[lesson];
+        td = document.createElement('td');
+        tr.appendChild(td);
+        td.className = 'outTime';
+        td.innerHTML = calculatedTeachers[lesson];
+      }
+    }
+    tr = document.createElement('tr');
+    table.appendChild(tr);
+    td = document.createElement('td');
+    tr.appendChild(td);
+    td.className = 'outTime';
+    td.innerHTML = '<b>Lektionen mit Lehrer</b>';
+    td = document.createElement('td');
+    tr.appendChild(td);
+    td.className = 'outTime';
+    td.innerHTML = '<b>'+summe+'</b>';
+    tr = document.createElement('tr');
+    table.appendChild(tr);
+    td = document.createElement('td');
+    tr.appendChild(td);
+    td.className = 'outTime';
+    td.innerHTML = '<b>Lektionen gesamt</b>';
+    td = document.createElement('td');
+    tr.appendChild(td);
+    td.className = 'outTime';
+    td.innerHTML = '<b>'+summeUnb +'</b>';
+    }
+  
+  function calculateTeacherLessonsWorker(/*: String */ id) {
+     var parts = document.getElementById(id).value.split(/[.:]/);
+      if (parts[0].length > 0 && parts[0] != '.') {
+        // Fach eingetragen
+        if (calculatedTeachers[ubId] == null) {
+          calculatedTeachers[ubId] = 0;
+        }
+        calculatedTeachers[ubId]++;
+        if (parts.length > 1) {
+        var part = parts[1];
+        if (calculatedTeachers[part] == null) {
+            calculatedTeachers[part] = 0;
+          }
+         if (part.length > 0 ) { 
+            calculatedTeachers[part]++;
+          }
+        }
+      }
+  }
+
+  /**
+    * Berechnung der Gruppenstundenanzahlen
+    */
+  function calculateGroupLessons() {
+    calculatedGroups = new Object();
+    var summe = 0;
+    var summeUnb = 0;
+    allCellFactory(calculateGroupLessonsWorker);
+    var tr; 
+    var td;    
+    var entry = document.getElementById('outputGroups');  
+    entry.innerHTML = "";
+    entry.className = 'out';
+    var table = document.createElement('table');
+    entry.appendChild(table);
+    table.className = 'outCalc';
+    tr = document.createElement('tr');
+    table.appendChild(tr);
+    td = document.createElement('th');
+    tr.appendChild(td);
+    td.innerHTML = 'Gruppe';
+    td = document.createElement('th');
+    tr.appendChild(td);
+    td.innerHTML = 'Stundenzahl';
+    for (var lesson in calculatedGroups) {
+      if (lesson == ubId) {
+        summeUnb += calculatedGroups[lesson];
+      } else {
+        tr = document.createElement('tr');
+        table.appendChild(tr);
+        td = document.createElement('td');
+        tr.appendChild(td);
+        td.className = 'outTime';
+        td.innerHTML = lesson;
+        summe += calculatedGroups[lesson];
+        td = document.createElement('td');
+        tr.appendChild(td);
+        td.className = 'outTime';
+        td.innerHTML = calculatedGroups[lesson];
+      }
+    }
+    tr = document.createElement('tr');
+    table.appendChild(tr);
+    td = document.createElement('td');
+    tr.appendChild(td);
+    td.className = 'outTime';
+    td.innerHTML = '<b>Lektionen mit Gruppenzuteilung</b>';
+    td = document.createElement('td');
+    tr.appendChild(td);
+    td.className = 'outTime';
+    td.innerHTML = '<b>'+summe+'</b>';
+    tr = document.createElement('tr');
+    table.appendChild(tr);
+    td = document.createElement('td');
+    tr.appendChild(td);
+    td.className = 'outTime';
+    td.innerHTML = '<b>Lektionen gesamt</b>';
+    td = document.createElement('td');
+    tr.appendChild(td);
+    td.className = 'outTime';
+    td.innerHTML = '<b>'+summeUnb +'</b>';
+    }
+  
+  function calculateGroupLessonsWorker(/*: String */ id) {
+     var parts = document.getElementById(id).value.split(/[.:]/);
+      if (parts[0].length > 0 && parts[0] != '.') {
+        // Fach eingetragen aber keine Gruppe
+        if (calculatedGroups[ubId] == null) {
+          calculatedGroups[ubId] = 0;
+        }
+        calculatedGroups[ubId]++;
+        if (parts.length > 2) {
+        var part = parts[2];
+        for (var idx = 0; idx < part.length; idx++) {
+          var ppart = part[idx];
+          if (calculatedGroups[ppart] == null) {
+              calculatedGroups[ppart] = 0;
+            }
+              calculatedGroups[ppart]++;
+          }
+        }
+      }
+  }
+  
+  function allCellFactory(/*:function*/ worker) {
+    var error = ''; 
+    for (var row = 1; row <= tableRows; row++) {
+      for (var day in days) {
+        for (var col = 1; col <= dayCols; col++) {
+          var id = days[day]+'_'+row+'_'+col;
+          try {
+             worker(id);
+            } catch (e)  {
+              error += id + '\n';  
+            }
+        }
+      }
+    }
+    if (error.length > 0) {
+      alert('Fehler bei allCellFactory des/der Elements/e:\n'+error); 
+    }
+  }
+  
+  function clearView() {
+    var entry = document.getElementById('outputPlans');  
+    entry.innerHTML = "";
+  }
+
+  function generateViews() {
+     var groups = document.getElementById('groups').value.trim().split(/[,]/);
+     for (var group in groups) {
+      generateView(groups[group]);
+    }
+  }
+  
+  /**
+    * Ausgabestundenplaene fuer die Gruppen generieren 
+    */
+  function generateView(group) {
+    var tr; 
+    var td;    
+    var entry = document.getElementById('outputPlans');  
+    entry.className = 'out';
+    entry.appendChild(document.createElement('br'));
+    var outGroup = document.createElement('div');
+    entry.appendChild(outGroup);
+    outGroup.className='outGroup';
+    var comment = document.createTextNode('Gruppe: ' + group);
+    comment.className='outTag';
+    entry.appendChild(comment);
+    var table = document.createElement('table');
+    entry.appendChild(table);
+    table.className = 'out';
+    tr = document.createElement('tr');
+    table.appendChild(tr);
+    td = document.createElement('td');
+    tr.appendChild(td);
+    td.className = 'outTime';
+    td.innerHTML = 'Zeiten';
+    for (var day in headline) {
+      td = document.createElement('td');
+      tr.appendChild(td);
+      td.className = 'outTag';
+      td.innerHTML = headline[day];
+    }
+    td = document.createElement('td');
+    tr.appendChild(td);
+    td.style.border = '1px solid white';
+    td.innerHTML = '&nbsp;';
+    var elem;
+    for (var row = 1; row <= tableRows; row++) {
+        var rowStyle = document.getElementById('Style_'+row).value;
+        if (rowStyle == 0) {
+          continue;
+        }
+        tr = document.createElement('tr');
+        table.appendChild(tr);
+        td = document.createElement('td');
+        tr.appendChild(td);
+        td.className = 'outTime';
+        td.innerHTML = document.getElementById('Time_'+row).value;
+        for (var day in days) {
+          td = document.createElement('td');
+          tr.appendChild(td);
+          for (var col = 1; col <= dayCols; col++) {
+            var parts = document.getElementById(days[day]+'_'+row+'_'+col).value.split(/[.:]/);
+            if ((parts.length > 2 && parts[2].search(group) != -1) || group.length == 0) {
+              elem = document.getElementById(days[day]+'_'+row+'_'+col);
+              td.className = 'outAtom';
+              td.style.backgroundColor = elem.style.backgroundColor;
+              td.style.border = '1px solid blue';
+              td.style.height = rowStyle;
+              var value = elem.value.split(/[.:]/)[0];
+              if (value.length==0)
+                value = '&nbsp;';
+              td.innerHTML = value;
+              break;
+            }
+          }
+       }
+       td = document.createElement('td');
+       tr.appendChild(td);
+       td.style.border = '1px solid white';
+       td.style.backgroundColor = 'white';
+    }
+  }
+//]]>
+</script>
+</HEAD>
+<BODY LANG="de-DE" DIR="LTR" onLoad="initTopics();initTeachers();/*initHiddenGroups();*/">
+<fieldset><legend>Transfer</legend>
+<textarea style="float:left;width:85%;height:57px;" id="transfer"></textarea>
+<input style="height:28px;" type="button" value="Transfer&nbsp;-->&nbsp;Plan" onClick="if (!confirm('Alle Daten im Stundenplan ueberschreiben?')) {return;} else {generateEditPlan();transfer2plan();initTopics();initTeachers();/*initHiddenGroups();*/refreshAllAtoms();}"/><br />
+</fieldset>
+<fieldset><legend>Properties</legend>
+  <TABLE WIDTH=100%>
+    <TR>
+      <TD WIDTH=5%>Fächer:</TD>
+      <TD>
+      <input style="width:100%;" id="topicNames" name="topicNames" onblur="initTopics();refreshAllAtoms();" 
+       value="&Uuml;b, HU, Ma, Deu, Fr, En, Ha, Ku, Tu, Pause" />
+      </TD>
+    </TR>
+  <TR>
+      <TD>Hintergrund&nbsp;(Fach):</TD>
+      <TD>
+      <input style="width:100%;" id="topicValues" name="topicValues" onblur="initTopics();refreshAllAtoms();" 
+      value="#FFFFCC, #FFFF99, #FFCC66, #00aaaa, #FF3333, #aaaaaa, #aa00aa, #aaaa00, #CC6633, #aaaaaa" />
+      </TD>
+    </TR>
+   <TR>
+      <TD>
+      Lehrer:
+      </TD>
+      <TD>
+      <input style="width:100%;" id="teacherNames" name="teacherNames" onblur="initTeachers();refreshAllAtoms();" 
+      value="HK, KS, LG, BG, SB, WS, AT" />
+      </TD>
+    </TR>
+  <TR>
+      <TD>Rahmen&nbsp;(Lehrer):</TD>
+      <TD>
+      <input style="width:100%;" id="teacherValues" name="teacherValues" onblur="initTeachers();refreshAllAtoms();" 
+      value="3px solid #ffffff, 1px solid #0000ff" />
+      </TD>
+    </TR>
+    <tr><td><A HREF="#" onclick="w = window.open('./col/index.html','ColorPicker','width=560,height=330,left=0,top=0',toolbar='no'); w.focus();">Color Picker</A></td></tr>
+  <!-- TR>
+      <TD>Versteckte Gruppen:</TD>
+      <TD>
+      <input style="width:100%;" id="hiddenGroups" name="hiddenGroups" onblur="initHiddenGroups();refreshAllAtoms();" 
+      value="" />
+      </TD>
+    </TR -->
+  </TABLE>
+</fieldset>
+<fieldset><legend>Plandata</legend>
+  <div style="font-size:small;">Fill in:  
+    <ul>
+      <li>&nbsp;RowHeight: Hoehe der Zeile in generierter Ausgabe</li>
+      <li>&nbsp;Zeiten: wird einfach uebernommen</li>
+      <li>&nbsp;Stundenplanfelder: Stundenkuerzel .Lehrerkuerzel :Gruppenname</li>
+    </ul> 
+  </div>
+  Cols per Day: <input id="dayCols" name="dayCols" type="text" value="3" size="3"/>&nbsp;&nbsp;TableRows: <input id="tableRows" name="tableRows" type="text" value="11" size ="4"/>&nbsp;&nbsp;<input type="button" value="redrawTable" onclick="generateEditPlan();" />
+  &nbsp;&nbsp;<input style="height:28px;" type="button" value="Plan&nbsp;-->&nbsp;Transfer" onClick="if (!confirm('Alle Daten aus Transfer ueberschreiben?')) {return;} else {plan2transfer();document.getElementById('transfer').focus();document.getElementById('transfer').select();}"/>
+<div id ="inPlan">
+</div>
+</fieldset>
+<p>
+  <fieldset style="Xfloat:left;"><legend>Stunden je Fach <input type="button" value="(re)calculate" onclick="calculateLessons();" /></legend>
+    <div id="outputLessons"></div>
+  </fieldset>
+  <fieldset style="Xfloat:right;"><legend>Stunden je Lehrer  <input type="button" value="(re)calculate" onclick="calculateTeacherLessons();" /></legend>
+    <div id="outputTeachers"></div>
+  </fieldset>
+  <fieldset style="Xfloat:right;"><legend>Stunden je Gruppe  <input type="button" value="(re)calculate" onclick="calculateGroupLessons();" /></legend>
+    <div id="outputGroups"></div>
+  </fieldset>
+</p>
+<fieldset style="Xfloat:none;"><legend>Für Gruppe <input id="groups" name="groups" type="text" value="" title="Format: 4 5 6"/><input type="button" value="generate View" onClick="generateViews();"/> <input type="button" value="clear View" onClick="clearView();"/></legend>
+</fieldset>
+  <div id="outputPlans"></div>
+<script language="javascript" type="text/javascript">// <![CDATA[
+  setTimeout("autoRefresh = true;",1000);
+//]]></script>
+</BODY>
+<!--
+IndLA, HU, Ma, Deu, Fr, En, Ha, Ku, Tu, Essen, PV, Theater, SÜ, Club,  ., IndFA, Sprache;
+#FFFFCC, #FFFF99, #FFCC66, #00aaaa, #FF6666, #aaffff, #aa00aa, #aaaa00, #CC6633, #aaaaaa, #BF2A19, #dddddd, white, yellow, gray, #FF6666, #FFaaaa;
+HK, KS, LG, AT, BG, SB, WS, MH,LG/HK,HK/LG;
+2px solid #0000FF, 2px solid #000088, 2px solid #00FF00, 2px solid #00aaaa;
+3; 11;
+60; 7:00; IndLA .HK; IndLA .HK :B; IndLA .HK :C; IndLA .HK; IndLA .HK :B; IndLA .HK :C; IndLA .HK; IndLA .HK :B; IndLA .HK :C; IndLA .HK; IndLA .HK :B; IndLA .HK :C; IndLA .HK; IndLA .HK :B; IndLA .HK :C; 
+60; 8:00; Sprache .AT :A; HU .HK :B; HU .HK :C; Sprache .AT :A; HA .LG :B; HA .LG :C; Sprache .AT :A; Fr .SB :B; HU .HK :C; Ku .WS :A; Fr .SB :B; Sprache .AT :C; Sprache .AT :A; HU .HK :B; HU .HK :C; 
+60; 9:00; HU .HK :A; Sprache .AT :B; HA .LG :C; HA .LG :A; Sprache .AT :B; HA .LG :C; HU .HK :A; Sprache .AT :B; Fr .SB :C; Ku .WS :A; Sprache .AT :B; Fr .SB :C; HU .HK :A; Sprache .AT :B; HU .HK :C; 
+60; 10:30; HU .HK :A; HA .LG :B; Sprache .AT :C; HA .LG :A; HU .HK :B; Sprache .AT :C; Fr .SB :A; HU .HK :B; Sprache .AT :C; Fr .SB :A; HU .HK :B; HU .HK :C; HU .HK :A; HU .HK :B; Sprache .AT :C; 
+60; 11:30; HU .HK :A; HU .HK :B; HU .HK :C; HU .HK :A; HU .HK :B; HU .HK :C; HU .HK :A; HU .HK :B; HU .HK :C; HU .HK :A; HU .HK :B; HU .HK :C; HU .HK :A; HU .HK :B; HU .HK :C; 
+60; 12:10
+Mittag; Essen . :A; Essen . :B; Essen . :C; Essen . :A; Essen . :B; Essen . :C; Essen . :A; Essen . :B; Essen . :C; Essen . :A; Essen . :B; Essen . :C; Essen . :A; Essen . :B; Essen . :C; 
+60; 13:00; HA .LG :A; HA .AT :B; ; ; PV .HK :B; HA .LG/HK :C; ; ; PV .HK :C; HU .HK :A; Ku .WS :B; Ku .WS :C; IndFö.HK :A; Tu .KS :B; Tu .KS :C; 
+60; 14:00; HA .LG :A; HA .AT :B; ; ; IndFA .BG :B; HU .HK/LG :C; ; ; PV .HK :C; HU .HK :A; Ku .WS :B; Ku .WS :C; Tu .KS :A; IndFörd .HK :B; Tu .KS :C; 
+60; 15:00; Club :A; IndFA .BG :B; ; ; IndFA .BG :B; Club :C; ; ; PV .HK :C; ; PV .HK :B; Club :C; Tu .KS :A; Tu .KS :B; IndFörd .HK :C; 
+60; 16:00; Club :A; IndFA .BG :B; ; ; ; Club :C; ; ; PV .HK :C; ; PV .HK :B; Club :C; Tu .KS :A; Tu .KS :B; Tu .KS :C; 
+; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; 
+-->
+</HTML>

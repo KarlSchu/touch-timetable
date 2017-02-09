@@ -40,6 +40,10 @@ body {
     .no-print * {
         display: none !important;
     }
+    .admin,
+    .admin * {
+        display: none !important;
+    }
     .page-break {
         display: block;
         page-break-before: always;
@@ -49,6 +53,14 @@ body {
         page-break-before: always;
         page-break-inside: avoid;
     }
+}
+
+.admin,
+.admin * {
+    /*background-color: darkgray;*/
+    font-style: italic;
+    text-decoration: underline;
+    opacity: 0.8;
 }
 
 .only-print {
@@ -252,8 +264,8 @@ table tr td:last-child {
 }
 
 #T10.colored {
-    color: gray;
-    background-color: lightggray;
+    color: black;
+    background-color: #444;
     border: 1px solid greenyellow;
 }
 
@@ -495,7 +507,7 @@ table tr td:last-child {
     right: 0;
     bottom: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.6);
     z-index: 99999;
     opacity: 0;
     -webkit-transition: opacity 400ms ease-in;
@@ -509,10 +521,12 @@ table tr td:last-child {
     pointer-events: auto;
 }
 
-.modalDialog>div {
+.modalDialog>form {
+    position: absolute;
+    left: 0;
+    top: 0;
     width: 400px;
-    position: relative;
-    margin: 10% auto;
+    /*margin: 10% auto;*/
     padding: 5px 20px 13px 20px;
     border-radius: 10px;
     background: #fff;

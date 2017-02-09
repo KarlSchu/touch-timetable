@@ -9,5 +9,5 @@
         "command": "chromium-browser"
     },
     "args": ["${file}"],
-    "showOutput": "always"
+    "showOutput": "silent"
 }

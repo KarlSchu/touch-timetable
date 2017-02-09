@@ -94,8 +94,9 @@ function initTimeTableGrid() {
         nodeDiv.setAttribute('draggable', 'true');
         nodeTd.appendChild(nodeDiv);
         var nodeDiv2 = document.createElement("div");
-        nodeDiv2.appendChild(document.createTextNode(teacherValue));
         nodeDiv.appendChild(nodeDiv2);
+        //nodeDiv.setAttribute('admin', 'false');
+        nodeDiv2.appendChild(document.createTextNode(teacherValue));
         nodeDiv.appendChild(document.createElement("div"));
         nodeDiv.appendChild(document.createElement("div"));
         $.each(groupDef, function(groupKey, groupValue) {
@@ -239,8 +240,11 @@ function initTimeTableGrid() {
     });
 }
 
+var editLesson = null;
+
 function clickOnLesson(event) {
     var target = event.currentTarget;
+    editLesson = event.currentTarget;
     var lessonId = target.parentNode.id;
     $("#fieldId").text(lessonId);
     $("#lessonNr").text(lessonId.replace(new RegExp(/([A-Z])L([0-9]+)/gmi), " \$2, Gr \$1"));
@@ -248,14 +252,26 @@ function clickOnLesson(event) {
     $("#teacher").text(target.children[0].innerHTML);
     $("#subject").val(target.children[1].innerHTML);
     $("#room").val(target.children[2].innerHTML);
+    if (target.classList.contains('admin')) {
+        $("#admin").prop('checked', true);
+    }
 }
 
 function handleOk(event) {
     var fieldId = $("#fieldId").text();
     var field = $("#" + fieldId)[0];
-    field.children[0].children[1].innerHTML = $("#subject").val();
-    field.children[0].children[2].innerHTML = $("#room").val();
+    if ($("#admin").is(':checked')) {
+        if (!editLesson.classList.contains("admin")) {
+            editLesson.classList.add("admin");
+        }
+    } else {
+        editLesson.classList.remove("admin");
+    }
+    field = $("#" + fieldId)[0].children[0];
+    field.children[1].innerHTML = $("#subject").val();
+    field.children[2].innerHTML = $("#room").val();
     saveData();
+    editLesson = null;
 }
 
 function initTimeTable() {
@@ -290,12 +306,12 @@ function fetchDataFromDOM() {
                     var level2List = level1List[0].childNodes;
                     if (level2List.length > 0) {
                         var content = new Object();
-                        content.id = level2List[0].id
-                        content.teacher = level2List[0].children[0].innerHTML
-                        content.subject = level2List[0].children[1].innerHTML
-                        content.room = level2List[0].children[2].innerHTML
+                        content.id = level2List[0].id;
+                        content.teacher = level2List[0].children[0].innerHTML;
+                        content.subject = level2List[0].children[1].innerHTML;
+                        content.room = level2List[0].children[2].innerHTML;
+                        content.admin = level2List[0].classList.contains("admin");
                         timeTable[dayKey][groupKey][lessonKey] = content;
-                        //timeTable[dayKey][groupKey][lessonKey] = e2List[0].id;
                     }
                 }
             });
@@ -334,6 +350,7 @@ function reloadDataIntoDOM(timeTable) {
                             var teacherName = timeTable[dayKey][groupKey][lessonKey].teacher;
                             var subject = timeTable[dayKey][groupKey][lessonKey].subject;
                             var room = timeTable[dayKey][groupKey][lessonKey].room;
+                            var admin = timeTable[dayKey][groupKey][lessonKey].admin;
                             while (target.childNodes.length > 0) {
                                 target.removeChild(target.childNodes[0]);
                             }
@@ -345,6 +362,13 @@ function reloadDataIntoDOM(timeTable) {
                                 dupNode.setAttribute('class', 'teacherLesson colored');
                             } else {
                                 dupNode.setAttribute('class', 'teacherLesson');
+                            }
+                            if (admin != null && admin) {
+                                if (!dupNode.classList.contains("admin")) {
+                                    dupNode.classList.add("admin");
+                                }
+                            } else {
+                                dupNode.classList.remove("admin");
                             }
                             dupNode.children[0].innerHTML = timeTable[dayKey][groupKey][lessonKey].teacher;
                             dupNode.children[1].innerHTML = timeTable[dayKey][groupKey][lessonKey].subject;
@@ -460,7 +484,7 @@ function importData() {
 
 function saveData() {
     var timeTable = fetchDataFromDOM();
-    if (printMode == 'true') {
+    if (printMode != null || groupList != null) {
         alert('No modification allowed in print mode!');
     } else {
         timeTableString = JSON.stringify(timeTable);

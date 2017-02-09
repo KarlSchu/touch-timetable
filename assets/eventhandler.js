@@ -86,7 +86,7 @@ $("#save").click(function() {
 
 $("#textprint").click(function() {
 
-    if (printMode == 'true') {
+    if (printMode != null || groupList != null) {
         print();
     } else {
 
@@ -110,11 +110,12 @@ $("#download").click(function(event) {
         encodeURIComponent(JSON.stringify(timeTable, null, 4));
 });
 
-$("#ok").click(function(event) {
+$("#ok").on('click', function(event) {
     handleOk(event);
 });
 
-var dragged = null;;
+var dragged = null;
+var draggedForm = null;
 var shift = false;
 // $(document).on('keydown', function(event) {
 //     console.log('keydown');
@@ -144,7 +145,7 @@ document.addEventListener("drag", function(event) {
 document.addEventListener("dragstart", function(event) {
     if ((event.target.className != null && event.target.className.match('.*' + 'spring\\b.*')) ||
         (event.target.className != null && event.target.className.match('.*' + 'teacherLesson\\b.*'))) {
-        if (printMode == 'true') {
+        if (printMode != null || groupList != null) {
             alert('No modification allowed in print mode!');
             dragged = null;
             // prevent default to allow drop
@@ -155,8 +156,12 @@ document.addEventListener("dragstart", function(event) {
         // make it half transparent
         dragged.style.opacity = .5;
         event.dataTransfer.setData('text/plain', null)
+    } else if (event.target.className != null && event.target.className.match('.*' + 'modalForm\\b.*')) {
+        draggedForm = event.target;
+        draggedForm.style.opacity = .5;
     } else {
         dragged = null;
+        draggedForm = null;
         // prevent default to allow drop
         event.preventDefault();
     }
@@ -164,7 +169,12 @@ document.addEventListener("dragstart", function(event) {
 
 document.addEventListener("dragend", function(event) {
     // reset the transparency
-    dragged.style.opacity = "";
+    if (dragged != null) {
+        dragged.style.opacity = "";
+    }
+    if (draggedForm != null) {
+        draggedForm.style.opacity = "";
+    }
 }, false);
 
 /* events fired on the drop targets */
@@ -206,10 +216,10 @@ document.addEventListener("drop", function(event) {
     //var clone = event.ctrlKey;
     shift = shift || event.shiftKey;
 
-    // prevent default action (open as link for some elements)
-    event.preventDefault();
     // move dragged elem to the selected drop target
     if (dragged != null) {
+        // prevent default action (open as link for some elements)
+        event.preventDefault();
         var target = targetDeepTest(event.target, "dropLesson", 5);
         if (target != null) {
             target.style.background = "";
@@ -223,7 +233,7 @@ document.addEventListener("drop", function(event) {
             var dupNode = dragged.cloneNode(true);
             dupNode.style.opacity = "";
             dupNode.style.cursor = "move";
-            dupNode.className = "colored teacherLesson";
+            dupNode.className = dragged.className;
             target.appendChild(dupNode);
 
             dupNode.addEventListener("click", function(event) {
@@ -238,6 +248,10 @@ document.addEventListener("drop", function(event) {
         }
         saveData();
         recalcAll();
+    } else if (draggedForm != null) {
+        draggedForm.styl.left = event.clientX;
+        draggedForm.styl.top = event.clientY;
+        event.preventDefault();
     }
 }, false);
 

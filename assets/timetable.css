@@ -320,6 +320,15 @@ table tr td:last-child {
     height: 2em;
 }
 
+.groupsSum {
+    border-top: 1px;
+    border-bottom: 1px;
+    border-left: 1px;
+    border-right: 1px;
+    border-style: solid;
+    border-color: gray;
+}
+
 .groupsSum td {
     border-top: 1px;
     border-bottom: 1px;

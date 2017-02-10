@@ -1,0 +1,1620 @@
+{
+    "version": "(c) ksc, 2017, v.0.0.3",
+    "lastChange": "2017-02-10T11:26:11.044Z",
+    "remarks": "Variante 2a \nhallo kerstin",
+    "mo": {
+        "A": {
+            "L0": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L1": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "NuT",
+                "room": "16",
+                "admin": false
+            },
+            "L2": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "NuT",
+                "room": "16",
+                "admin": false
+            },
+            "L3": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "MuU",
+                "room": "SD",
+                "admin": false
+            },
+            "L4": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "MuU",
+                "room": "SD",
+                "admin": false
+            },
+            "L5": "",
+            "L6": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "MuU",
+                "room": "SD",
+                "admin": false
+            },
+            "L7": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "MuU",
+                "room": "SD",
+                "admin": false
+            },
+            "L8": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "MuU",
+                "room": "SD",
+                "admin": false
+            },
+            "L9": ""
+        },
+        "B": {
+            "L0": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "",
+                "room": "",
+                "admin": true
+            },
+            "L1": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "NuT",
+                "room": "16",
+                "admin": false
+            },
+            "L2": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "NuT",
+                "room": "16",
+                "admin": false
+            },
+            "L3": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L4": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L5": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L6": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Mat",
+                "room": "See",
+                "admin": false
+            },
+            "L7": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Mat",
+                "room": "See",
+                "admin": false
+            },
+            "L8": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Eng",
+                "room": "See",
+                "admin": false
+            },
+            "L9": ""
+        },
+        "C": {
+            "L0": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "",
+                "room": "",
+                "admin": true
+            },
+            "L1": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "NuT",
+                "room": "16",
+                "admin": false
+            },
+            "L2": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "NuT",
+                "room": "16",
+                "admin": false
+            },
+            "L3": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L4": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L5": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L6": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Mat",
+                "room": "See",
+                "admin": false
+            },
+            "L7": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Mat",
+                "room": "See",
+                "admin": false
+            },
+            "L8": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Eng",
+                "room": "See",
+                "admin": false
+            },
+            "L9": ""
+        },
+        "D": {
+            "L0": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "",
+                "room": "",
+                "admin": true
+            },
+            "L1": {
+                "id": "T5",
+                "teacher": "KRU",
+                "subject": "Eng",
+                "room": "17",
+                "admin": false
+            },
+            "L2": {
+                "id": "T5",
+                "teacher": "KRU",
+                "subject": "Mat",
+                "room": "17",
+                "admin": false
+            },
+            "L3": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "NuT",
+                "room": "16",
+                "admin": false
+            },
+            "L4": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "NuT",
+                "room": "16",
+                "admin": false
+            },
+            "L5": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L6": {
+                "id": "T5",
+                "teacher": "KRU",
+                "subject": "Mat",
+                "room": "13",
+                "admin": false
+            },
+            "L7": {
+                "id": "T5",
+                "teacher": "KRU",
+                "subject": "Eng",
+                "room": "13",
+                "admin": false
+            },
+            "L8": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "Wer",
+                "room": "Wer",
+                "admin": false
+            },
+            "L9": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "Wer",
+                "room": "Wer",
+                "admin": false
+            }
+        },
+        "E": {
+            "L0": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L1": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L2": "",
+            "L3": {
+                "id": "T5",
+                "teacher": "KRU",
+                "subject": "Mat",
+                "room": "13",
+                "admin": false
+            },
+            "L4": {
+                "id": "T5",
+                "teacher": "KRU",
+                "subject": "Eng",
+                "room": "13",
+                "admin": false
+            },
+            "L5": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L6": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "NuT",
+                "room": "16",
+                "admin": false
+            },
+            "L7": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "NuT",
+                "room": "16",
+                "admin": false
+            },
+            "L8": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L9": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            }
+        }
+    },
+    "di": {
+        "A": {
+            "L0": {
+                "id": "T7",
+                "teacher": "SKU",
+                "subject": "",
+                "room": "",
+                "admin": true
+            },
+            "L1": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "MuU",
+                "room": "16",
+                "admin": false
+            },
+            "L2": {
+                "id": "T11",
+                "teacher": "ASA",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L3": {
+                "id": "T8",
+                "teacher": "AST",
+                "subject": "TU",
+                "room": "13",
+                "admin": false
+            },
+            "L4": {
+                "id": "T8",
+                "teacher": "AST",
+                "subject": "Tu",
+                "room": "Tu",
+                "admin": false
+            },
+            "L5": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L6": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L7": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Eng",
+                "room": "See",
+                "admin": false
+            },
+            "L8": "",
+            "L9": ""
+        },
+        "B": {
+            "L0": "",
+            "L1": {
+                "id": "T11",
+                "teacher": "ASA",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L2": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "MuU",
+                "room": "16",
+                "admin": false
+            },
+            "L3": {
+                "id": "T8",
+                "teacher": "AST",
+                "subject": "TU",
+                "room": "13",
+                "admin": false
+            },
+            "L4": {
+                "id": "T8",
+                "teacher": "AST",
+                "subject": "Tu",
+                "room": "Tu",
+                "admin": false
+            },
+            "L5": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L6": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L7": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Eng",
+                "room": "See",
+                "admin": false
+            },
+            "L8": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "HA",
+                "room": "16",
+                "admin": false
+            },
+            "L9": ""
+        },
+        "C": {
+            "L0": "",
+            "L1": {
+                "id": "T3",
+                "teacher": "SBO",
+                "subject": "Fra",
+                "room": "17",
+                "admin": false
+            },
+            "L2": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "MuU",
+                "room": "16",
+                "admin": false
+            },
+            "L3": {
+                "id": "T11",
+                "teacher": "ASA",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L4": {
+                "id": "T8",
+                "teacher": "AST",
+                "subject": "Tu",
+                "room": "Tu",
+                "admin": false
+            },
+            "L5": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L6": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L7": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Eng",
+                "room": "See",
+                "admin": false
+            },
+            "L8": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L9": ""
+        },
+        "D": {
+            "L0": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L1": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "MuU",
+                "room": "16",
+                "admin": false
+            },
+            "L2": {
+                "id": "T3",
+                "teacher": "SBO",
+                "subject": "Fra",
+                "room": "17",
+                "admin": false
+            },
+            "L3": {
+                "id": "T8",
+                "teacher": "AST",
+                "subject": "TU",
+                "room": "13",
+                "admin": false
+            },
+            "L4": {
+                "id": "T8",
+                "teacher": "AST",
+                "subject": "Tu",
+                "room": "Tu",
+                "admin": false
+            },
+            "L5": {
+                "id": "T8",
+                "teacher": "AST",
+                "subject": "",
+                "room": "",
+                "admin": true
+            },
+            "L6": {
+                "id": "T8",
+                "teacher": "AST",
+                "subject": "Üb",
+                "room": "16",
+                "admin": false
+            },
+            "L7": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "NuT",
+                "room": "13",
+                "admin": false
+            },
+            "L8": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L9": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "NuT",
+                "room": "13",
+                "admin": false
+            }
+        },
+        "E": {
+            "L0": "",
+            "L1": "",
+            "L2": "",
+            "L3": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "NuT",
+                "room": "13",
+                "admin": false
+            },
+            "L4": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "NuT",
+                "room": "13",
+                "admin": false
+            },
+            "L5": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L6": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "NuT",
+                "room": "13",
+                "admin": false
+            },
+            "L7": {
+                "id": "T8",
+                "teacher": "AST",
+                "subject": "Üb",
+                "room": "13",
+                "admin": false
+            },
+            "L8": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L9": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            }
+        }
+    },
+    "mi": {
+        "A": {
+            "L0": "",
+            "L1": {
+                "id": "T4",
+                "teacher": "CES",
+                "subject": "Ges",
+                "room": "17",
+                "admin": false
+            },
+            "L2": {
+                "id": "T11",
+                "teacher": "ASA",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L3": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Mat",
+                "room": "See",
+                "admin": false
+            },
+            "L4": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L5": "",
+            "L6": "",
+            "L7": "",
+            "L8": "",
+            "L9": ""
+        },
+        "B": {
+            "L0": {
+                "id": "T10",
+                "teacher": "XXX",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L1": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L2": {
+                "id": "T4",
+                "teacher": "CES",
+                "subject": "Ges",
+                "room": "17",
+                "admin": false
+            },
+            "L3": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L4": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L5": "",
+            "L6": "",
+            "L7": "",
+            "L8": "",
+            "L9": ""
+        },
+        "C": {
+            "L0": {
+                "id": "T10",
+                "teacher": "XXX",
+                "subject": "",
+                "room": "",
+                "admin": true
+            },
+            "L1": {
+                "id": "T11",
+                "teacher": "ASA",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L2": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L3": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Mat",
+                "room": "See",
+                "admin": false
+            },
+            "L4": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L5": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L6": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "PV",
+                "room": "See",
+                "admin": false
+            },
+            "L7": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "PV",
+                "room": "See",
+                "admin": false
+            },
+            "L8": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "PV",
+                "room": "See",
+                "admin": false
+            },
+            "L9": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "PV",
+                "room": "See",
+                "admin": false
+            }
+        },
+        "D": {
+            "L0": {
+                "id": "T3",
+                "teacher": "SBO",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L1": {
+                "id": "T3",
+                "teacher": "SBO",
+                "subject": "Fra",
+                "room": "17",
+                "admin": false
+            },
+            "L2": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "MuU",
+                "room": "16",
+                "admin": false
+            },
+            "L3": {
+                "id": "T4",
+                "teacher": "CES",
+                "subject": "Ges",
+                "room": "17",
+                "admin": false
+            },
+            "L4": {
+                "id": "T4",
+                "teacher": "CES",
+                "subject": "Ges",
+                "room": "17",
+                "admin": false
+            },
+            "L5": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L6": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L7": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L8": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L9": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            }
+        },
+        "E": {
+            "L0": "",
+            "L1": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "NuT",
+                "room": "13",
+                "admin": false
+            },
+            "L2": {
+                "id": "T3",
+                "teacher": "SBO",
+                "subject": "Fra",
+                "room": "17",
+                "admin": false
+            },
+            "L3": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "NuT",
+                "room": "13",
+                "admin": false
+            },
+            "L4": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "NuT",
+                "room": "13",
+                "admin": false
+            },
+            "L5": "",
+            "L6": "",
+            "L7": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "PV",
+                "room": "13",
+                "admin": false
+            },
+            "L8": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "PV",
+                "room": "13",
+                "admin": false
+            },
+            "L9": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "PV",
+                "room": "13",
+                "admin": false
+            }
+        }
+    },
+    "do": {
+        "A": {
+            "L0": "",
+            "L1": {
+                "id": "T11",
+                "teacher": "ASA",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L2": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "MuU",
+                "room": "16",
+                "admin": false
+            },
+            "L3": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "MuU",
+                "room": "16",
+                "admin": false
+            },
+            "L4": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L5": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "HU",
+                "room": "See",
+                "admin": false
+            },
+            "L6": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "HU",
+                "room": "See",
+                "admin": false
+            },
+            "L7": "",
+            "L8": "",
+            "L9": ""
+        },
+        "B": {
+            "L0": "",
+            "L1": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "MuU",
+                "room": "16",
+                "admin": false
+            },
+            "L2": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L3": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "MuU",
+                "room": "16",
+                "admin": false
+            },
+            "L4": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "MuU",
+                "room": "16",
+                "admin": false
+            },
+            "L5": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "HU",
+                "room": "See",
+                "admin": false
+            },
+            "L6": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "HU",
+                "room": "See",
+                "admin": false
+            },
+            "L7": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "HA",
+                "room": "16",
+                "admin": false
+            },
+            "L8": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L9": ""
+        },
+        "C": {
+            "L0": "",
+            "L1": {
+                "id": "T3",
+                "teacher": "SBO",
+                "subject": "Fra",
+                "room": "17",
+                "admin": false
+            },
+            "L2": {
+                "id": "T11",
+                "teacher": "ASA",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L3": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L4": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "MuU",
+                "room": "16",
+                "admin": false
+            },
+            "L5": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "HU",
+                "room": "See",
+                "admin": false
+            },
+            "L6": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "HU",
+                "room": "See",
+                "admin": false
+            },
+            "L7": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L8": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "HA",
+                "room": "16",
+                "admin": false
+            },
+            "L9": ""
+        },
+        "D": {
+            "L0": "",
+            "L1": {
+                "id": "T5",
+                "teacher": "KRU",
+                "subject": "Eng",
+                "room": "17",
+                "admin": false
+            },
+            "L2": {
+                "id": "T5",
+                "teacher": "KRU",
+                "subject": "Mat",
+                "room": "17",
+                "admin": false
+            },
+            "L3": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L4": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "Deu",
+                "room": "See",
+                "admin": false
+            },
+            "L5": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L6": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L7": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "HU",
+                "room": "See",
+                "admin": false
+            },
+            "L8": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "HU",
+                "room": "See",
+                "admin": false
+            },
+            "L9": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "HA",
+                "room": "16",
+                "admin": false
+            }
+        },
+        "E": {
+            "L0": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L1": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L2": {
+                "id": "T3",
+                "teacher": "SBO",
+                "subject": "Fra",
+                "room": "17",
+                "admin": false
+            },
+            "L3": {
+                "id": "T5",
+                "teacher": "KRU",
+                "subject": "Mat",
+                "room": "13",
+                "admin": false
+            },
+            "L4": {
+                "id": "T5",
+                "teacher": "KRU",
+                "subject": "Eng",
+                "room": "13",
+                "admin": false
+            },
+            "L5": {
+                "id": "T5",
+                "teacher": "KRU",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L6": {
+                "id": "T8",
+                "teacher": "AST",
+                "subject": "Tu",
+                "room": "Tu",
+                "admin": false
+            },
+            "L7": {
+                "id": "T8",
+                "teacher": "AST",
+                "subject": "Tu",
+                "room": "Tu",
+                "admin": false
+            },
+            "L8": {
+                "id": "T8",
+                "teacher": "AST",
+                "subject": "Üb",
+                "room": "13",
+                "admin": false
+            },
+            "L9": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            }
+        }
+    },
+    "fr": {
+        "A": {
+            "L0": {
+                "id": "T7",
+                "teacher": "SKU",
+                "subject": "Mus",
+                "room": "Mus",
+                "admin": false
+            },
+            "L1": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L2": {
+                "id": "T4",
+                "teacher": "CES",
+                "subject": "HU",
+                "room": "Wer",
+                "admin": false
+            },
+            "L3": {
+                "id": "T4",
+                "teacher": "CES",
+                "subject": "HU",
+                "room": "Wer",
+                "admin": false
+            },
+            "L4": {
+                "id": "T4",
+                "teacher": "CES",
+                "subject": "HU",
+                "room": "Wer",
+                "admin": false
+            },
+            "L5": "",
+            "L6": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L7": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L8": "",
+            "L9": ""
+        },
+        "B": {
+            "L0": {
+                "id": "T7",
+                "teacher": "SKU",
+                "subject": "Mus",
+                "room": "Mus",
+                "admin": false
+            },
+            "L1": {
+                "id": "T4",
+                "teacher": "CES",
+                "subject": "HU",
+                "room": "Wer",
+                "admin": false
+            },
+            "L2": {
+                "id": "T4",
+                "teacher": "CES",
+                "subject": "HU",
+                "room": "Wer",
+                "admin": false
+            },
+            "L3": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L4": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L5": "",
+            "L6": {
+                "id": "T6",
+                "teacher": "HME",
+                "subject": "Tex",
+                "room": "16",
+                "admin": false
+            },
+            "L7": {
+                "id": "T6",
+                "teacher": "HME",
+                "subject": "Tex",
+                "room": "16",
+                "admin": false
+            },
+            "L8": "",
+            "L9": ""
+        },
+        "C": {
+            "L0": {
+                "id": "T7",
+                "teacher": "SKU",
+                "subject": "Mus",
+                "room": "Mus",
+                "admin": false
+            },
+            "L1": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L2": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L3": {
+                "id": "T4",
+                "teacher": "CES",
+                "subject": "HU",
+                "room": "Wer",
+                "admin": false
+            },
+            "L4": {
+                "id": "T4",
+                "teacher": "CES",
+                "subject": "HU",
+                "room": "Wer",
+                "admin": false
+            },
+            "L5": "",
+            "L6": {
+                "id": "T6",
+                "teacher": "HME",
+                "subject": "Tex",
+                "room": "16",
+                "admin": false
+            },
+            "L7": {
+                "id": "T6",
+                "teacher": "HME",
+                "subject": "Tex",
+                "room": "16",
+                "admin": false
+            },
+            "L8": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "HA",
+                "room": "16",
+                "admin": false
+            },
+            "L9": ""
+        },
+        "D": {
+            "L0": "",
+            "L1": {
+                "id": "T5",
+                "teacher": "KRU",
+                "subject": "Eng",
+                "room": "17",
+                "admin": false
+            },
+            "L2": {
+                "id": "T5",
+                "teacher": "KRU",
+                "subject": "Mat",
+                "room": "17",
+                "admin": false
+            },
+            "L3": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "MuU",
+                "room": "17",
+                "admin": false
+            },
+            "L4": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "MuU",
+                "room": "17",
+                "admin": false
+            },
+            "L5": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L6": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "MuU",
+                "room": "17",
+                "admin": false
+            },
+            "L7": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "MuU",
+                "room": "17",
+                "admin": false
+            },
+            "L8": {
+                "id": "T7",
+                "teacher": "SKU",
+                "subject": "Mus",
+                "room": "Mus",
+                "admin": false
+            },
+            "L9": ""
+        },
+        "E": {
+            "L0": "",
+            "L1": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "NuT",
+                "room": "13",
+                "admin": false
+            },
+            "L2": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "NuT",
+                "room": "13",
+                "admin": false
+            },
+            "L3": {
+                "id": "T5",
+                "teacher": "KRU",
+                "subject": "Mat",
+                "room": "13",
+                "admin": false
+            },
+            "L4": {
+                "id": "T5",
+                "teacher": "KRU",
+                "subject": "Eng",
+                "room": "13",
+                "admin": false
+            },
+            "L5": {
+                "id": "T2",
+                "teacher": "UWO",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L6": {
+                "id": "T7",
+                "teacher": "SKU",
+                "subject": "Eng",
+                "room": "13",
+                "admin": false
+            },
+            "L7": {
+                "id": "T7",
+                "teacher": "SKU",
+                "subject": "Mus",
+                "room": "Mus",
+                "admin": false
+            },
+            "L8": {
+                "id": "T9",
+                "teacher": "ISC",
+                "subject": "",
+                "room": "",
+                "admin": false
+            },
+            "L9": ""
+        }
+    },
+    "sa": {
+        "A": {
+            "L0": "",
+            "L1": "",
+            "L2": "",
+            "L3": "",
+            "L4": "",
+            "L5": "",
+            "L6": "",
+            "L7": "",
+            "L8": "",
+            "L9": ""
+        },
+        "B": {
+            "L0": "",
+            "L1": "",
+            "L2": "",
+            "L3": "",
+            "L4": "",
+            "L5": "",
+            "L6": "",
+            "L7": "",
+            "L8": "",
+            "L9": ""
+        },
+        "C": {
+            "L0": "",
+            "L1": "",
+            "L2": "",
+            "L3": "",
+            "L4": "",
+            "L5": "",
+            "L6": "",
+            "L7": "",
+            "L8": "",
+            "L9": ""
+        },
+        "D": {
+            "L0": "",
+            "L1": "",
+            "L2": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "PV",
+                "room": "13",
+                "admin": false
+            },
+            "L3": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "PV",
+                "room": "13",
+                "admin": false
+            },
+            "L4": {
+                "id": "T1",
+                "teacher": "KSC",
+                "subject": "PV",
+                "room": "13",
+                "admin": false
+            },
+            "L5": "",
+            "L6": "",
+            "L7": "",
+            "L8": "",
+            "L9": ""
+        },
+        "E": {
+            "L0": "",
+            "L1": "",
+            "L2": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "PV",
+                "room": "See",
+                "admin": false
+            },
+            "L3": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "PV",
+                "room": "See",
+                "admin": false
+            },
+            "L4": {
+                "id": "T0",
+                "teacher": "KeS",
+                "subject": "PV",
+                "room": "See",
+                "admin": false
+            },
+            "L5": "",
+            "L6": "",
+            "L7": "",
+            "L8": "",
+            "L9": ""
+        }
+    },
+    "legend": ""
+}

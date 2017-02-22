@@ -10,6 +10,7 @@ If there are already an entry in the timetable cell the background becomes red. 
 nevertheless then the old content is replaced.  
 You can drag timetable content from one cell to the other too. Then the default mode is "copy". 
 By pressing the shift key (not on touch devices;) the cell content will be moved. 
+![Timetable](/assets/timetableps-part.png)
 
 ## Counters
 After each move the timtable countes are recalculated and the jason serialization of the 

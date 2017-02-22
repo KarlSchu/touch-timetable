@@ -50,6 +50,7 @@ body {
     }
     #legendPrint,
     .weekday-container {
+        display: block;
         page-break-before: always;
         page-break-inside: avoid;
     }
@@ -499,6 +500,7 @@ table tr td:last-child {
 }
 
 #legend {
+    margin-top: 2em;
     height: 12em;
     width: 96%;
 }

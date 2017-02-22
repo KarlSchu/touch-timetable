@@ -21,8 +21,8 @@ var dayDef = { //max mo - so
     'di': 'Dienstag',
     'mi': 'Mittwoch',
     'do': 'Donnerstag',
-    'fr': 'Freitag',
-    'sa': 'Samstag'
+    'fr': 'Freitag' //,
+        //'sa': 'Samstag'
 };
 var groupDefDefault = { // max: A - Z
     'A': 'GrA1',

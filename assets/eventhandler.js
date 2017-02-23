@@ -242,7 +242,8 @@ document.addEventListener("drop", function(event) {
                 $("#subject").focus();
             }, false);
             $("#lastChange")[0].innerHTML = (new Date()).toISOString();
-        } else if (dragged.className == "spring") {;
+        } else if (dragged.className.match('.*' + 'spring\\b.*')) {
+            //do nothing: it comes from 
         } else {
             dragged.parentNode.removeChild(dragged);
         }

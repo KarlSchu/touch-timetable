@@ -286,6 +286,11 @@ table tr td:last-child {
     clear: both;
 }
 
+#timeTableDefinitionImportButton {
+    display: none;
+    clear: both;
+}
+
 #timeTableHideButton {
     display: none;
     clear: both;

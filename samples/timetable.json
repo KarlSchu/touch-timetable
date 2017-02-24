@@ -1,6 +1,6 @@
 {
     "version": "(c) ksc, 2017, v.0.0.3",
-    "lastChange": "2017-02-10T11:26:11.044Z",
+    "lastChange": "2017-02-23T17:32:23.109Z",
     "remarks": "Variante 2a \nhallo kerstin",
     "mo": {
         "A": {
@@ -207,7 +207,7 @@
                 "id": "T5",
                 "teacher": "KRU",
                 "subject": "Eng",
-                "room": "17",
+                "room": "13",
                 "admin": false
             },
             "L2": {
@@ -1518,103 +1518,5 @@
             "L9": ""
         }
     },
-    "sa": {
-        "A": {
-            "L0": "",
-            "L1": "",
-            "L2": "",
-            "L3": "",
-            "L4": "",
-            "L5": "",
-            "L6": "",
-            "L7": "",
-            "L8": "",
-            "L9": ""
-        },
-        "B": {
-            "L0": "",
-            "L1": "",
-            "L2": "",
-            "L3": "",
-            "L4": "",
-            "L5": "",
-            "L6": "",
-            "L7": "",
-            "L8": "",
-            "L9": ""
-        },
-        "C": {
-            "L0": "",
-            "L1": "",
-            "L2": "",
-            "L3": "",
-            "L4": "",
-            "L5": "",
-            "L6": "",
-            "L7": "",
-            "L8": "",
-            "L9": ""
-        },
-        "D": {
-            "L0": "",
-            "L1": "",
-            "L2": {
-                "id": "T1",
-                "teacher": "KSC",
-                "subject": "PV",
-                "room": "13",
-                "admin": false
-            },
-            "L3": {
-                "id": "T1",
-                "teacher": "KSC",
-                "subject": "PV",
-                "room": "13",
-                "admin": false
-            },
-            "L4": {
-                "id": "T1",
-                "teacher": "KSC",
-                "subject": "PV",
-                "room": "13",
-                "admin": false
-            },
-            "L5": "",
-            "L6": "",
-            "L7": "",
-            "L8": "",
-            "L9": ""
-        },
-        "E": {
-            "L0": "",
-            "L1": "",
-            "L2": {
-                "id": "T0",
-                "teacher": "KeS",
-                "subject": "PV",
-                "room": "See",
-                "admin": false
-            },
-            "L3": {
-                "id": "T0",
-                "teacher": "KeS",
-                "subject": "PV",
-                "room": "See",
-                "admin": false
-            },
-            "L4": {
-                "id": "T0",
-                "teacher": "KeS",
-                "subject": "PV",
-                "room": "See",
-                "admin": false
-            },
-            "L5": "",
-            "L6": "",
-            "L7": "",
-            "L8": "",
-            "L9": ""
-        }
-    },
-    "legend": "Fächer:\nDeu\tDeutsch\nMa\tMathematik\nFr\tFranzösisch\nEn\tEnglisch\nEC\tEnglish Cooking\nEB\tEnglish Baking\nGes\tGeschichte\nGeo\tGeografie\nBio\tMensch und Umwelt / Biologie\nPh\tMensch und Umwelt / Physik\nCh\tMensch und Umwelt / Chemie\nNL\tNaturlehre\nKu\tKunst\nSB\tSekundarschulbegleitung\nBL\tBetreutes Lernen\nÜb\tÜben\nBB\tBerufsbildung\nUGV\tVorbereitung UG Prüfung\nHAB\tHausaufgabenbetreuung\n\nxxx\tZeitbereich für Arztbesuche, BIZ, Vorstellungsgespräche etc.: Andere Freistellungen werden nicht mehr als entschuldigtes Fehlen akzeptiert!\n\nLehrpersonen:\nAS\t\nCE\t\nHM \t\nKR\t\nKhS\tKarlheinz Schubert\nKS\t\nSB\t\nSK\t\nUW\t"
+    "legend": ""
 }

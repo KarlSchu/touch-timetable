@@ -71,9 +71,16 @@ function setGroupDefinition(groupList) {
 }
 
 function initTimeTableGrid() {
-    // teacher source
+    initTeachersTable();
+    initGroupsTable();
+    initTimetableTable();
+}
+
+// teacher source
+function initTeachersTable() {
     var nodeTable = document.createElement("table");
     nodeTable.setAttribute('class', 'springLake');
+    $("#teachers")[0].innerHTML = "";
     $("#teachers")[0].appendChild(nodeTable);
     var teacherNr = 0;
     var nodeTr;
@@ -106,11 +113,14 @@ function initTimeTableGrid() {
             nodeTd.append(nodeSpan);
         });
     });
+}
 
-    // lesson and group sums
+// lesson and group sums
+function initGroupsTable() {
     nodeTable = document.createElement("table");
     nodeTable.setAttribute('class', 'groupsSum');
     // groupCount
+    $("#groupCounters")[0].innerHTML = ""
     $("#groupCounters")[0].appendChild(nodeTable);
     var nodeTr;
     var nodeTd;
@@ -154,8 +164,11 @@ function initTimeTableGrid() {
     nodeTd.appendChild(nodeSpan);
     nodeSpan.setAttribute('id', 'lessonsCount');
     nodeSpan.appendChild(document.createTextNode('_'));
+}
 
-    // timeline
+// timeline and days 
+function initTimetableTable() {
+    $("#timetable")[0].innerHTML = "";
     var nodeDiv = document.createElement("div");
     nodeDiv.setAttribute('class', 'timeline-container');
     var nodeHeader = document.createElement("header");
@@ -291,6 +304,15 @@ function initTimeTable() {
     return timeTable;
 }
 
+function fetchDefinitionFromDOM() {
+    var definition = new Object();
+    definition.dayDef = dayDef;
+    definition.groupDef = groupDef;
+    definition.lessonDef = lessonDef;
+    definition.teacherDef = teacherDef;
+    return definition;
+}
+
 function fetchDataFromDOM() {
     var timeTable = initTimeTable();
     timeTable.remarks = $("#remarks").val();
@@ -319,6 +341,34 @@ function fetchDataFromDOM() {
     });
     //$("#lastChange")[0].innerHTML = (new Date()).toISOString();
     return timeTable;
+}
+
+function reloadDefinitionDataIntoDOM(timeTableDefinition) {
+
+    if (timeTableDefinition.teacherDef != null) {
+        if (confirm("Teachers definition found. Overwrite current definition and data?")) {
+            teacherDef = timeTableDefinition.teacherDef;
+        }
+    }
+    if (timeTableDefinition.groupDef != null) {
+        if (confirm("Group definition found. Overwrite current definition and data?")) {
+            groupDef = new Object();
+            $.each(timeTableDefinition.groupDef, function(groupKey, groupValue) {
+                groupDef[groupKey] = groupValue;
+            });
+        }
+    }
+    if (timeTableDefinition.dayDef != null) {
+        if (confirm("Day definition found. Overwrite current definition and data?")) {
+            dayDef = timeTableDefinition.dayDef;
+        }
+    }
+    if (timeTableDefinition.lessonsDef != null) {
+        if (confirm("Lesson periods definition found. Overwrite current definition and data?")) {
+            lessonDef = timeTableDefinition.lessonDef;
+        }
+    }
+    initTimeTableGrid();
 }
 
 function reloadDataIntoDOM(timeTable) {
@@ -476,6 +526,17 @@ function importData() {
     try {
         timeTable = JSON.parse(timeTableString);
         reloadDataIntoDOM(timeTable);
+    } catch (ex) {
+        alert("Error: " + ex);
+    }
+    saveData();
+}
+
+function importDefinitionData() {
+    timeTableDefinitionString = $("#timeTableOut").val();
+    try {
+        timeTableDefinition = JSON.parse(timeTableDefinitionString);
+        reloadDefinitionDataIntoDOM(timeTableDefinition);
     } catch (ex) {
         alert("Error: " + ex);
     }

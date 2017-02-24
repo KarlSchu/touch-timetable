@@ -6,6 +6,7 @@ $("#showimport").click(function() {
     $("#timeTableOut").show();
     $("#timeTableUpload").show();
     $("#timeTableImportButton").show();
+    $("#timeTableDefinitionImportButton").show();
     $("#timeTableHideButton").show();
     $("#download").hide();
     $("#timeTableOut").focus();
@@ -17,6 +18,17 @@ $("#timeTableImportButton").click(function() {
     $("#timeTableOut").hide();
     $("#timeTableUpload").hide();
     $("#timeTableImportButton").hide();
+    $("#timeTableDefinitionImportButton").hide();
+    $("#timeTableHideButton").hide();
+});
+
+$("#timeTableDefinitionImportButton").click(function() {
+    clearAllAsk();
+    importDefinitionData();
+    $("#timeTableOut").hide();
+    $("#timeTableUpload").hide();
+    $("#timeTableImportButton").hide();
+    $("#timeTableDefinitionImportButton").hide();
     $("#timeTableHideButton").hide();
 });
 
@@ -26,6 +38,7 @@ $("#timeTableHideButton").click(function() {
     $("#timeTableUpload").hide();
     $("#timeTableHideButton").hide();
     $("#timeTableImportButton").hide();
+    $("#timeTableDefinitionImportButton").hide();
 });
 
 $("#export").click(function() {
@@ -34,11 +47,28 @@ $("#export").click(function() {
     $("#timeTableOut").val(JSON.stringify(fetchDataFromDOM(), null, 4));
     $("#timeTableHideButton").show();
     $("#timeTableImportButton").hide();
+    $("#timeTableDefinitionImportButton").hide();
     $("#timeTableUpload").hide();
     $("#timeTableOut").focus();
     $("#timeTableOut")[0].setSelectionRange(0, 0);
     $("#timeTableOut")[0].scrollTop = 0;
     $("#timeTableOut")[0].scrollLeft = 0;
+    $("#download")[0].download = "timetable.json"
+});
+
+$("#exportdefinition").click(function() {
+    $("#download").show();
+    $("#timeTableOut").show();
+    $("#timeTableOut").val(JSON.stringify(fetchDefinitionFromDOM(), null, 4));
+    $("#timeTableHideButton").show();
+    $("#timeTableImportButton").hide();
+    $("#timeTableDefinitionImportButton").hide();
+    $("#timeTableUpload").hide();
+    $("#timeTableOut").focus();
+    $("#timeTableOut")[0].setSelectionRange(0, 0);
+    $("#timeTableOut")[0].scrollTop = 0;
+    $("#timeTableOut")[0].scrollLeft = 0;
+    $("#download")[0].download = "timetabledef.json"
 });
 
 $("#timeTableUpload").change(function(event) {
@@ -107,7 +137,8 @@ $("#textprint").click(function() {
 $("#download").click(function(event) {
     var timeTable = fetchDataFromDOM();
     this.href = "data:text/json;charset=utf-8," +
-        encodeURIComponent(JSON.stringify(timeTable, null, 4));
+        encodeURIComponent($("#timeTableOut").val());
+    // encodeURIComponent(JSON.stringify(timeTable, null, 4));
 });
 
 $("#ok").on('click', function(event) {
@@ -255,37 +286,3 @@ document.addEventListener("drop", function(event) {
         event.preventDefault();
     }
 }, false);
-
-
-
-// if (window.File && window.FileReader && window.FileList && window.Blob) {
-//     alert('File API supported.!');
-// } else {
-//     alert('The File APIs are not fully supported in this browser.');
-// }
-
-// $(function() {
-//     'use strict';
-//     // Change this to the location of your server-side upload handler:
-//     var url = "uploadCarPicture";
-//     $('#fileupload').fileupload({
-//             url: url,
-//             dataType: 'json',
-//             done: function(e, data) {
-//                 $.each(data.files, function(index, file) {
-//                     $('<p/>').text(file.name);
-//                 });
-//             },
-//             fail: function(e, data) {
-//                 alert("File exists");
-//             },
-//             progressall: function(e, data) {
-//                 var progress = parseInt(data.loaded / data.total * 100, 10);
-//                 $('#progress .bar').css(
-//                     'width',
-//                     progress + '%'
-//                 );
-//             }
-//         }).prop('disabled', !$.support.fileInput)
-//         .parent().addClass($.support.fileInput ? undefined : 'disabled');
-// });

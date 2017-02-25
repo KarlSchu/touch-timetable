@@ -39,7 +39,6 @@
                     <br/>
                     <input type="button" class="btn btn-small" id="showimport" value="Import" />
                     <input type="button" class="btn btn-small" id="export" value="Export" />
-                    <input type="button" class="btn btn-small" id="exportdefinition" value="Export Definition" />
                 </div>
             </div>
             <div class="no-print" id="teachers"></div>
@@ -50,8 +49,7 @@
                 <input type="file" class="btn btn-small btn2" id="timeTableUpload" name="file" />
                 <textarea id="timeTableOut"></textarea>
                 <div>
-                    <input type="button" class="btn btn-small btn2 no-print" id="timeTableImportButton" value="Start Import Data" />
-                    <input type="button" class="btn btn-small btn2 no-print" id="timeTableDefinitionImportButton" value="Start Import Definition" />
+                    <input type="button" class="btn btn-small btn2 no-print" id="timeTableImportButton" value="Start Import" />
                     <input type="button" class="btn btn-small btn2 no-print" id="timeTableHideButton" value="Hide" />
                     <a href="#" id="download" class="btn btn-small no-print" download="timetable.json">Download</a>
                 </div>
@@ -66,7 +64,7 @@
             <div class="resetFloat"></div>
         </div>
         <footer class="no-print">
-            <span id="version">(c) ksc, 2017, v.0.0.3</span>
+            <span id="version">(c) ksc, 2017, v.0.0.5</span>
         </footer>
         <script type="text/javascript" src="lib/jQuery/jquery.min.js"></script>
         <script type="text/javascript" src="lib/DragDropTouch.js"></script>
@@ -80,7 +78,7 @@
                 groupList = getUrlParameter('groups');
                 printMode = getUrlParameter('doprint');
                 setGroupDefinition(groupList);
-                initTimeTableGrid();
+                //initTimeTableGrid();
                 loadDataFromStore();
                 // convert textarea legend for printing into div
                 if (printMode != null) {

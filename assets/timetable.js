@@ -71,6 +71,7 @@ function setGroupDefinition(groupList) {
 }
 
 function initTimeTableGrid() {
+    clearAllDo();
     initTeachersTable();
     initGroupsTable();
     initTimetableTable();
@@ -255,6 +256,7 @@ function initTimetableTable() {
 
 var editLesson = null;
 
+// initialize lesson input form with additional data form
 function clickOnLesson(event) {
     var target = event.currentTarget;
     editLesson = event.currentTarget;
@@ -270,6 +272,7 @@ function clickOnLesson(event) {
     }
 }
 
+// take lesson edit form data into lesson
 function handleOk(event) {
     var fieldId = $("#fieldId").text();
     var field = $("#" + fieldId)[0];
@@ -287,42 +290,50 @@ function handleOk(event) {
     editLesson = null;
 }
 
-function initTimeTable() {
-    var timeTable = new Object();
-    timeTable.version = '';
-    timeTable.lastChange = '';
-    timeTable.remarks = '';
+// create empty timetable structure
+function createDayGroupLessonStructur() {
+    var data = new Object();
+    data.remarks = '';
     $.each(dayDef, function(dayKey, dayValue) {
-        timeTable[dayKey] = new Object();
+        data[dayKey] = new Object();
         $.each(groupDef, function(groupKey, groupValue) {
-            timeTable[dayKey][groupKey] = new Object();
+            data[dayKey][groupKey] = new Object();
             $.each(lessonDef, function(lessonKey, lessonValue) {
-                timeTable[dayKey][groupKey][lessonKey] = '';
+                data[dayKey][groupKey][lessonKey] = '';
             });
         });
     });
+    data.legend = '';
+    return data;
+}
+
+function fetchAllFromDOM() {
+    // create empty timetable
+    var timeTable = new Object();
+    timeTable.version = $("#version")[0].innerHTML;
+    timeTable.lastChange = $("#lastChange")[0].innerHTML;
+    timeTable.definitions = fetchDefinitionFromDOM();
+    timeTable.data = fetchDataFromDOM(timeTable);
     return timeTable;
 }
 
 function fetchDefinitionFromDOM() {
-    var definition = new Object();
-    definition.dayDef = dayDef;
-    definition.groupDef = groupDef;
-    definition.lessonDef = lessonDef;
-    definition.teacherDef = teacherDef;
-    return definition;
+    var definitions = new Object();
+    definitions.dayDef = dayDef;
+    definitions.groupDef = groupDef;
+    definitions.lessonDef = lessonDef;
+    definitions.teacherDef = teacherDef;
+    return definitions;
 }
 
-function fetchDataFromDOM() {
-    var timeTable = initTimeTable();
-    timeTable.remarks = $("#remarks").val();
-    timeTable.legend = $("#legend").val();
-    timeTable.version = $("#version")[0].innerHTML;
-    timeTable.lastChange = $("#lastChange")[0].innerHTML;
+function fetchDataFromDOM(timeTable) {
+    var data = createDayGroupLessonStructur();
+    data.remarks = $("#remarks").val();
+    data.legend = $("#legend").val();
     $.each(dayDef, function(dayKey, dayValue) {
         $.each(groupDef, function(groupKey, groupValue) {
             $.each(lessonDef, function(lessonKey, lessonValue) {
-                timeTable[dayKey][groupKey][lessonKey] = '';
+                data[dayKey][groupKey][lessonKey] = '';
                 var level1List = $("#" + dayKey + groupKey + lessonKey)
                 if (level1List.length > 0) {
                     var level2List = level1List[0].childNodes;
@@ -333,53 +344,64 @@ function fetchDataFromDOM() {
                         content.subject = level2List[0].children[1].innerHTML;
                         content.room = level2List[0].children[2].innerHTML;
                         content.admin = level2List[0].classList.contains("admin");
-                        timeTable[dayKey][groupKey][lessonKey] = content;
+                        data[dayKey][groupKey][lessonKey] = content;
                     }
                 }
             });
         });
     });
-    //$("#lastChange")[0].innerHTML = (new Date()).toISOString();
-    return timeTable;
+    return data;
 }
 
-function reloadDefinitionDataIntoDOM(timeTableDefinition) {
 
-    if (timeTableDefinition.teacherDef != null) {
-        if (confirm("Teachers definition found. Overwrite current definition and data?")) {
-            teacherDef = timeTableDefinition.teacherDef;
+// reads definitions into dom, repaint table
+// returns true if data are overwritten, else false
+function reloadDefinitionsIntoDOM(timeTableDefinition, interactive) {
+    if (timeTableDefinition.teacherDef != null ||
+        timeTableDefinition.groupDef != null ||
+        timeTableDefinition.dayDef != null ||
+        timeTableDefinition.lessonDef != null) {
+        if (!interactive || confirm("DEFINITIONS found. Overwrite current definition and data (clear all)?")) {
+            var definitionsChanged = false;
+            if (timeTableDefinition.teacherDef != null) {
+                teacherDef = timeTableDefinition.teacherDef;
+                definitionsChanged = true;
+            }
+            if (timeTableDefinition.groupDef != null) {
+                groupDef = new Object();
+                $.each(timeTableDefinition.groupDef, function(groupKey, groupValue) {
+                    groupDef[groupKey] = groupValue;
+                });
+                definitionsChanged = true;
+            }
+            if (timeTableDefinition.dayDef != null) {
+                dayDef = timeTableDefinition.dayDef;
+                definitionsChanged = true;
+            }
+            if (timeTableDefinition.lessonDef != null) {
+                lessonDef = timeTableDefinition.lessonDef;
+                definitionsChanged = true;
+            }
+            if (definitionsChanged) {
+                initTimeTableGrid();
+                return true;
+            }
         }
     }
-    if (timeTableDefinition.groupDef != null) {
-        if (confirm("Group definition found. Overwrite current definition and data?")) {
-            groupDef = new Object();
-            $.each(timeTableDefinition.groupDef, function(groupKey, groupValue) {
-                groupDef[groupKey] = groupValue;
-            });
-        }
-    }
-    if (timeTableDefinition.dayDef != null) {
-        if (confirm("Day definition found. Overwrite current definition and data?")) {
-            dayDef = timeTableDefinition.dayDef;
-        }
-    }
-    if (timeTableDefinition.lessonsDef != null) {
-        if (confirm("Lesson periods definition found. Overwrite current definition and data?")) {
-            lessonDef = timeTableDefinition.lessonDef;
-        }
-    }
-    initTimeTableGrid();
+    return false;
 }
 
-function reloadDataIntoDOM(timeTable) {
+function reloadDataIntoDOM(timeTable, interactive) {
     $("#remarks").val(timeTable.remarks);
     timeTable.remarks = $("#remarks").val();
     $("#lastChange")[0].innerHTML = timeTable.lastChange;
     $("#legend").val(timeTable.legend);
-    if (timeTable.version != $("#version")[0].innerHTML) {
-        alert('Version upgrade from ' + timeTable.version + ' to ' + $("#version")[0].innerHTML);
-        timeTable.version = $("#version")[0].innerHTML;
-    }
+    // if (timeTable.version != $("#version")[0].innerHTML) {
+    //     if (!interactive) {
+    //         alert('Version upgrade from ' + timeTable.version + ' to ' + $("#version")[0].innerHTML);
+    //     }
+    //     timeTable.version = $("#version")[0].innerHTML;
+    // }
     $.each(dayDef, function(dayKey, dayValue) {
         $.each(groupDef, function(groupKey, groupValue) {
             $.each(lessonDef, function(lessonKey, lessonValue) {
@@ -388,7 +410,7 @@ function reloadDataIntoDOM(timeTable) {
                     alert("Error: Expected timetable element '" + dayKey + groupKey + lessonKey + "' not found!");
                 } else if (target.className != null && target.className.match('.*' + 'dropLesson\\b.*')) {
                     if (timeTable == null) {
-                        timeTable = initTimeTable();
+                        timeTable = createDayGroupLessonStructur();
                     }
                     if (timeTable[dayKey] != undefined &&
                         timeTable[dayKey][groupKey] != undefined &&
@@ -510,33 +532,37 @@ function recalcAll() {
     });
 }
 
+function testVersion(importData) {
+    if (importData.version != $("#version")[0].innerHTML) {
+        alert('Version upgrade from ' + importData.version + ' to ' + $("#version")[0].innerHTML);
+        importData.version = $("#version")[0].innerHTML;
+    }
+}
+
 function loadDataFromStore() {
     $("#timeTableOut").val('');
     timeTableString = localStorage.getItem("timeTablePs");
-    timeTable = JSON.parse(timeTableString);
-    if (timeTable == null) {
-        timeTable = initTimeTable();
+    importData = JSON.parse(timeTableString);
+    testVersion(importData);
+    if (importData == null || importData.definitions == null) {
+        importData = createDayGroupLessonStructur();
+        importData.definitions = fetchDefinitionFromDOM();
     }
-    document.getElementById("timeTableOut").innerHTML = JSON.stringify(timeTable);
-    reloadDataIntoDOM(timeTable);
+    document.getElementById("timeTableOut").innerHTML = JSON.stringify(importData);
+    reloadDefinitionsIntoDOM(importData.definitions, false);
+    reloadDataIntoDOM(importData.data, false);
 }
 
-function importData() {
+function importAll() {
     timeTableString = $("#timeTableOut").val();
     try {
-        timeTable = JSON.parse(timeTableString);
-        reloadDataIntoDOM(timeTable);
-    } catch (ex) {
-        alert("Error: " + ex);
-    }
-    saveData();
-}
-
-function importDefinitionData() {
-    timeTableDefinitionString = $("#timeTableOut").val();
-    try {
-        timeTableDefinition = JSON.parse(timeTableDefinitionString);
-        reloadDefinitionDataIntoDOM(timeTableDefinition);
+        importData = JSON.parse(timeTableString);
+        testVersion(importData);
+        if (!reloadDefinitionsIntoDOM(importData.definitions, true)) {
+            // if no definition written then ask for keep old data
+            clearAllAsk();
+        }
+        reloadDataIntoDOM(importData.data, true);
     } catch (ex) {
         alert("Error: " + ex);
     }
@@ -544,7 +570,7 @@ function importDefinitionData() {
 }
 
 function saveData() {
-    var timeTable = fetchDataFromDOM();
+    var timeTable = fetchAllFromDOM();
     if (printMode != null || groupList != null) {
         alert('No modification allowed in print mode!');
     } else {

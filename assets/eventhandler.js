@@ -13,18 +13,7 @@ $("#showimport").click(function() {
 });
 
 $("#timeTableImportButton").click(function() {
-    clearAllAsk();
-    importData();
-    $("#timeTableOut").hide();
-    $("#timeTableUpload").hide();
-    $("#timeTableImportButton").hide();
-    $("#timeTableDefinitionImportButton").hide();
-    $("#timeTableHideButton").hide();
-});
-
-$("#timeTableDefinitionImportButton").click(function() {
-    clearAllAsk();
-    importDefinitionData();
+    importAll();
     $("#timeTableOut").hide();
     $("#timeTableUpload").hide();
     $("#timeTableImportButton").hide();
@@ -44,7 +33,8 @@ $("#timeTableHideButton").click(function() {
 $("#export").click(function() {
     $("#download").show();
     $("#timeTableOut").show();
-    $("#timeTableOut").val(JSON.stringify(fetchDataFromDOM(), null, 4));
+    var data = fetchAllFromDOM();
+    $("#timeTableOut").val(JSON.stringify(data, null, 4));
     $("#timeTableHideButton").show();
     $("#timeTableImportButton").hide();
     $("#timeTableDefinitionImportButton").hide();
@@ -53,22 +43,6 @@ $("#export").click(function() {
     $("#timeTableOut")[0].setSelectionRange(0, 0);
     $("#timeTableOut")[0].scrollTop = 0;
     $("#timeTableOut")[0].scrollLeft = 0;
-    $("#download")[0].download = "timetable.json"
-});
-
-$("#exportdefinition").click(function() {
-    $("#download").show();
-    $("#timeTableOut").show();
-    $("#timeTableOut").val(JSON.stringify(fetchDefinitionFromDOM(), null, 4));
-    $("#timeTableHideButton").show();
-    $("#timeTableImportButton").hide();
-    $("#timeTableDefinitionImportButton").hide();
-    $("#timeTableUpload").hide();
-    $("#timeTableOut").focus();
-    $("#timeTableOut")[0].setSelectionRange(0, 0);
-    $("#timeTableOut")[0].scrollTop = 0;
-    $("#timeTableOut")[0].scrollLeft = 0;
-    $("#download")[0].download = "timetabledef.json"
 });
 
 $("#timeTableUpload").change(function(event) {
@@ -119,7 +93,6 @@ $("#textprint").click(function() {
     if (printMode != null || groupList != null) {
         print();
     } else {
-
         var groupString = '';
         $.each(groupDef, function(groupKey, groupValue) {
             if (groupString.length > 0) {
@@ -135,7 +108,7 @@ $("#textprint").click(function() {
 });
 
 $("#download").click(function(event) {
-    var timeTable = fetchDataFromDOM();
+    var timeTable = fetchAllFromDOM();
     this.href = "data:text/json;charset=utf-8," +
         encodeURIComponent($("#timeTableOut").val());
     // encodeURIComponent(JSON.stringify(timeTable, null, 4));

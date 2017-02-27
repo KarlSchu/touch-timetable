@@ -311,7 +311,7 @@ function fetchAllFromDOM() {
     // create empty timetable
     var timeTable = new Object();
     timeTable.version = $("#version")[0].innerHTML;
-    timeTable.lastChange = $("#lastChange")[0].innerHTML;
+    timeTable.lastChange = (new Date()).toString(); //$("#lastChange")[0].innerHTML;
     timeTable.definitions = fetchDefinitionFromDOM();
     timeTable.data = fetchDataFromDOM(timeTable);
     return timeTable;
@@ -356,7 +356,7 @@ function fetchDataFromDOM(timeTable) {
 
 // reads definitions into dom, repaint table
 // returns true if data are overwritten, else false
-function reloadDefinitionsIntoDOM(timeTableDefinition, interactive) {
+function reloadDefinitionsIntoDOM(timeTableDefinition, interactive, groupList) {
     if (timeTableDefinition.teacherDef != null ||
         timeTableDefinition.groupDef != null ||
         timeTableDefinition.dayDef != null ||
@@ -367,7 +367,9 @@ function reloadDefinitionsIntoDOM(timeTableDefinition, interactive) {
                 teacherDef = timeTableDefinition.teacherDef;
                 definitionsChanged = true;
             }
-            if (timeTableDefinition.groupDef != null) {
+            if (groupList != null) {
+                setGroupDefinition(groupList);
+            } else if (timeTableDefinition.groupDef != null) {
                 groupDef = new Object();
                 $.each(timeTableDefinition.groupDef, function(groupKey, groupValue) {
                     groupDef[groupKey] = groupValue;
@@ -394,7 +396,6 @@ function reloadDefinitionsIntoDOM(timeTableDefinition, interactive) {
 function reloadDataIntoDOM(timeTable, interactive) {
     $("#remarks").val(timeTable.remarks);
     timeTable.remarks = $("#remarks").val();
-    $("#lastChange")[0].innerHTML = timeTable.lastChange;
     $("#legend").val(timeTable.legend);
     // if (timeTable.version != $("#version")[0].innerHTML) {
     //     if (!interactive) {
@@ -474,7 +475,7 @@ function clearAllDo() {
             elem.removeChild(elem.childNodes[0]);
         }
     });
-    $("#lastChange")[0].innerHTML = (new Date()).toISOString();
+    $("#lastChange")[0].innerHTML = (new Date()).toString();
     recalcAll();
 }
 
@@ -539,7 +540,7 @@ function testVersion(importData) {
     }
 }
 
-function loadDataFromStore() {
+function loadDataFromStore(groupList) {
     $("#timeTableOut").val('');
     timeTableString = localStorage.getItem("timeTablePs");
     importData = JSON.parse(timeTableString);
@@ -549,8 +550,9 @@ function loadDataFromStore() {
         importData.definitions = fetchDefinitionFromDOM();
     }
     document.getElementById("timeTableOut").innerHTML = JSON.stringify(importData);
-    reloadDefinitionsIntoDOM(importData.definitions, false);
+    reloadDefinitionsIntoDOM(importData.definitions, false, groupList);
     reloadDataIntoDOM(importData.data, false);
+    $("#lastChange")[0].innerHTML = (new Date(importData.lastChange)).toString();
 }
 
 function importAll() {
@@ -576,7 +578,6 @@ function saveData() {
     } else {
         timeTableString = JSON.stringify(timeTable);
         localStorage.setItem("timeTablePs", timeTableString);
-        // $("#lastChange")[0].innerHTML = (new Date()).toISOString();
     }
     return timeTable;
 }

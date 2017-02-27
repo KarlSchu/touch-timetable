@@ -84,7 +84,7 @@ function errorHandler(evt) {
 }
 
 $("#save").click(function() {
-    $("#lastChange")[0].innerHTML = (new Date()).toISOString();
+    $("#lastChange")[0].innerHTML = (new Date()).toString();
     saveData();
 });
 

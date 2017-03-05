@@ -91,7 +91,7 @@ body {
 
 #remarks {
     height: 6.6em;
-    width: 500px;
+    width: 260px;
 }
 
 .resetFloat {
@@ -296,7 +296,7 @@ table tr td:last-child {
     clear: both;
 }
 
-#timeTableOut {
+#importExportData {
     display: none;
     clear: both;
     height: 20em;

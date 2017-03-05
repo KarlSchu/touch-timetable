@@ -3,18 +3,18 @@ $("#clear").click(function() {
 });
 
 $("#showimport").click(function() {
-    $("#timeTableOut").show();
+    $("#importExportData").show();
     $("#timeTableUpload").show();
     $("#timeTableImportButton").show();
     $("#timeTableDefinitionImportButton").show();
     $("#timeTableHideButton").show();
     $("#download").hide();
-    $("#timeTableOut").focus();
+    $("#importExportData").focus();
 });
 
 $("#timeTableImportButton").click(function() {
     importAll();
-    $("#timeTableOut").hide();
+    $("#importExportData").hide();
     $("#timeTableUpload").hide();
     $("#timeTableImportButton").hide();
     $("#timeTableDefinitionImportButton").hide();
@@ -22,7 +22,7 @@ $("#timeTableImportButton").click(function() {
 });
 
 $("#timeTableHideButton").click(function() {
-    $("#timeTableOut").hide();
+    $("#importExportData").hide();
     $("#download").hide();
     $("#timeTableUpload").hide();
     $("#timeTableHideButton").hide();
@@ -32,17 +32,17 @@ $("#timeTableHideButton").click(function() {
 
 $("#export").click(function() {
     $("#download").show();
-    $("#timeTableOut").show();
+    $("#importExportData").show();
     var data = fetchAllFromDOM();
-    $("#timeTableOut").val(JSON.stringify(data, null, 4));
+    $("#importExportData").val(JSON.stringify(data, null, 4));
     $("#timeTableHideButton").show();
     $("#timeTableImportButton").hide();
     $("#timeTableDefinitionImportButton").hide();
     $("#timeTableUpload").hide();
-    $("#timeTableOut").focus();
-    $("#timeTableOut")[0].setSelectionRange(0, 0);
-    $("#timeTableOut")[0].scrollTop = 0;
-    $("#timeTableOut")[0].scrollLeft = 0;
+    $("#importExportData").focus();
+    $("#importExportData")[0].setSelectionRange(0, 0);
+    $("#importExportData")[0].scrollTop = 0;
+    $("#importExportData")[0].scrollLeft = 0;
 });
 
 $("#timeTableUpload").change(function(event) {
@@ -59,11 +59,11 @@ function loaded(evt) {
     // https://w3c.github.io/FileAPI/#FileReader-interface
     // Obtain the read file data
     var fileString = evt.target.result;
-    $("#timeTableOut").val(fileString);
-    $("#timeTableOut").focus();
-    $("#timeTableOut")[0].setSelectionRange(0, 0);
-    $("#timeTableOut")[0].scrollTop = 0;
-    $("#timeTableOut")[0].scrollLeft = 0;
+    $("#importExportData").val(fileString);
+    $("#importExportData").focus();
+    $("#importExportData")[0].setSelectionRange(0, 0);
+    $("#importExportData")[0].scrollTop = 0;
+    $("#importExportData")[0].scrollLeft = 0;
 }
 
 function updateProgress(evt) {
@@ -110,7 +110,7 @@ $("#textprint").click(function() {
 $("#download").click(function(event) {
     var timeTable = fetchAllFromDOM();
     this.href = "data:text/json;charset=utf-8," +
-        encodeURIComponent($("#timeTableOut").val());
+        encodeURIComponent($("#importExportData").val());
     // encodeURIComponent(JSON.stringify(timeTable, null, 4));
 });
 
@@ -130,6 +130,7 @@ document.addEventListener("keydown", function(event) {
         shift = true;
     }
 });
+
 document.addEventListener("keyup", function(event) {
     var key = event.wich || event.keyCode;
     if (key === 16) {
@@ -141,11 +142,16 @@ document.addEventListener("keyup", function(event) {
     }
 });
 
-/* events fired on the draggable target */
+/**
+ * Event fired to a draggable target.
+ */
 document.addEventListener("drag", function(event) {
     //
 }, false);
 
+/**
+ * Test permission to drag and handles initialization of after drag start.
+ */
 document.addEventListener("dragstart", function(event) {
     if ((event.target.className != null && event.target.className.match('.*' + 'spring\\b.*')) ||
         (event.target.className != null && event.target.className.match('.*' + 'teacherLesson\\b.*'))) {

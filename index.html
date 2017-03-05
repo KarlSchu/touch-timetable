@@ -27,11 +27,9 @@
 
         <div>
             <div id="top">
-                <div id="header"> Timetable Pegasusschule
-                    <br>
-                    <div id="lastChange">no idea</div>
+                <div id="header">Timetable Pegasusschule<br/>
+                    <span id="lastChange">no idea</span>
                 </div>
-
                 <div class="no-print">
                     <input type="button" class="btn btn-small" id="clear" value="Clear" />
                     <input type="button" class="btn btn-small" id="save" value="Save" />
@@ -47,7 +45,7 @@
             <br/>
             <div class="importContainer no-print">
                 <input type="file" class="btn btn-small btn2" id="timeTableUpload" name="file" />
-                <textarea id="timeTableOut"></textarea>
+                <textarea id="importExportData"></textarea>
                 <div>
                     <input type="button" class="btn btn-small btn2 no-print" id="timeTableImportButton" value="Start Import" />
                     <input type="button" class="btn btn-small btn2 no-print" id="timeTableHideButton" value="Hide" />
@@ -58,7 +56,11 @@
             <div id="timetable"></div>
             <div class="resetFloat page-break"></div>
             <br/>
+            <br/>
+            <br/>
             <textarea id="legend" class="no-print"></textarea>
+            <br/>
+            <br/>
             <br/>
             <div id="legendPrint" class="only-print page-break"></div>
             <div class="resetFloat"></div>

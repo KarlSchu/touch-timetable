@@ -1,9 +1,24 @@
 // timetable.js
 //
+/**
+ * Should breaks count as teacher lesson or not.
+ */
 var countBreaksAsTeacherLessons = true;
+/**
+ * Should breaks count as group lessons or not.
+ */
 var countBreaksAsGroupLessons = true;
+/**
+ * The number of the lesson what is interpreted as the lunch break.
+ */
 var breakLessonNr = 6;
+/**
+ * Use background color for lessons or not, used for print mode.
+ */
 var coloredLessons = true;
+/**
+ * Default, code defined timeline for the lessons.
+ */
 var lessonDef = { // max: L0 to L9
     'L0': '7:30',
     'L1': '8:00',
@@ -16,6 +31,9 @@ var lessonDef = { // max: L0 to L9
     'L8': '-16:00',
     'L9': '-17:00'
 };
+/**
+ * Default, code defined definition of day.
+ */
 var dayDef = { //max mo - so
     'mo': 'Montag',
     'di': 'Dienstag',
@@ -24,6 +42,11 @@ var dayDef = { //max mo - so
     'fr': 'Freitag' //,
         //'sa': 'Samstag'
 };
+/**
+ * Default, code defined defintion of groups.
+ * May be overwritten bei definition part of stored data or a 
+ * group defintion string in the url.
+ */
 var groupDefDefault = { // max: A - Z
     'A': 'GrA1',
     'B': 'GrA2',
@@ -35,6 +58,9 @@ var groupDefDefault = { // max: A - Z
     //, 'H':'HHH'
 };
 var groupDef = {};
+/**
+ * Default, code defined definition of teachers.
+ */
 var teacherDef = {
     'T0': 'KeS',
     'T1': 'KSC',
@@ -49,9 +75,15 @@ var teacherDef = {
     'T10': 'XXX',
     'T11': 'ASA'
 };
-
+/**
+ * DateTime stammp of last data change.
+ */
 var timeStamp = "";
 
+/**
+ * Overwrites the default group definition with the groups in list.
+ * @param {string} groupList 
+ */
 function setGroupDefinition(groupList) {
     if (groupList != undefined && groupList.length > 0) {
         groupList = groupList.replace(/\s*/g, '');
@@ -70,6 +102,9 @@ function setGroupDefinition(groupList) {
     }
 }
 
+/**
+ * Calls all the functions for DOM initializing.
+ */
 function initTimeTableGrid() {
     clearAllDo();
     initTeachersTable();
@@ -77,7 +112,9 @@ function initTimeTableGrid() {
     initTimetableTable();
 }
 
-// teacher source
+/**
+ * Creates the DOM for teacher drag source table.
+ */
 function initTeachersTable() {
     var nodeTable = document.createElement("table");
     nodeTable.setAttribute('class', 'springLake');
@@ -116,7 +153,9 @@ function initTeachersTable() {
     });
 }
 
-// lesson and group sums
+/**
+ * Creates the DOM for lesson and group sums table.
+ */
 function initGroupsTable() {
     nodeTable = document.createElement("table");
     nodeTable.setAttribute('class', 'groupsSum');
@@ -167,7 +206,9 @@ function initGroupsTable() {
     nodeSpan.appendChild(document.createTextNode('_'));
 }
 
-// timeline and days 
+/**
+ * Init the timeline column and day containers.
+ */
 function initTimetableTable() {
     $("#timetable")[0].innerHTML = "";
     var nodeDiv = document.createElement("div");
@@ -256,7 +297,10 @@ function initTimetableTable() {
 
 var editLesson = null;
 
-// initialize lesson input form with additional data form
+/**
+ * Initialize lesson input form with additional data form.
+ * @param {*} event 
+ */
 function clickOnLesson(event) {
     var target = event.currentTarget;
     editLesson = event.currentTarget;
@@ -272,7 +316,10 @@ function clickOnLesson(event) {
     }
 }
 
-// take lesson edit form data into lesson
+/**
+ * Take lesson edit form data into lesson
+ * @param {*} event 
+ */
 function handleOk(event) {
     var fieldId = $("#fieldId").text();
     var field = $("#" + fieldId)[0];
@@ -290,7 +337,9 @@ function handleOk(event) {
     editLesson = null;
 }
 
-// create empty timetable structure
+/**
+ * Create empty timetable structure.
+ */
 function createDayGroupLessonStructur() {
     var data = new Object();
     data.remarks = '';
@@ -307,16 +356,22 @@ function createDayGroupLessonStructur() {
     return data;
 }
 
+/**
+ * Get the definition, data part of the timetable and the version info from the DOM.
+ */
 function fetchAllFromDOM() {
     // create empty timetable
     var timeTable = new Object();
     timeTable.version = $("#version")[0].innerHTML;
     timeTable.lastChange = (new Date()).toString(); //$("#lastChange")[0].innerHTML;
     timeTable.definitions = fetchDefinitionFromDOM();
-    timeTable.data = fetchDataFromDOM(timeTable);
+    timeTable.data = fetchDataFromDOM();
     return timeTable;
 }
 
+/**
+ * Get the definition part of the timetable from the DOM.
+ */
 function fetchDefinitionFromDOM() {
     var definitions = new Object();
     definitions.dayDef = dayDef;
@@ -326,7 +381,10 @@ function fetchDefinitionFromDOM() {
     return definitions;
 }
 
-function fetchDataFromDOM(timeTable) {
+/**
+ * Get the data part of the timetable from th DOM.
+ */
+function fetchDataFromDOM() {
     var data = createDayGroupLessonStructur();
     data.remarks = $("#remarks").val();
     data.legend = $("#legend").val();
@@ -353,9 +411,13 @@ function fetchDataFromDOM(timeTable) {
     return data;
 }
 
-
-// reads definitions into dom, repaint table
-// returns true if data are overwritten, else false
+/**
+ * Reads definitions into dom, repaint table,
+ * returns true if data are overwritten, else false
+ * @param {*} timeTableDefinition 
+ * @param {*} interactive 
+ * @param {*} groupList 
+ */
 function reloadDefinitionsIntoDOM(timeTableDefinition, interactive, groupList) {
     if (timeTableDefinition.teacherDef != null ||
         timeTableDefinition.groupDef != null ||
@@ -393,6 +455,11 @@ function reloadDefinitionsIntoDOM(timeTableDefinition, interactive, groupList) {
     return false;
 }
 
+/**
+ * 
+ * @param {*} timeTable 
+ * @param {*} interactive 
+ */
 function reloadDataIntoDOM(timeTable, interactive) {
     $("#remarks").val(timeTable.remarks);
     timeTable.remarks = $("#remarks").val();
@@ -462,12 +529,18 @@ function reloadDataIntoDOM(timeTable, interactive) {
     recalcAll();
 }
 
+/**
+ * Clear all timetable cells with confirmation.
+ */
 function clearAllAsk() {
     if (confirm("Clear all lesson entry from time table?")) {
         clearAllDo();
     }
 }
 
+/**
+ * Clear all timetable cells, execution part.
+ */
 function clearAllDo() {
     var elements = $(".dropLesson");
     elements.each(function(idx, elem) {
@@ -479,6 +552,9 @@ function clearAllDo() {
     recalcAll();
 }
 
+/**
+ * Iterate through all timetable cells and add group and teacher and add lessons.
+ */
 function recalcAll() {
     var allLessonsCount = 0;
     var teachers = $(".spring");
@@ -533,6 +609,10 @@ function recalcAll() {
     });
 }
 
+/**
+ * Check the version info from the timetable object and compare it with the code version.
+ * @param {timeTable object} importData 
+ */
 function testVersion(importData) {
     if (importData.version != $("#version")[0].innerHTML) {
         alert('Version upgrade from ' + importData.version + ' to ' + $("#version")[0].innerHTML);
@@ -540,8 +620,12 @@ function testVersion(importData) {
     }
 }
 
+/**
+ * Load timtable data from the browser local DB.
+ * @param {*} groupList 
+ */
 function loadDataFromStore(groupList) {
-    $("#timeTableOut").val('');
+    $("#importExportData").val('');
     timeTableString = localStorage.getItem("timeTablePs");
     importData = JSON.parse(timeTableString);
     testVersion(importData);
@@ -549,28 +633,44 @@ function loadDataFromStore(groupList) {
         importData = createDayGroupLessonStructur();
         importData.definitions = fetchDefinitionFromDOM();
     }
-    document.getElementById("timeTableOut").innerHTML = JSON.stringify(importData);
+    document.getElementById("importExportData").innerHTML = JSON.stringify(importData);
     reloadDefinitionsIntoDOM(importData.definitions, false, groupList);
     reloadDataIntoDOM(importData.data, false);
     $("#lastChange")[0].innerHTML = (new Date(importData.lastChange)).toString();
 }
 
+/**
+ * Import timetable data from string in form field importExportData
+ */
 function importAll() {
-    timeTableString = $("#timeTableOut").val();
+    timeTableString = $("#importExportData").val();
     try {
         importData = JSON.parse(timeTableString);
         testVersion(importData);
-        if (!reloadDefinitionsIntoDOM(importData.definitions, true)) {
-            // if no definition written then ask for keep old data
-            clearAllAsk();
+        // test for old data format (versions below 0.0.5)
+        if (importData.definitions == null) {
+            // nothing to do: take the default values as defined in js code
+        } else {
+            if (!reloadDefinitionsIntoDOM(importData.definitions, true)) {
+                // if no definition written then ask for keep old data
+                clearAllAsk();
+            }
         }
-        reloadDataIntoDOM(importData.data, true);
+        // test for old data format (versions below 0.0.5)
+        if (importData.data == null) {
+            reloadDataIntoDOM(importData, true);
+        } else {
+            reloadDataIntoDOM(importData.data, true);
+        }
     } catch (ex) {
         alert("Error: " + ex);
     }
     saveData();
 }
 
+/**
+ * Explizit save of all data and definitions from DOM into local DB.
+ */
 function saveData() {
     var timeTable = fetchAllFromDOM();
     if (printMode != null || groupList != null) {
@@ -582,6 +682,12 @@ function saveData() {
     return timeTable;
 }
 
+/**
+ * Recursive test for matching a classname in the parent structure.
+ * @param {*} elem 
+ * @param {*} className 
+ * @param {*} level 
+ */
 function targetDeepTest(elem, className, level) {
     if (elem == null || level < 1) {
         return null;

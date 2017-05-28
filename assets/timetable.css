@@ -276,6 +276,18 @@ table tr td:last-child {
     border: 1px solid greenyellow;
 }
 
+#T12.colored {
+    color: darkslateblue;
+    background-color: cadetblue;
+    border: 1px solid greenyellow;
+}
+
+#T13.colored {
+    color: darkslateblue;
+    background-color: brown;
+    border: 1px solid darkcyan;
+}
+
 #timeTableUpload {
     display: none;
     clear: both;

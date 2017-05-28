@@ -48,32 +48,32 @@ var dayDef = { //max mo - so
  * group defintion string in the url.
  */
 var groupDefDefault = { // max: A - Z
-    'A': 'GrA1',
-    'B': 'GrA2',
-    'C': 'GrA3',
-    'D': 'GrB',
-    'E': 'GrC',
-    //, 'F': 'Extra'
-    //, 'G':'GGG'
-    //, 'H':'HHH'
+    "A": "GrK",
+    "B": "GrA",
+    "C": "GrB",
+    "D": "GrC",
+    "E": "GrD",
+    "F": "GrE"
 };
 var groupDef = {};
 /**
  * Default, code defined definition of teachers.
  */
 var teacherDef = {
-    'T0': 'KeS',
-    'T1': 'KSC',
-    'T2': 'UWO',
-    'T3': 'SBO',
-    'T4': 'CES',
-    'T5': 'KRU',
-    'T6': 'HME',
-    'T7': 'SKU',
-    'T8': 'AST',
-    'T9': 'ISC',
-    'T10': 'XXX',
-    'T11': 'ASA'
+    "T0": "KeS",
+    "T1": "KSC",
+    "T2": "UWO",
+    "T3": "SBO",
+    "T4": "CES",
+    "T5": "BSI",
+    "T6": "HME",
+    "T7": "GKI",
+    "T8": "AST",
+    "T9": "ISC",
+    "T10": "MLU",
+    "T11": "NBE",
+    "T12": "SKU",
+    "T13": "___"
 };
 /**
  * DateTime stammp of last data change.
@@ -123,7 +123,7 @@ function initTeachersTable() {
     var teacherNr = 0;
     var nodeTr;
     $.each(teacherDef, function(teacherKey, teacherValue) {
-        if (teacherNr++ % 6 == 0) {
+        if (teacherNr++ % 7 == 0) {
             nodeTr = document.createElement("tr");
             nodeTable.appendChild(nodeTr);
         }

@@ -243,7 +243,12 @@ document.addEventListener("drop", function(event) {
             var dupNode = dragged.cloneNode(true);
             dupNode.style.opacity = "";
             dupNode.style.cursor = "move";
-            dupNode.className = dragged.className;
+            dupNode.className = "teacherLesson";
+            if (coloredLessons) {
+                dupNode.setAttribute('class', 'teacherLesson colored');
+            } else {
+                dupNode.setAttribute('class', 'teacherLesson');
+            }
             target.appendChild(dupNode);
 
             dupNode.addEventListener("click", function(event) {

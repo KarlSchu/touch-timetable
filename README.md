@@ -8,7 +8,7 @@ Main purpose is to place lessons into a predefined timetable. It is not the idea
 Add a lesson by drag it from the teachers list and droping it into the lesson table cell. 
 
 If there are already an entry in the timetable cell the background becomes red. If you drop it 
-nevertheless then the old content is replaced.  
+nevertheless then the old content is replaced.
 You can drag timetable content from one cell to the other too. Then the default mode is "copy". 
 By pressing the shift key (not on touch devices;) the cell content will be moved. 
 ![Timetable](/assets/timetableps-part.png)

@@ -2,7 +2,47 @@
     "version": "(c) ksc, 2017, v.0.0.3",
     "lastChange": "2017-02-23T17:32:23.109Z",
     "remarks": "Variante 2a \nhallo kerstin",
-    "mo": {
+    "dayDef": {
+        "mo": "MONDAY",
+        "di": "Dienstag",
+        "mi": "Mittwoch",
+        "do": "Donnerstag",
+        "fr": "Freitag"
+    },
+    "groupDef": {
+        "A": "GrX1",
+        "B": "GrY2",
+        "C": "GrZ3",
+        "D": "GrB",
+        "E": "GrC"
+    },
+    "lessonDef": {
+        "L0": "6:30",
+        "L1": "8:00",
+        "L2": "",
+        "L3": "10:15",
+        "L4": "",
+        "L5": "",
+        "L6": "",
+        "L7": "-15:00",
+        "L8": "-16:00",
+        "L9": "-17:00"
+    },
+    "teacherDef": {
+        "T0": "KiS",
+        "T1": "KSC",
+        "T2": "UWO",
+        "T3": "SBO",
+        "T4": "CES",
+        "T5": "KRU",
+        "T6": "HME",
+        "T7": "SKU",
+        "T8": "AST",
+        "T9": "ISC",
+        "T10": "___",
+        "T11": "ASA"
+    },  
+	"mo": {
         "A": {
             "L0": {
                 "id": "T1",

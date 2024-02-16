@@ -3,42 +3,46 @@ $("#clear").click(function() {
 });
 
 $("#showimport").click(function() {
-    $("#timeTableOut").show();
+    $("#importExportData").show();
     $("#timeTableUpload").show();
     $("#timeTableImportButton").show();
+    $("#timeTableDefinitionImportButton").show();
     $("#timeTableHideButton").show();
     $("#download").hide();
-    $("#timeTableOut").focus();
+    $("#importExportData").focus();
 });
 
 $("#timeTableImportButton").click(function() {
-    clearAllAsk();
-    importData();
-    $("#timeTableOut").hide();
+    importAll();
+    $("#importExportData").hide();
     $("#timeTableUpload").hide();
     $("#timeTableImportButton").hide();
+    $("#timeTableDefinitionImportButton").hide();
     $("#timeTableHideButton").hide();
 });
 
 $("#timeTableHideButton").click(function() {
-    $("#timeTableOut").hide();
+    $("#importExportData").hide();
     $("#download").hide();
     $("#timeTableUpload").hide();
     $("#timeTableHideButton").hide();
     $("#timeTableImportButton").hide();
+    $("#timeTableDefinitionImportButton").hide();
 });
 
 $("#export").click(function() {
     $("#download").show();
-    $("#timeTableOut").show();
-    $("#timeTableOut").val(JSON.stringify(fetchDataFromDOM(), null, 4));
+    $("#importExportData").show();
+    var data = fetchAllFromDOM();
+    $("#importExportData").val(JSON.stringify(data, null, 4));
     $("#timeTableHideButton").show();
     $("#timeTableImportButton").hide();
+    $("#timeTableDefinitionImportButton").hide();
     $("#timeTableUpload").hide();
-    $("#timeTableOut").focus();
-    $("#timeTableOut")[0].setSelectionRange(0, 0);
-    $("#timeTableOut")[0].scrollTop = 0;
-    $("#timeTableOut")[0].scrollLeft = 0;
+    $("#importExportData").focus();
+    $("#importExportData")[0].setSelectionRange(0, 0);
+    $("#importExportData")[0].scrollTop = 0;
+    $("#importExportData")[0].scrollLeft = 0;
 });
 
 $("#timeTableUpload").change(function(event) {
@@ -55,11 +59,11 @@ function loaded(evt) {
     // https://w3c.github.io/FileAPI/#FileReader-interface
     // Obtain the read file data
     var fileString = evt.target.result;
-    $("#timeTableOut").val(fileString);
-    $("#timeTableOut").focus();
-    $("#timeTableOut")[0].setSelectionRange(0, 0);
-    $("#timeTableOut")[0].scrollTop = 0;
-    $("#timeTableOut")[0].scrollLeft = 0;
+    $("#importExportData").val(fileString);
+    $("#importExportData").focus();
+    $("#importExportData")[0].setSelectionRange(0, 0);
+    $("#importExportData")[0].scrollTop = 0;
+    $("#importExportData")[0].scrollLeft = 0;
 }
 
 function updateProgress(evt) {
@@ -80,7 +84,7 @@ function errorHandler(evt) {
 }
 
 $("#save").click(function() {
-    $("#lastChange")[0].innerHTML = (new Date()).toISOString();
+    $("#lastChange")[0].innerHTML = (new Date()).toString();
     saveData();
 });
 
@@ -89,7 +93,6 @@ $("#textprint").click(function() {
     if (printMode != null || groupList != null) {
         print();
     } else {
-
         var groupString = '';
         $.each(groupDef, function(groupKey, groupValue) {
             if (groupString.length > 0) {
@@ -105,9 +108,10 @@ $("#textprint").click(function() {
 });
 
 $("#download").click(function(event) {
-    var timeTable = fetchDataFromDOM();
+    var timeTable = fetchAllFromDOM();
     this.href = "data:text/json;charset=utf-8," +
-        encodeURIComponent(JSON.stringify(timeTable, null, 4));
+        encodeURIComponent($("#importExportData").val());
+    // encodeURIComponent(JSON.stringify(timeTable, null, 4));
 });
 
 $("#ok").on('click', function(event) {
@@ -126,6 +130,7 @@ document.addEventListener("keydown", function(event) {
         shift = true;
     }
 });
+
 document.addEventListener("keyup", function(event) {
     var key = event.wich || event.keyCode;
     if (key === 16) {
@@ -137,11 +142,16 @@ document.addEventListener("keyup", function(event) {
     }
 });
 
-/* events fired on the draggable target */
+/**
+ * Event fired to a draggable target.
+ */
 document.addEventListener("drag", function(event) {
     //
 }, false);
 
+/**
+ * Test permission to drag and handles initialization of after drag start.
+ */
 document.addEventListener("dragstart", function(event) {
     if ((event.target.className != null && event.target.className.match('.*' + 'spring\\b.*')) ||
         (event.target.className != null && event.target.className.match('.*' + 'teacherLesson\\b.*'))) {
@@ -233,7 +243,12 @@ document.addEventListener("drop", function(event) {
             var dupNode = dragged.cloneNode(true);
             dupNode.style.opacity = "";
             dupNode.style.cursor = "move";
-            dupNode.className = dragged.className;
+            dupNode.className = "teacherLesson";
+            if (coloredLessons) {
+                dupNode.setAttribute('class', 'teacherLesson colored');
+            } else {
+                dupNode.setAttribute('class', 'teacherLesson');
+            }
             target.appendChild(dupNode);
 
             dupNode.addEventListener("click", function(event) {
@@ -242,7 +257,8 @@ document.addEventListener("drop", function(event) {
                 $("#subject").focus();
             }, false);
             $("#lastChange")[0].innerHTML = (new Date()).toISOString();
-        } else if (dragged.className == "spring") {;
+        } else if (dragged.className.match('.*' + 'spring\\b.*')) {
+            //do nothing: it comes from 
         } else {
             dragged.parentNode.removeChild(dragged);
         }
@@ -254,37 +270,3 @@ document.addEventListener("drop", function(event) {
         event.preventDefault();
     }
 }, false);
-
-
-
-// if (window.File && window.FileReader && window.FileList && window.Blob) {
-//     alert('File API supported.!');
-// } else {
-//     alert('The File APIs are not fully supported in this browser.');
-// }
-
-// $(function() {
-//     'use strict';
-//     // Change this to the location of your server-side upload handler:
-//     var url = "uploadCarPicture";
-//     $('#fileupload').fileupload({
-//             url: url,
-//             dataType: 'json',
-//             done: function(e, data) {
-//                 $.each(data.files, function(index, file) {
-//                     $('<p/>').text(file.name);
-//                 });
-//             },
-//             fail: function(e, data) {
-//                 alert("File exists");
-//             },
-//             progressall: function(e, data) {
-//                 var progress = parseInt(data.loaded / data.total * 100, 10);
-//                 $('#progress .bar').css(
-//                     'width',
-//                     progress + '%'
-//                 );
-//             }
-//         }).prop('disabled', !$.support.fileInput)
-//         .parent().addClass($.support.fileInput ? undefined : 'disabled');
-// });

@@ -91,7 +91,7 @@ body {
 
 #remarks {
     height: 6.6em;
-    width: 500px;
+    width: 260px;
 }
 
 .resetFloat {
@@ -276,6 +276,18 @@ table tr td:last-child {
     border: 1px solid greenyellow;
 }
 
+#T12.colored {
+    color: darkslateblue;
+    background-color: cadetblue;
+    border: 1px solid greenyellow;
+}
+
+#T13.colored {
+    color: darkslateblue;
+    background-color: brown;
+    border: 1px solid darkcyan;
+}
+
 #timeTableUpload {
     display: none;
     clear: both;
@@ -286,12 +298,17 @@ table tr td:last-child {
     clear: both;
 }
 
+#timeTableDefinitionImportButton {
+    display: none;
+    clear: both;
+}
+
 #timeTableHideButton {
     display: none;
     clear: both;
 }
 
-#timeTableOut {
+#importExportData {
     display: none;
     clear: both;
     height: 20em;

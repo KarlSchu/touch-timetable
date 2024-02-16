@@ -27,11 +27,9 @@
 
         <div>
             <div id="top">
-                <div id="header"> Timetable Pegasusschule
-                    <br>
-                    <div id="lastChange">no idea</div>
+                <div id="header">Timetable Pegasusschule<br/>
+                    <span id="lastChange">no idea</span>
                 </div>
-
                 <div class="no-print">
                     <input type="button" class="btn btn-small" id="clear" value="Clear" />
                     <input type="button" class="btn btn-small" id="save" value="Save" />
@@ -47,9 +45,9 @@
             <br/>
             <div class="importContainer no-print">
                 <input type="file" class="btn btn-small btn2" id="timeTableUpload" name="file" />
-                <textarea id="timeTableOut"></textarea>
+                <textarea id="importExportData"></textarea>
                 <div>
-                    <input type="button" class="btn btn-small btn2 no-print" id="timeTableImportButton" value="Start" />
+                    <input type="button" class="btn btn-small btn2 no-print" id="timeTableImportButton" value="Start Import" />
                     <input type="button" class="btn btn-small btn2 no-print" id="timeTableHideButton" value="Hide" />
                     <a href="#" id="download" class="btn btn-small no-print" download="timetable.json">Download</a>
                 </div>
@@ -58,13 +56,17 @@
             <div id="timetable"></div>
             <div class="resetFloat page-break"></div>
             <br/>
+            <br/>
+            <br/>
             <textarea id="legend" class="no-print"></textarea>
+            <br/>
+            <br/>
             <br/>
             <div id="legendPrint" class="only-print page-break"></div>
             <div class="resetFloat"></div>
         </div>
         <footer class="no-print">
-            <span id="version">(c) ksc, 2017, v.0.0.3</span>
+            <span id="version">(c) ksc, 2017, v.0.0.5</span>
         </footer>
         <script type="text/javascript" src="lib/jQuery/jquery.min.js"></script>
         <script type="text/javascript" src="lib/DragDropTouch.js"></script>
@@ -77,11 +79,10 @@
                 // Handler for .ready() called.
                 groupList = getUrlParameter('groups');
                 printMode = getUrlParameter('doprint');
-                setGroupDefinition(groupList);
-                initTimeTableGrid();
-                loadDataFromStore();
+                loadDataFromStore(groupList);
                 // convert textarea legend for printing into div
                 if (printMode != null) {
+                    //alert(printMode + ': ' + groupList);
                     $("#legendPrint").show();
                     $("#legendPrint")[0].innerHTML = $("#legend").val().replace(/\n/g, '<br/>');
                     $("#legend").hide();

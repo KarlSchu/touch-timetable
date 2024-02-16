@@ -1518,5 +1518,45 @@
             "L9": ""
         }
     },
+    "dayDef": {
+        "mo": "Montag",
+        "di": "Dienstag",
+        "mi": "Mittwoch",
+        "do": "Donnerstag",
+        "fr": "Freitag"
+    },
+    "groupDef": {
+        "A": "GrA1",
+        "B": "GrA2",
+        "C": "GrA3",
+        "D": "GrB",
+        "E": "GrC"
+    },
+    "lessonDef": {
+        "L0": "7:30",
+        "L1": "8:00",
+        "L2": "",
+        "L3": "10:15",
+        "L4": "",
+        "L5": "",
+        "L6": "",
+        "L7": "-15:00",
+        "L8": "-16:00",
+        "L9": "-17:00"
+    },
+    "teacherDef": {
+        "T0": "KeS",
+        "T1": "KSC",
+        "T2": "UWO",
+        "T3": "SBO",
+        "T4": "CES",
+        "T5": "KRU",
+        "T6": "HME",
+        "T7": "SKU",
+        "T8": "AST",
+        "T9": "ISC",
+        "T10": "XXX",
+        "T11": "ASA"
+    },
     "legend": ""
 }
